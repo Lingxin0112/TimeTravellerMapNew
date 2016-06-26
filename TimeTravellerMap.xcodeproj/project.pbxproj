@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B60997F1D1FCB6700BBA9E8 /* AppDelegate.swift */; };
-		3B6099821D1FCB6700BBA9E8 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099811D1FCB6700BBA9E8 /* FirstViewController.swift */; };
+		3B6099821D1FCB6700BBA9E8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */; };
 		3B6099841D1FCB6700BBA9E8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */; };
 		3B6099871D1FCB6700BBA9E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B6099851D1FCB6700BBA9E8 /* Main.storyboard */; };
 		3B6099891D1FCB6700BBA9E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B6099881D1FCB6700BBA9E8 /* Assets.xcassets */; };
 		3B60998C1D1FCB6700BBA9E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B60998A1D1FCB6700BBA9E8 /* LaunchScreen.storyboard */; };
 		3B6099971D1FCB6700BBA9E8 /* TimeTravellerMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099961D1FCB6700BBA9E8 /* TimeTravellerMapTests.swift */; };
 		3B6099A21D1FCB6700BBA9E8 /* TimeTravellerMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099A11D1FCB6700BBA9E8 /* TimeTravellerMapUITests.swift */; };
+		3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099AF1D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +38,7 @@
 /* Begin PBXFileReference section */
 		3B60997C1D1FCB6700BBA9E8 /* TimeTravellerMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTravellerMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B60997F1D1FCB6700BBA9E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3B6099811D1FCB6700BBA9E8 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		3B6099861D1FCB6700BBA9E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B6099881D1FCB6700BBA9E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		3B60999D1D1FCB6700BBA9E8 /* TimeTravellerMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeTravellerMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B6099A11D1FCB6700BBA9E8 /* TimeTravellerMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTravellerMapUITests.swift; sourceTree = "<group>"; };
 		3B6099A31D1FCB6700BBA9E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B6099AF1D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLocationsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +102,13 @@
 			isa = PBXGroup;
 			children = (
 				3B60997F1D1FCB6700BBA9E8 /* AppDelegate.swift */,
-				3B6099811D1FCB6700BBA9E8 /* FirstViewController.swift */,
+				3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */,
 				3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */,
 				3B6099851D1FCB6700BBA9E8 /* Main.storyboard */,
 				3B6099881D1FCB6700BBA9E8 /* Assets.xcassets */,
 				3B60998A1D1FCB6700BBA9E8 /* LaunchScreen.storyboard */,
 				3B60998D1D1FCB6700BBA9E8 /* Info.plist */,
+				3B6099AF1D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift */,
 			);
 			path = TimeTravellerMap;
 			sourceTree = "<group>";
@@ -262,9 +265,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */,
 				3B6099841D1FCB6700BBA9E8 /* SecondViewController.swift in Sources */,
 				3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */,
-				3B6099821D1FCB6700BBA9E8 /* FirstViewController.swift in Sources */,
+				3B6099821D1FCB6700BBA9E8 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
