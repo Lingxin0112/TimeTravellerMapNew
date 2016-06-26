@@ -19,6 +19,7 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var resultSearchController: UISearchController? = nil
+    let historyMap = HistoryMap()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,18 @@ class MapViewController: UIViewController {
         definesPresentationContext = true
         
         self.chooseDateTextField.text = String(Int(self.dateSlider.maximumValue))
+        
+        // 
+        let latDelta = historyMap.southWestCoordinate.latitude -
+            historyMap.northEastCoordinate.latitude
+        
+        // think of a span as a tv size, measure from one corner to another
+        let span = MKCoordinateSpanMake(fabs(latDelta), 0.0)
+        
+        let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
+        
+        mapView.region = region
+        addOverlay()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -117,6 +130,14 @@ class MapViewController: UIViewController {
         self.dateSlider.setValue(inputDate, animated: true)
         self.chooseDateTextField.text = String(Int(inputDate))
     }
+    
+    func addOverlay() {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
+//        let historyMap = HistoryMap()
+        let overlay = HistoryMapOverlay(historyMap: historyMap)
+        mapView.addOverlay(overlay)
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -143,10 +164,6 @@ extension MapViewController: CLLocationManagerDelegate {
 // MARK: - UITextFieldDelegate
 
 extension MapViewController: UITextFieldDelegate {
-//    func textFieldDidEndEditing(textField: UITextField) {
-//        self.dateSlider.setValue(Float(self.chooseDateTextField.text!)!, animated: true)
-//        self.chooseDateTextField.resignFirstResponder()
-//    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField.returnKeyType == .Go {
@@ -159,3 +176,16 @@ extension MapViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - MKMapViewDelegate
+extension MapViewController: MKMapViewDelegate {
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is HistoryMapOverlay {
+            let historyMapImage = UIImage(named: "Newark1800.jpg")
+            let overlayView = HistoryMapOverlayView(overlay: overlay, overlayImage: historyMapImage!)
+            
+            return overlayView
+        } 
+        
+        return MKOverlayRenderer()
+    }
+}

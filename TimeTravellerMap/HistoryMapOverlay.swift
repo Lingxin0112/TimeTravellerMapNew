@@ -9,7 +9,12 @@
 import UIKit
 import MapKit
 
-//class HistoryMapOverlay: NSObject, MKOverlay {
-//    var coordinate: CLLocationCoordinate2D
-//    var boundingMapRect: MKMapRect
-//}
+class HistoryMapOverlay: NSObject, MKOverlay {
+    var coordinate: CLLocationCoordinate2D
+    var boundingMapRect: MKMapRect
+    
+    init(historyMap: HistoryMap) {
+        coordinate = historyMap.midCoordinate
+        boundingMapRect = historyMap.overlayBoudingMapRect
+    }
+}
