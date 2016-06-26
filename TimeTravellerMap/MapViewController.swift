@@ -12,7 +12,10 @@ import MapKit
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
-    
+    @IBOutlet weak var dateSlider: UISlider!
+    @IBOutlet weak var startDateLabel: UILabel!
+    @IBOutlet weak var chooseDateTextField: UITextField!
+    @IBOutlet weak var endDateLabel: UILabel!
     let locationManager = CLLocationManager()
     
     var resultSearchController: UISearchController? = nil
@@ -34,6 +37,8 @@ class MapViewController: UIViewController {
         resultSearchController?.hidesNavigationBarDuringPresentation =  false
         resultSearchController?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
+        
+        self.chooseDateTextField.text = String(Int(self.dateSlider.maximumValue))
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -60,6 +65,12 @@ class MapViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Action
+    
+    @IBAction func dateSliderChanged(sender: UISlider) {
+        self.chooseDateTextField.text = String(Int(self.dateSlider.value))
     }
     
     func showLocationServicesDeniedAlert() {
@@ -89,6 +100,23 @@ class MapViewController: UIViewController {
         dropPinZoomIn(chooseLocation.placemark)
         print(chooseLocation.name)
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        updateSlider()
+        self.view.endEditing(true)
+    }
+    
+    // Functions
+    func updateSlider() {
+        var inputDate = Float(self.chooseDateTextField.text!)!
+        if inputDate < self.dateSlider.minimumValue {
+            inputDate = self.dateSlider.minimumValue
+        } else if inputDate > self.dateSlider.maximumValue {
+            inputDate = self.dateSlider.maximumValue
+        }
+        self.dateSlider.setValue(inputDate, animated: true)
+        self.chooseDateTextField.text = String(Int(inputDate))
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -109,6 +137,25 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("error: '\(error)'")
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension MapViewController: UITextFieldDelegate {
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        self.dateSlider.setValue(Float(self.chooseDateTextField.text!)!, animated: true)
+//        self.chooseDateTextField.resignFirstResponder()
+//    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField.returnKeyType == .Go {
+            updateSlider()
+            self.chooseDateTextField.resignFirstResponder()
+            return true
+        }
+        
+        return false
     }
 }
 

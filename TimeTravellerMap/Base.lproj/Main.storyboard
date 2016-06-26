@@ -17,24 +17,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-SG-RJw">
-                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-SG-RJw">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <connections>
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="M6e-Y1-Gny"/>
                                 </connections>
                             </mapView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2016" minValue="1800" maxValue="2016" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-DU-4sy">
+                                <rect key="frame" x="-2" y="521" width="604" height="31"/>
+                                <connections>
+                                    <action selector="dateSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="Y1p-B5-LFT"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1800" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pvt-pm-iPn">
+                                <rect key="frame" x="0.0" y="492" width="39" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGi-bl-CmG">
+                                <rect key="frame" x="561" y="492" width="39" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input year" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vM6-rw-gD9">
+                                <rect key="frame" x="250" y="64" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="h6I-GC-0ck"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9pv-A4-QxB" id="bh2-ef-yyM"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Pvt-pm-iPn" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="1Qq-gl-Iuc"/>
+                            <constraint firstAttribute="trailing" secondItem="rRx-DU-4sy" secondAttribute="trailing" id="CUK-XL-fiJ"/>
                             <constraint firstItem="1cA-SG-RJw" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="CY6-NV-2cP"/>
+                            <constraint firstItem="vM6-rw-gD9" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="EOi-4W-t2H"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="1cA-SG-RJw" secondAttribute="bottom" id="IYP-id-tXf"/>
+                            <constraint firstItem="rRx-DU-4sy" firstAttribute="top" secondItem="dGi-bl-CmG" secondAttribute="bottom" constant="8" id="RO4-rZ-Vwv"/>
+                            <constraint firstAttribute="trailing" secondItem="dGi-bl-CmG" secondAttribute="trailing" id="aso-IG-yTj"/>
                             <constraint firstItem="1cA-SG-RJw" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="gIo-0T-Mzd"/>
                             <constraint firstAttribute="trailing" secondItem="1cA-SG-RJw" secondAttribute="trailing" id="iag-mY-5ZW"/>
+                            <constraint firstItem="rRx-DU-4sy" firstAttribute="top" secondItem="Pvt-pm-iPn" secondAttribute="bottom" constant="8" id="lBS-ON-hjY"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="rRx-DU-4sy" secondAttribute="bottom" id="vHx-oc-voB"/>
+                            <constraint firstItem="vM6-rw-gD9" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="vjW-56-aBV"/>
+                            <constraint firstItem="rRx-DU-4sy" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="x0w-5n-Nmq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vrd-Xw-aJi"/>
                     <connections>
+                        <outlet property="chooseDateTextField" destination="vM6-rw-gD9" id="qiL-NV-GsC"/>
+                        <outlet property="dateSlider" destination="rRx-DU-4sy" id="J5j-ju-EGi"/>
+                        <outlet property="endDateLabel" destination="dGi-bl-CmG" id="5f8-9W-qkK"/>
                         <outlet property="mapView" destination="1cA-SG-RJw" id="vtO-aA-wId"/>
+                        <outlet property="startDateLabel" destination="Pvt-pm-iPn" id="WoE-zJ-1zn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -61,14 +103,14 @@
                                             <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ics-9J-AfG">
                                             <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -106,13 +148,13 @@
                                 <rect key="frame" x="195" y="279" width="209.5" height="41.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by SecondViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDk-cv-Gan">
                                 <rect key="frame" x="192" y="329" width="215.5" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
