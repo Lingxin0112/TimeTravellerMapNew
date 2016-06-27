@@ -16,11 +16,17 @@ class HistoryMap {
     var midCoordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2DMake((southWestCoordinate.latitude + northEastCoordinate.latitude) / 2, (southWestCoordinate.longitude + northEastCoordinate.longitude) / 2)
     }
+//    var midCoordinate: CLLocationCoordinate2D {
+//        return CLLocationCoordinate2DMake(40.72422, 74.172574)
+//    }
     var overlayBoudingMapRect: MKMapRect {
         get {
             let southWest = MKMapPointForCoordinate(southWestCoordinate)
             let northEast = MKMapPointForCoordinate(northEastCoordinate)
-            return MKMapRectMake(northEast.x, southWest.y, fabs(northEast.x - southWest.x), fabs(northEast.y - southWest.y))
+//            let originCoordinate = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: 40.772216, longitude: -74.22544))
+//            let origin = MKCoordinateForMapPoint(originCoordinate)
+//            return MKMapRectMake(northEast.x, southWest.y, fabs(northEast.x - southWest.x), fabs(northEast.y - southWest.y))
+            return MKMapRectMake(southWest.x, northEast.y, fabs(northEast.x - southWest.x), fabs(northEast.y - southWest.y))
         }
     }
     

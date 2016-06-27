@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     
     var resultSearchController: UISearchController? = nil
     let historyMap = HistoryMap()
+    var overlayView: HistoryMapOverlayView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +47,8 @@ class MapViewController: UIViewController {
             historyMap.northEastCoordinate.latitude
         
         // think of a span as a tv size, measure from one corner to another
-        let span = MKCoordinateSpanMake(fabs(latDelta), 0.0)
-        
+//        let span = MKCoordinateSpanMake(fabs(latDelta), 0.0)
+        let span = MKCoordinateSpanMake(0.05, 0)
         let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
         
         mapView.region = region
@@ -115,10 +116,17 @@ class MapViewController: UIViewController {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        updateSlider()
+//        updateSlider()
         self.view.endEditing(true)
     }
     
+    @IBAction func hideOverlay(sender: UIButton) {
+//        self.overlayView?.alpha = 0.5
+//        self.overlayView?.setNeedsDisplay()
+//        var i = self.mapView.overlays[0] as! HistoryMapOverlay
+        overlayView?.overlayImage = UIImage(named: "Newark1666to1916")!
+        UIView.animateWithDuration(5, delay: 2, options: [.Repeat, .Autoreverse], animations: {self.overlayView?.alpha = 0.5}, completion: nil)
+    }
     // Functions
     func updateSlider() {
         var inputDate = Float(self.chooseDateTextField.text!)!
@@ -129,12 +137,12 @@ class MapViewController: UIViewController {
         }
         self.dateSlider.setValue(inputDate, animated: true)
         self.chooseDateTextField.text = String(Int(inputDate))
+    
     }
     
     func addOverlay() {
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
-//        let historyMap = HistoryMap()
         let overlay = HistoryMapOverlay(historyMap: historyMap)
         mapView.addOverlay(overlay)
     }
@@ -152,7 +160,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.first {
             let span = MKCoordinateSpanMake(0.05, 0.05)
             let region = MKCoordinateRegion(center: location.coordinate, span: span)
-            mapView.setRegion(region, animated: true)
+//            mapView.setRegion(region, animated: true)
         }
     }
     
@@ -182,7 +190,8 @@ extension MapViewController: MKMapViewDelegate {
         if overlay is HistoryMapOverlay {
             let historyMapImage = UIImage(named: "Newark1800.jpg")
             let overlayView = HistoryMapOverlayView(overlay: overlay, overlayImage: historyMapImage!)
-            
+            overlayView.alpha = 1.0
+            self.overlayView = overlayView
             return overlayView
         } 
         
