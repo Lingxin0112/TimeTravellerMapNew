@@ -121,11 +121,20 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func hideOverlay(sender: UIButton) {
-//        self.overlayView?.alpha = 0.5
-//        self.overlayView?.setNeedsDisplay()
-//        var i = self.mapView.overlays[0] as! HistoryMapOverlay
-        overlayView?.overlayImage = UIImage(named: "Newark1666to1916")!
-        UIView.animateWithDuration(5, delay: 2, options: [.Repeat, .Autoreverse], animations: {self.overlayView?.alpha = 0.5}, completion: nil)
+//        overlayView?.overlayImage = UIImage(named: "Newark1666to1916")!
+//        UIView.animateWithDuration(5, delay: 2, options: [.Repeat, .Autoreverse], animations: {self.overlayView?.alpha = 0.5}, completion: nil)
+        
+        let secondImageView = UIImageView(image: UIImage(named: "Newark1666to1916"))
+        secondImageView.alpha = 0.0
+        secondImageView.frame = view.frame
+        view.addSubview(secondImageView)
+        UIView.animateWithDuration(2.0, delay: 2.0, options: .CurveEaseOut, animations: {
+            secondImageView.alpha = 1.0
+            }, completion: { _ in
+                self.overlayView?.setNeedsDisplay()
+                self.overlayView?.overlayImage = secondImageView.image!
+                secondImageView.removeFromSuperview()
+        })
     }
     // Functions
     func updateSlider() {
