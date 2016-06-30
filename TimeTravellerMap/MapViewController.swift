@@ -50,11 +50,12 @@ class MapViewController: UIViewController {
         
         // think of a span as a tv size, measure from one corner to another
 //        let span = MKCoordinateSpanMake(fabs(latDelta), 0.0)
-        let span = MKCoordinateSpanMake(0.5, 0.5)
+        let span = MKCoordinateSpanMake(0.2, 0.0)
         let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
         
         mapView.region = region
         addOverlay()
+        print(overlayView?.overlayImage.size)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -86,7 +87,9 @@ class MapViewController: UIViewController {
     // MARK: - Action
     
     @IBAction func dateSliderChanged(sender: UISlider) {
-        self.chooseDateTextField.text = String(Int(self.dateSlider.value))
+        let year = String(Int(self.dateSlider.value))
+        self.chooseDateTextField.text = year
+        updateMap(year)
     }
     
     @IBAction func alphaSliderChanged(sender: UISlider) {
@@ -130,21 +133,24 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func hideOverlay(sender: UIButton) {
-//        overlayView?.overlayImage = UIImage(named: "Newark1666to1916")!
-//        UIView.animateWithDuration(5, delay: 2, options: [.Repeat, .Autoreverse], animations: {self.overlayView?.alpha = 0.5}, completion: nil)
-        
-        let secondImageView = UIImageView(image: UIImage(named: "Newark1666to1916"))
+        let secondImageView = UIImageView(image: UIImage(named: "Newark1916"))
         secondImageView.alpha = 0.0
         secondImageView.frame = view.frame
         view.addSubview(secondImageView)
-        UIView.animateWithDuration(2.0, delay: 2.0, options: .CurveEaseOut, animations: {
+        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
             secondImageView.alpha = 1.0
             }, completion: { _ in
-                self.overlayView?.setNeedsDisplay()
-                self.overlayView?.overlayImage = secondImageView.image!
+        })
+        
+        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
+            secondImageView.alpha = 0.0
+            self.overlayView?.setNeedsDisplay()
+            self.overlayView?.overlayImage = secondImageView.image!
+            }, completion: { _ in
                 secondImageView.removeFromSuperview()
         })
     }
+    
     // Functions
     func updateSlider() {
         var inputDate = Float(self.chooseDateTextField.text!)!
@@ -155,7 +161,6 @@ class MapViewController: UIViewController {
         }
         self.dateSlider.setValue(inputDate, animated: true)
         self.chooseDateTextField.text = String(Int(inputDate))
-    
     }
     
     func addOverlay() {
@@ -163,6 +168,28 @@ class MapViewController: UIViewController {
         mapView.removeOverlays(mapView.overlays)
         let overlay = HistoryMapOverlay(historyMap: historyMap)
         mapView.addOverlay(overlay)
+    }
+    
+    func updateMap(year: String) {
+        if let newImage = UIImage(named: "Newark\(year)") {
+            let newImageView = UIImageView(image: newImage)
+            newImageView.alpha = 0.0
+            newImageView.frame = view.frame
+            view.addSubview(newImageView)
+            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
+                newImageView.alpha = 1.0
+                }, completion: { _ in
+            })
+            
+            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
+                newImageView.alpha = 0.0
+                self.overlayView?.setNeedsDisplay()
+                self.overlayView?.overlayImage = newImageView.image!
+                }, completion: { _ in
+                    newImageView.removeFromSuperview()
+            })
+
+        }
     }
 }
 
@@ -199,6 +226,10 @@ extension MapViewController: UITextFieldDelegate {
         }
         
         return false
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        updateMap(textField.text!)
     }
 }
 
