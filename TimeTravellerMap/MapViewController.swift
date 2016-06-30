@@ -13,6 +13,8 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var dateSlider: UISlider!
+    
+    @IBOutlet weak var alphaSlider: UISlider!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var chooseDateTextField: UITextField!
     @IBOutlet weak var endDateLabel: UILabel!
@@ -48,7 +50,7 @@ class MapViewController: UIViewController {
         
         // think of a span as a tv size, measure from one corner to another
 //        let span = MKCoordinateSpanMake(fabs(latDelta), 0.0)
-        let span = MKCoordinateSpanMake(0.05, 0)
+        let span = MKCoordinateSpanMake(0.5, 0.5)
         let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
         
         mapView.region = region
@@ -86,6 +88,13 @@ class MapViewController: UIViewController {
     @IBAction func dateSliderChanged(sender: UISlider) {
         self.chooseDateTextField.text = String(Int(self.dateSlider.value))
     }
+    
+    @IBAction func alphaSliderChanged(sender: UISlider) {
+        let alpha = String(format: "%.1f", alphaSlider.value)
+        chooseDateTextField.text = alpha
+        overlayView?.alpha = CGFloat(Float(alpha)!)
+    }
+    
     
     func showLocationServicesDeniedAlert() {
         let alertController = UIAlertController(title: "Location Services Disabled", message: "Please enable location services in settings.", preferredStyle: .Alert)
@@ -199,7 +208,7 @@ extension MapViewController: MKMapViewDelegate {
         if overlay is HistoryMapOverlay {
             let historyMapImage = UIImage(named: "Newark1800.jpg")
             let overlayView = HistoryMapOverlayView(overlay: overlay, overlayImage: historyMapImage!)
-            overlayView.alpha = 1.0
+//            overlayView.alpha = 1.0
             self.overlayView = overlayView
             return overlayView
         } 
