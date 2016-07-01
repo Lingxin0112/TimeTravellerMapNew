@@ -23,6 +23,18 @@ class MapViewController: UIViewController {
     var resultSearchController: UISearchController? = nil
     let historyMap = HistoryMap()
     var overlayView: HistoryMapOverlayView?
+    
+    lazy var data: [String] = {
+        var dataArray = [String]()
+        for i in 1800...2016 {
+            dataArray.append("\(i)")
+        }
+        return dataArray
+    }()
+    var alpha = ["0.0", "0.1","0.2","0.3","0.4", "0.5", "0.6",  "0.7", "0.8", "0.9", "1.0"]
+    var picker = UIPickerView()
+    var dateAndAlphaDict = [String: String]()
+    var newDateAndAlphaDict = [String: String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +54,11 @@ class MapViewController: UIViewController {
         resultSearchController?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
         
-        self.chooseDateTextField.text = String(Int(self.dateSlider.maximumValue))
+        dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
+        dateAndAlphaDict["alpha"] = String(format: "%.1f", Float(self.alphaSlider.maximumValue))
+        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        newDateAndAlphaDict["date"] = dateAndAlphaDict["date"]
+        newDateAndAlphaDict["alpha"] = dateAndAlphaDict["alpha"]
         
         // 
         let latDelta = historyMap.southWestCoordinate.latitude -
@@ -56,6 +72,26 @@ class MapViewController: UIViewController {
         mapView.region = region
         addOverlay()
         print(overlayView?.overlayImage.size)
+        
+        // picker
+        picker.delegate = self
+        picker.dataSource = self
+        chooseDateTextField.inputView = picker
+        picker.selectRow(2, inComponent: 0, animated: true)
+        picker.selectRow(2, inComponent: 1, animated: true)
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .Default
+        toolBar.translucent = true
+        toolBar.tintColor = UIColor.blackColor()
+        toolBar.sizeToFit()
+        var items = [UIBarButtonItem]()
+        items.append(UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil))
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "donePicker")
+        items.append(doneButton)
+        toolBar.setItems(items, animated: false)
+        toolBar.userInteractionEnabled = true
+        chooseDateTextField.inputAccessoryView = toolBar
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -88,13 +124,15 @@ class MapViewController: UIViewController {
     
     @IBAction func dateSliderChanged(sender: UISlider) {
         let year = String(Int(self.dateSlider.value))
-        self.chooseDateTextField.text = year
+        dateAndAlphaDict["date"] = year
+        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
         updateMap(year)
     }
     
     @IBAction func alphaSliderChanged(sender: UISlider) {
         let alpha = String(format: "%.1f", alphaSlider.value)
-        chooseDateTextField.text = alpha
+        dateAndAlphaDict["alpha"] = alpha
+        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
         overlayView?.alpha = CGFloat(Float(alpha)!)
     }
     
@@ -135,7 +173,7 @@ class MapViewController: UIViewController {
     @IBAction func hideOverlay(sender: UIButton) {
         let secondImageView = UIImageView(image: UIImage(named: "Newark1916"))
         secondImageView.alpha = 0.0
-        secondImageView.frame = view.frame
+        secondImageView.frame = CGRectMake(100, 50, 200, 100)
         view.addSubview(secondImageView)
         UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
             secondImageView.alpha = 1.0
@@ -144,7 +182,6 @@ class MapViewController: UIViewController {
         
         UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
             secondImageView.alpha = 0.0
-            self.overlayView?.setNeedsDisplay()
             self.overlayView?.overlayImage = secondImageView.image!
             }, completion: { _ in
                 secondImageView.removeFromSuperview()
@@ -152,15 +189,25 @@ class MapViewController: UIViewController {
     }
     
     // Functions
+//    func updateSlider() {
+//        var inputDate = Float(self.chooseDateTextField.text!)!
+//        if inputDate < self.dateSlider.minimumValue {
+//            inputDate = self.dateSlider.minimumValue
+//        } else if inputDate > self.dateSlider.maximumValue {
+//            inputDate = self.dateSlider.maximumValue
+//        }
+//        self.dateSlider.setValue(inputDate, animated: true)
+//        self.chooseDateTextField.text = String(Int(inputDate))
+//    }
+    
     func updateSlider() {
-        var inputDate = Float(self.chooseDateTextField.text!)!
-        if inputDate < self.dateSlider.minimumValue {
-            inputDate = self.dateSlider.minimumValue
-        } else if inputDate > self.dateSlider.maximumValue {
-            inputDate = self.dateSlider.maximumValue
+        if let date = dateAndAlphaDict["date"] {
+            dateSlider.setValue(Float(date)!, animated: true)
         }
-        self.dateSlider.setValue(inputDate, animated: true)
-        self.chooseDateTextField.text = String(Int(inputDate))
+        
+        if let alpha = dateAndAlphaDict["alpha"] {
+            alphaSlider.setValue(Float(alpha)!, animated: true)
+        }
     }
     
     func addOverlay() {
@@ -190,6 +237,17 @@ class MapViewController: UIViewController {
             })
 
         }
+    }
+    
+    func donePicker() {
+        dateAndAlphaDict["date"] = newDateAndAlphaDict["date"]
+        dateAndAlphaDict["alpha"] = newDateAndAlphaDict["alpha"]
+        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
+            updateMap(date)
+            chooseDateTextField.text = "\(date) + \(alpha)"
+        }
+        updateSlider()
+        chooseDateTextField.resignFirstResponder()
     }
 }
 
@@ -231,6 +289,13 @@ extension MapViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         updateMap(textField.text!)
     }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        picker.selectRow(data.indexOf(dateAndAlphaDict["date"]!)!, inComponent: 0, animated: true)
+        picker.selectRow(alpha.indexOf(dateAndAlphaDict["alpha"]!)!, inComponent: 1, animated: true)
+        print("beigin editing")
+    }
+    
 }
 
 // MARK: - MKMapViewDelegate
@@ -245,5 +310,65 @@ extension MapViewController: MKMapViewDelegate {
         } 
         
         return MKOverlayRenderer()
+    }
+    
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let mapRect = mapView.visibleMapRect;
+        let eastPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMidY(mapRect));
+        let westPoint = MKMapPointMake(MKMapRectGetMaxX(mapRect), MKMapRectGetMidY(mapRect));
+        let currentMapDist = MKMetersBetweenMapPoints(eastPoint, westPoint);
+        print("Current map distance is \(currentMapDist)");
+    }
+}
+
+// MARK: - UIPickerViewDataSource
+
+extension MapViewController: UIPickerViewDataSource {
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 2
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if component == 0 {
+            return data.count
+        } else {
+            return alpha.count
+        }
+    }
+    
+    
+}
+
+// MARK: - UIPickerViewDelegate
+
+extension MapViewController: UIPickerViewDelegate {
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if component == 0 {
+            newDateAndAlphaDict["date"] = data[row]
+        } else {
+            newDateAndAlphaDict["alpha"] = alpha[row]
+        }
+        
+//        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
+//            chooseDateTextField.text = "\(date) + \(alpha)"
+//        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if component == 0 {
+            return data[row]
+        } else {
+            return alpha[row]
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        let pickerWidth = pickerView.bounds.size.width
+        if component == 0 {
+            return pickerWidth/3 * 2
+        } else {
+            return pickerWidth/3
+        }
     }
 }

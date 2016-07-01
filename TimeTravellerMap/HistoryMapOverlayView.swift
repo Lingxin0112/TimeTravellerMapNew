@@ -10,7 +10,11 @@ import UIKit
 import MapKit
 
 class HistoryMapOverlayView: MKOverlayRenderer {
-    var overlayImage: UIImage
+    var overlayImage: UIImage {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     var overlayRect: CGRect {
         return rectForMapRect(overlay.boundingMapRect)
     }
@@ -26,12 +30,9 @@ class HistoryMapOverlayView: MKOverlayRenderer {
         let theMapRect = overlay.boundingMapRect
         let theRect = rectForMapRect(theMapRect)
         
-        
         CGContextScaleCTM(context, 1.0, -1.0)
         CGContextTranslateCTM(context, 0.0, -theRect.size.height)
         CGContextDrawImage(context, theRect, imageReference)
-//        print("width: \((mapRect.size.width) * Double(zoomScale))")
-//        print("height: \(theMapRect.size.width * Double(zoomScale))")
     }
     
 }
