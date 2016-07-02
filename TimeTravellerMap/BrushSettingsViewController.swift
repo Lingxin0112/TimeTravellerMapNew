@@ -33,6 +33,9 @@ class BrushSettingsViewController: UIViewController {
     
     var brush: CGFloat = 10.0
     var opacity: CGFloat = 1.0
+    var red: CGFloat = 0.0
+    var green: CGFloat = 0.0
+    var blue: CGFloat = 0.0
     
 //    weak var delegate: BrushSettingsViewControllerDelegate?
     
@@ -40,6 +43,23 @@ class BrushSettingsViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        sliderBrush.value = Float(brush)
+        labelBrush.text = String(format: "%.1f", brush.native)
+        sliderOpacity.value = Float(opacity)
+        labelOpacity.text = String(format: "%.1f", opacity.native)
+        sliderRed.value = Float(red * 255.0)
+        labelRed.text = String(format: "%d", Int(sliderRed.value))
+        sliderGreen.value = Float(green * 255.0)
+        labelGreen.text = String(format: "%d", Int(sliderGreen.value))
+        sliderBlue.value = Float(blue * 255.0)
+        labelBlue.text = String(format: "%d", Int(sliderBlue.value))
+        
+        drawPreview()
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,6 +73,14 @@ class BrushSettingsViewController: UIViewController {
     }
     
     @IBAction func colorChanged(sender: UISlider) {
+        red = CGFloat(sliderRed.value / 255.0)
+        labelRed.text = String(format: "%d", Int(sliderRed.value))
+        green = CGFloat(sliderGreen.value / 255.0)
+        labelGreen.text = String(format: "%d", Int(sliderGreen.value))
+        blue = CGFloat(sliderBlue.value / 255.0)
+        labelBlue.text = String(format: "%d", Int(sliderBlue.value))
+        
+        drawPreview()
     }
     
     @IBAction func sliderChanged(sender: UISlider) {
@@ -73,7 +101,7 @@ class BrushSettingsViewController: UIViewController {
         CGContextSetLineCap(context, .Round)
         CGContextSetLineWidth(context, brush)
         
-        CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0)
+        CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
         CGContextMoveToPoint(context, 45.0, 45.0)
         CGContextAddLineToPoint(context, 45.0, 45.0)
         CGContextStrokePath(context)
@@ -88,7 +116,7 @@ class BrushSettingsViewController: UIViewController {
         CGContextMoveToPoint(context, 45.0, 45.0)
         CGContextAddLineToPoint(context, 45.0, 45.0)
         
-        CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, opacity)
+        CGContextSetRGBStrokeColor(context, red, green, blue, opacity)
         CGContextStrokePath(context)
         imageViewOpacity.image = UIGraphicsGetImageFromCurrentImageContext()
         

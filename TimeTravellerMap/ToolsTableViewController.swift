@@ -16,6 +16,9 @@ class ToolsTableViewController: UITableViewController {
     
     var brush: CGFloat = 10.0
     var opacity: CGFloat = 1.0
+    var red: CGFloat = 0.0
+    var green: CGFloat = 0.0
+    var blue: CGFloat = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +112,9 @@ class ToolsTableViewController: UITableViewController {
 //            vc.delegate = self
             vc.brush = brush
             vc.opacity = opacity
+            vc.red = red
+            vc.green = green
+            vc.blue = blue
         }
 
     }

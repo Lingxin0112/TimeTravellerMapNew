@@ -214,6 +214,9 @@ class MapViewController: UIViewController {
             let controller = segue.sourceViewController as! BrushSettingsViewController
             brushWidth = controller.brush
             opacity = controller.opacity
+            red = controller.red
+            green = controller.green
+            blue = controller.blue
             print("brushWidth \(controller.brush) + opacity \(controller.opacity)")
         }
     }
@@ -379,6 +382,9 @@ class MapViewController: UIViewController {
             }
             vc.brush = brushWidth
             vc.opacity = opacity
+            vc.red = red
+            vc.green = green
+            vc.blue = blue
         }
     }
 }
