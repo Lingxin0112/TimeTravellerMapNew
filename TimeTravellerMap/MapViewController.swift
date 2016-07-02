@@ -18,11 +18,16 @@ class MapViewController: UIViewController {
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var chooseDateTextField: UITextField!
     @IBOutlet weak var endDateLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var drawMapImageView: UIImageView!
+    @IBOutlet weak var tempImageView: UIImageView!
+
     let locationManager = CLLocationManager()
     
     var resultSearchController: UISearchController? = nil
     let historyMap = HistoryMap()
     var overlayView: HistoryMapOverlayView?
+    var historyMapImage: UIImage?
     
     lazy var data: [String] = {
         var dataArray = [String]()
@@ -35,10 +40,25 @@ class MapViewController: UIViewController {
     var picker = UIPickerView()
     var dateAndAlphaDict = [String: String]()
     var newDateAndAlphaDict = [String: String]()
+    
+    // map drawing
+    var lastPoint = CGPoint.zero
+    var red: CGFloat = 0.0
+    var green: CGFloat = 0.0
+    var blue: CGFloat = 0.0
+    var brushWidth: CGFloat = 10.0
+    var opacity: CGFloat = 1.0
+    var swiped = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        scrollView.hidden = true
+        drawMapImageView.hidden = true
+        tempImageView.hidden = true
+        scrollView.minimumZoomScale = 0.5
+        scrollView.maximumZoomScale = 6.0
         
         let searchLocationsTableViewController = storyboard!.instantiateViewControllerWithIdentifier("SearchLocationsTableViewController") as! SearchLocationsTableViewController
         searchLocationsTableViewController.mapView = mapView
@@ -144,6 +164,7 @@ class MapViewController: UIViewController {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // FIXME: change
     func dropPinZoomIn(placemark: MKPlacemark) {
         mapView.removeAnnotations(mapView.annotations)
         let annotation = MKPointAnnotation()
@@ -159,16 +180,107 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func searchLocation(segue: UIStoryboardSegue) {
-        let controller = segue.sourceViewController as! SearchLocationsTableViewController
-        let chooseLocation = controller.selectedItem
-        dropPinZoomIn(chooseLocation.placemark)
-        print(chooseLocation.name)
+        if segue.identifier == "ChooseLocation" {
+            let controller = segue.sourceViewController as! SearchLocationsTableViewController
+            let chooseLocation = controller.selectedItem
+            dropPinZoomIn(chooseLocation.placemark)
+            print(chooseLocation.name)
+        }
+    }
+    
+    @IBAction func chooseTool(segue: UIStoryboardSegue) {
+        if segue.identifier == "ChooseTool" {
+            let controller = segue.sourceViewController as! ToolsTableViewController
+            let tool = controller.tool
+            print(tool)
+            if tool == "pencil" {
+                mapView.removeOverlays(mapView.overlays)
+                scrollView.hidden = false
+                scrollView.userInteractionEnabled = false
+                drawMapImageView.hidden = false
+                tempImageView.hidden = false
+                mapView.userInteractionEnabled = false
+                drawMapImageView.image = historyMapImage
+                brushWidth = controller.brush
+                opacity = controller.opacity
+            } else if tool == "reset" {
+                resetDrawing()
+            }
+        }
+    }
+    
+    @IBAction func chooseBrush(segue: UIStoryboardSegue) {
+        if segue.identifier == "ChooseBrush" {
+            let controller = segue.sourceViewController as! BrushSettingsViewController
+            brushWidth = controller.brush
+            opacity = controller.opacity
+            print("brushWidth \(controller.brush) + opacity \(controller.opacity)")
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        updateSlider()
-        self.view.endEditing(true)
+//        self.view.endEditing(true)
+        swiped = false
+        if let touch = touches.first {
+            lastPoint = touch.locationInView(scrollView)
+        }
     }
+    
+    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
+        
+        // 1
+        UIGraphicsBeginImageContext(scrollView.frame.size)
+        let context = UIGraphicsGetCurrentContext()
+        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height))
+        
+        // 2
+        CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
+        CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
+        
+        // 3
+        CGContextSetLineCap(context, .Round)
+        CGContextSetLineWidth(context, brushWidth)
+        CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
+        CGContextSetBlendMode(context, .Normal)
+        
+        // 4
+        CGContextStrokePath(context)
+        
+        // 5
+        tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        tempImageView.alpha = opacity
+        UIGraphicsEndImageContext()
+        
+    }
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // 6
+        swiped = true
+        if let touch = touches.first {
+            let currentPoint = touch.locationInView(scrollView)
+            drawLineFrom(lastPoint, toPoint: currentPoint)
+            
+            // 7
+            lastPoint = currentPoint
+        }
+
+    }
+
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if !swiped {
+            // draw a single point
+            drawLineFrom(lastPoint, toPoint: lastPoint)
+        }
+        
+        // Merge tempImageView into mainImageView
+        UIGraphicsBeginImageContext(drawMapImageView.frame.size)
+        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: 1.0)
+        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: opacity)
+        drawMapImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        tempImageView.image = nil
+    }
+    
     
     @IBAction func hideOverlay(sender: UIButton) {
         let secondImageView = UIImageView(image: UIImage(named: "Newark1916"))
@@ -188,6 +300,9 @@ class MapViewController: UIViewController {
         })
     }
     
+    @IBAction func popover(sender: UIBarButtonItem) {
+        performSegueWithIdentifier("ShowTools", sender: self)
+    }
     // Functions
 //    func updateSlider() {
 //        var inputDate = Float(self.chooseDateTextField.text!)!
@@ -249,6 +364,23 @@ class MapViewController: UIViewController {
         updateSlider()
         chooseDateTextField.resignFirstResponder()
     }
+    
+    func resetDrawing() {
+        drawMapImageView.image = historyMapImage
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowTools" {
+            let vc = segue.destinationViewController as! ToolsTableViewController
+            let controller = vc.popoverPresentationController
+            
+            if controller != nil {
+                controller?.delegate = self
+            }
+            vc.brush = brushWidth
+            vc.opacity = opacity
+        }
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -302,7 +434,7 @@ extension MapViewController: UITextFieldDelegate {
 extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is HistoryMapOverlay {
-            let historyMapImage = UIImage(named: "Newark1800.jpg")
+            historyMapImage = UIImage(named: "Newark1800.jpg")
             let overlayView = HistoryMapOverlayView(overlay: overlay, overlayImage: historyMapImage!)
 //            overlayView.alpha = 1.0
             self.overlayView = overlayView
@@ -372,3 +504,55 @@ extension MapViewController: UIPickerViewDelegate {
         }
     }
 }
+
+// MARK: - UIPopoverPresentationController
+
+extension MapViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension MapViewController: UIScrollViewDelegate {
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return drawMapImageView
+    }
+    
+    func scrollViewDidZoom(scrollView: UIScrollView) {
+        let boundsSize = self.scrollView.bounds.size
+        let contentFrame = drawMapImageView.frame
+        
+//        if contentFrame.size.width < boundsSize.width {
+//            contentFrame.origin.x = (boundsSize.width - contentFrame.size.width)/2
+//        } else {
+//            contentFrame.origin.x = 0.0
+//        }
+//        
+//        if contentFrame.size.height < boundsSize.height {
+//            contentFrame.origin.y = (boundsSize.height - contentFrame.size.height)/2
+//        } else {
+//            contentFrame.origin.y = 0.0
+//        }
+//        
+//        drawMapImageView.frame = contentFrame
+        if contentFrame.height < boundsSize.height {
+            let shiftHeigh = boundsSize.height/2.0 - self.scrollView.contentSize.height/2.0
+            self.scrollView.contentInset.top = shiftHeigh
+        }
+        if contentFrame.width < boundsSize.width {
+            let shiftwidth = boundsSize.width/2.0 - self.scrollView.contentSize.width/2.0
+            self.scrollView.contentInset.left = shiftwidth
+        }
+    }
+}
+
+//// MARK: - BrushSettingsViewControllerDelegate
+//
+//extension MapViewController: BrushSettingsViewControllerDelegate {
+//    func brushSettingsviewControllerFinished(brushSettingsViewController: BrushSettingsViewController) {
+//        brushWidth = brushSettingsViewController.brush
+//        opacity = brushSettingsViewController.opacity
+//    }
+//}
