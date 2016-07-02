@@ -20,7 +20,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var drawMapImageView: UIImageView!
-    @IBOutlet weak var tempImageView: UIImageView!
+//    @IBOutlet weak var tempImageView: UIImageView!
 
     let locationManager = CLLocationManager()
     
@@ -49,14 +49,17 @@ class MapViewController: UIViewController {
     var brushWidth: CGFloat = 10.0
     var opacity: CGFloat = 1.0
     var swiped = false
-
+    
+    var overlayOrDraw: String = "overlay"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         scrollView.hidden = true
+        scrollView.userInteractionEnabled = false
         drawMapImageView.hidden = true
-        tempImageView.hidden = true
+//        tempImageView.hidden = true
         scrollView.minimumZoomScale = 0.5
         scrollView.maximumZoomScale = 6.0
         
@@ -153,7 +156,12 @@ class MapViewController: UIViewController {
         let alpha = String(format: "%.1f", alphaSlider.value)
         dateAndAlphaDict["alpha"] = alpha
         self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
-        overlayView?.alpha = CGFloat(Float(alpha)!)
+        if overlayOrDraw == "overlay" {
+            overlayView?.alpha = CGFloat(Float(alpha)!)
+        } else if overlayOrDraw == "draw" {
+            drawMapImageView.alpha = CGFloat(Float(alpha)!)
+        }
+        
     }
     
     
@@ -188,23 +196,47 @@ class MapViewController: UIViewController {
         }
     }
     
+    var draw: Bool = true
+    
     @IBAction func chooseTool(segue: UIStoryboardSegue) {
         if segue.identifier == "ChooseTool" {
             let controller = segue.sourceViewController as! ToolsTableViewController
             let tool = controller.tool
             print(tool)
             if tool == "pencil" {
+                overlayOrDraw = "draw"
                 mapView.removeOverlays(mapView.overlays)
+
                 scrollView.hidden = false
                 scrollView.userInteractionEnabled = false
+                
                 drawMapImageView.hidden = false
-                tempImageView.hidden = false
+//                tempImageView.hidden = false
+
                 mapView.userInteractionEnabled = false
-                drawMapImageView.image = historyMapImage
+                
+//                tempImageView.image = nil
+//                drawMapImageView.image = nil
+                if draw {
+                    drawMapImageView.image = historyMapImage
+                    draw = false
+                }
                 brushWidth = controller.brush
                 opacity = controller.opacity
             } else if tool == "reset" {
                 resetDrawing()
+            } else if tool == "zoom" {
+                
+                mapView.removeOverlays(mapView.overlays)
+                scrollView.hidden = false
+                scrollView.userInteractionEnabled = true
+                
+                
+            } else if tool == "overlay" {
+                overlayOrDraw = "overlay"
+                scrollView.hidden = true
+                mapView.userInteractionEnabled = true
+                addOverlay()
             }
         }
     }
@@ -225,8 +257,9 @@ class MapViewController: UIViewController {
 //        self.view.endEditing(true)
         swiped = false
         if let touch = touches.first {
-            lastPoint = touch.locationInView(scrollView)
+            lastPoint = touch.locationInView(drawMapImageView)
         }
+        
     }
     
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
@@ -234,7 +267,7 @@ class MapViewController: UIViewController {
         // 1
         UIGraphicsBeginImageContext(scrollView.frame.size)
         let context = UIGraphicsGetCurrentContext()
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height))
+        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height))
         
         // 2
         CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
@@ -243,15 +276,15 @@ class MapViewController: UIViewController {
         // 3
         CGContextSetLineCap(context, .Round)
         CGContextSetLineWidth(context, brushWidth)
-        CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
+        CGContextSetRGBStrokeColor(context, red, green, blue, opacity)
         CGContextSetBlendMode(context, .Normal)
         
         // 4
         CGContextStrokePath(context)
         
         // 5
-        tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        tempImageView.alpha = opacity
+        drawMapImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+//        drawMapImageView.alpha = opacity
         UIGraphicsEndImageContext()
         
     }
@@ -259,7 +292,7 @@ class MapViewController: UIViewController {
         // 6
         swiped = true
         if let touch = touches.first {
-            let currentPoint = touch.locationInView(scrollView)
+            let currentPoint = touch.locationInView(drawMapImageView)
             drawLineFrom(lastPoint, toPoint: currentPoint)
             
             // 7
@@ -275,13 +308,13 @@ class MapViewController: UIViewController {
         }
         
         // Merge tempImageView into mainImageView
-        UIGraphicsBeginImageContext(drawMapImageView.frame.size)
-        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: 1.0)
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: opacity)
-        drawMapImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        tempImageView.image = nil
+//        UIGraphicsBeginImageContext(drawMapImageView.frame.size)
+//        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: 1.0)
+//        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: opacity)
+//        drawMapImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        
+//        tempImageView.image = nil
     }
     
     
@@ -333,6 +366,18 @@ class MapViewController: UIViewController {
         mapView.removeOverlays(mapView.overlays)
         let overlay = HistoryMapOverlay(historyMap: historyMap)
         mapView.addOverlay(overlay)
+    }
+    
+    // TODO: add share function
+    func share() {
+        UIGraphicsBeginImageContext(drawMapImageView.bounds.size)
+        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0,
+            width: drawMapImageView.frame.size.width, height: drawMapImageView.frame.size.height))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        presentViewController(activity, animated: true, completion: nil)
     }
     
     func updateMap(year: String) {

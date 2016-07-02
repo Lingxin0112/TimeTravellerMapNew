@@ -140,6 +140,33 @@
                                             <segue destination="aLW-Sa-JDp" kind="unwind" identifier="ChooseTool" unwindAction="chooseTool:" id="vnN-Ui-ZjA"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" textLabel="nMr-yX-pgY" detailTextLabel="VkB-k6-AfD" style="IBUITableViewCellStyleValue1" id="T8a-H6-cYY">
+                                        <rect key="frame" x="0.0" y="319.5" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T8a-H6-cYY" id="iaC-zx-4T6">
+                                            <rect key="frame" x="0.0" y="0.0" width="553" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Overlay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nMr-yX-pgY">
+                                                    <rect key="frame" x="15" y="12" width="55" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Settings" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VkB-k6-AfD">
+                                                    <rect key="frame" x="493" y="12" width="60" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="aLW-Sa-JDp" kind="unwind" identifier="ChooseTool" unwindAction="chooseTool:" id="U7v-Uk-bPX"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -216,22 +243,16 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eeE-k4-wh8">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HsW-zg-B7X">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="centerX" secondItem="WY0-u7-kpn" secondAttribute="centerX" id="4os-3c-wog"/>
-                                    <constraint firstItem="HsW-zg-B7X" firstAttribute="top" secondItem="eeE-k4-wh8" secondAttribute="top" id="4xl-be-PtR"/>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="top" id="73M-Ww-VPN"/>
-                                    <constraint firstAttribute="trailing" secondItem="eeE-k4-wh8" secondAttribute="trailing" id="AWt-XO-Ano"/>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="trailing" secondItem="HsW-zg-B7X" secondAttribute="trailing" id="BoC-py-Cyp"/>
-                                    <constraint firstAttribute="bottom" secondItem="eeE-k4-wh8" secondAttribute="bottom" id="TbX-jF-1VC"/>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="leading" secondItem="WY0-u7-kpn" secondAttribute="leading" id="jen-Ln-ktE"/>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="leading" secondItem="HsW-zg-B7X" secondAttribute="leading" id="qlf-97-Hc5"/>
-                                    <constraint firstItem="HsW-zg-B7X" firstAttribute="centerY" secondItem="WY0-u7-kpn" secondAttribute="centerY" id="twx-Ef-uQU"/>
-                                    <constraint firstItem="HsW-zg-B7X" firstAttribute="bottom" secondItem="eeE-k4-wh8" secondAttribute="bottom" id="xWd-R4-bT3"/>
+                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="centerY" secondItem="WY0-u7-kpn" secondAttribute="centerY" id="Fjx-lr-qgi"/>
+                                    <constraint firstAttribute="trailing" secondItem="eeE-k4-wh8" secondAttribute="trailing" id="bA0-Zv-s5I"/>
+                                    <constraint firstAttribute="bottom" secondItem="eeE-k4-wh8" secondAttribute="bottom" id="byr-jk-Cns"/>
+                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="top" id="eSF-oh-Ira"/>
+                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="leading" secondItem="WY0-u7-kpn" secondAttribute="leading" id="rk2-3m-ciJ"/>
+                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="centerX" secondItem="WY0-u7-kpn" secondAttribute="centerX" id="t9N-dQ-3l9"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="j4i-uc-ux1"/>
@@ -240,19 +261,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dGi-bl-CmG" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="bottom" constant="4" id="17A-nT-j81"/>
                             <constraint firstItem="Pvt-pm-iPn" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="1Qq-gl-Iuc"/>
-                            <constraint firstItem="WY0-u7-kpn" firstAttribute="trailing" secondItem="dGi-bl-CmG" secondAttribute="trailing" id="2Qx-vc-SCW"/>
                             <constraint firstAttribute="trailing" secondItem="rRx-DU-4sy" secondAttribute="trailing" id="CUK-XL-fiJ"/>
                             <constraint firstItem="1cA-SG-RJw" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="CY6-NV-2cP"/>
+                            <constraint firstItem="WY0-u7-kpn" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-20" id="GRa-lT-GML"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="1cA-SG-RJw" secondAttribute="bottom" id="IYP-id-tXf"/>
                             <constraint firstItem="VCw-So-CmS" firstAttribute="leading" secondItem="aZV-9k-hRX" secondAttribute="leading" id="PP3-5g-j81"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="bottom" constant="63" id="QgV-OC-jLv"/>
                             <constraint firstItem="rRx-DU-4sy" firstAttribute="top" secondItem="dGi-bl-CmG" secondAttribute="bottom" constant="8" id="RO4-rZ-Vwv"/>
                             <constraint firstItem="vM6-rw-gD9" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Rfh-YE-Om4"/>
-                            <constraint firstItem="WY0-u7-kpn" firstAttribute="centerY" secondItem="1cA-SG-RJw" secondAttribute="centerY" id="Txp-q3-gYP"/>
                             <constraint firstItem="aZV-9k-hRX" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Waa-a4-2Au"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WY0-u7-kpn" secondAttribute="trailing" constant="-20" id="XA7-zO-fTq"/>
                             <constraint firstAttribute="trailing" secondItem="dGi-bl-CmG" secondAttribute="trailing" id="aso-IG-yTj"/>
-                            <constraint firstItem="WY0-u7-kpn" firstAttribute="leading" secondItem="Pvt-pm-iPn" secondAttribute="leading" id="bSm-XV-enJ"/>
                             <constraint firstItem="1cA-SG-RJw" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="gIo-0T-Mzd"/>
                             <constraint firstAttribute="trailing" secondItem="1cA-SG-RJw" secondAttribute="trailing" id="iag-mY-5ZW"/>
                             <constraint firstItem="rRx-DU-4sy" firstAttribute="top" secondItem="Pvt-pm-iPn" secondAttribute="bottom" constant="8" id="lBS-ON-hjY"/>
@@ -260,7 +280,9 @@
                             <constraint firstItem="vM6-rw-gD9" firstAttribute="leading" secondItem="aZV-9k-hRX" secondAttribute="trailing" constant="8" id="sDo-0N-nCn"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="rRx-DU-4sy" secondAttribute="bottom" id="vHx-oc-voB"/>
                             <constraint firstAttribute="leadingMargin" secondItem="aZV-9k-hRX" secondAttribute="leading" id="vxI-KT-ae0"/>
+                            <constraint firstItem="aZV-9k-hRX" firstAttribute="bottom" secondItem="vM6-rw-gD9" secondAttribute="bottom" id="wnW-TF-He4"/>
                             <constraint firstItem="rRx-DU-4sy" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="x0w-5n-Nmq"/>
+                            <constraint firstItem="WY0-u7-kpn" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="64" id="y8D-I1-PMI"/>
                             <constraint firstItem="VCw-So-CmS" firstAttribute="top" secondItem="aZV-9k-hRX" secondAttribute="bottom" constant="8" symbolic="YES" id="yVN-ph-JBn"/>
                         </constraints>
                     </view>
@@ -280,7 +302,6 @@
                         <outlet property="mapView" destination="1cA-SG-RJw" id="vtO-aA-wId"/>
                         <outlet property="scrollView" destination="WY0-u7-kpn" id="rd0-cf-Iv1"/>
                         <outlet property="startDateLabel" destination="Pvt-pm-iPn" id="WoE-zJ-1zn"/>
-                        <outlet property="tempImageView" destination="HsW-zg-B7X" id="aML-dM-FWf"/>
                         <segue destination="AUF-Lp-FTo" kind="popoverPresentation" identifier="ShowTools" popoverAnchorBarButtonItem="7ye-lz-Ajg" id="fxo-EA-0xk">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>

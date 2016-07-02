@@ -10,8 +10,8 @@ import UIKit
 
 class ToolsTableViewController: UITableViewController {
     
-    let tools = ["pencil", "photo", "Zoom"]
-    let newTools = ["sahre", "reset"]
+    let tools = ["pencil", "photo", "zoom"]
+    let newTools = ["sahre", "reset", "overlay"]
     var tool: String?
     
     var brush: CGFloat = 10.0
@@ -47,7 +47,7 @@ class ToolsTableViewController: UITableViewController {
         if section == 0 {
             return 3
         } else {
-            return 2
+            return 3
         }
     }
 
