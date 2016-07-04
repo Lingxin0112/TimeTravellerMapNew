@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PhotoPickedDelegate: class {
+    func photoPicked(image: UIImage)
+}
+
 class ToolsTableViewController: UITableViewController {
     
     let tools = ["pencil", "photo", "zoom"]
@@ -19,6 +23,9 @@ class ToolsTableViewController: UITableViewController {
     var red: CGFloat = 0.0
     var green: CGFloat = 0.0
     var blue: CGFloat = 0.0
+    
+    var image: UIImage?
+    weak var delegate: PhotoPickedDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +55,12 @@ class ToolsTableViewController: UITableViewController {
             return 3
         } else {
             return 3
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 && indexPath.row == 1 {
+            choosePhoto()
         }
     }
 
@@ -129,4 +142,63 @@ class ToolsTableViewController: UITableViewController {
 //        opacity = brushSettingsViewController.opacity
 //    }
 //}
+
+extension ToolsTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func takePhotoWithCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .Camera
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func chooseFromLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func choosePhoto() {
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            showPhotoMenu()
+        } else {
+            chooseFromLibrary()
+        }
+    }
+    
+    func showPhotoMenu() {
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let takePhotoAction = UIAlertAction(title: "Take Photo", style: .Default, handler: { _ in
+            self.takePhotoWithCamera()
+        })
+        let chooseFromLibraryAction = UIAlertAction(title: "Photo Library", style: .Default, handler: { _ in
+            self.chooseFromLibrary()
+        })
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        controller.addAction(takePhotoAction)
+        controller.addAction(chooseFromLibraryAction)
+        controller.addAction(cancelAction)
+        
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        image = info[UIImagePickerControllerEditedImage] as? UIImage
+        if let image = image {
+            delegate?.photoPicked(image)
+        }
+        dismissViewControllerAnimated(true, completion: {_ in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        })
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: {_ in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        })
+    }
+}
 

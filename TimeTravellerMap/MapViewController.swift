@@ -69,12 +69,14 @@ class MapViewController: UIViewController {
         resultSearchController?.searchResultsUpdater = searchLocationsTableViewController
         
         let searchBar = resultSearchController!.searchBar
+        searchBar.delegate = self
         searchBar.sizeToFit()
         searchBar.placeholder = "Search Places"
         navigationItem.titleView = searchBar
         
         resultSearchController?.hidesNavigationBarDuringPresentation =  false
         resultSearchController?.dimsBackgroundDuringPresentation = true
+        
         definesPresentationContext = true
         
         dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
@@ -93,6 +95,10 @@ class MapViewController: UIViewController {
         let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
         
         mapView.region = region
+        mapView.showsCompass = true
+        mapView.showsScale = true
+//        mapView.showsTraffic = true
+        historyMapImage = UIImage(named: "Newark1800.jpg")
         addOverlay()
         print(overlayView?.overlayImage.size)
         
@@ -115,6 +121,7 @@ class MapViewController: UIViewController {
         toolBar.setItems(items, animated: false)
         toolBar.userInteractionEnabled = true
         chooseDateTextField.inputAccessoryView = toolBar
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -158,7 +165,7 @@ class MapViewController: UIViewController {
         self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
         if overlayOrDraw == "overlay" {
             overlayView?.alpha = CGFloat(Float(alpha)!)
-        } else if overlayOrDraw == "draw" {
+        } else {
             drawMapImageView.alpha = CGFloat(Float(alpha)!)
         }
         
@@ -221,6 +228,7 @@ class MapViewController: UIViewController {
                     drawMapImageView.image = historyMapImage
                     draw = false
                 }
+                
                 brushWidth = controller.brush
                 opacity = controller.opacity
             } else if tool == "reset" {
@@ -229,12 +237,18 @@ class MapViewController: UIViewController {
                 
                 mapView.removeOverlays(mapView.overlays)
                 scrollView.hidden = false
+                drawMapImageView.hidden = false
                 scrollView.userInteractionEnabled = true
-                
-                
+                mapView.userInteractionEnabled = true
+                drawMapImageView.userInteractionEnabled = false
+                if draw {
+                    drawMapImageView.image = historyMapImage
+                    draw = false
+                }
             } else if tool == "overlay" {
                 overlayOrDraw = "overlay"
                 scrollView.hidden = true
+                scrollView.userInteractionEnabled = false
                 mapView.userInteractionEnabled = true
                 addOverlay()
             }
@@ -417,6 +431,10 @@ class MapViewController: UIViewController {
         drawMapImageView.image = historyMapImage
     }
     
+    func photoPicked() {
+        
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowTools" {
             let vc = segue.destinationViewController as! ToolsTableViewController
@@ -425,6 +443,8 @@ class MapViewController: UIViewController {
             if controller != nil {
                 controller?.delegate = self
             }
+            
+            vc.delegate = self
             vc.brush = brushWidth
             vc.opacity = opacity
             vc.red = red
@@ -485,7 +505,7 @@ extension MapViewController: UITextFieldDelegate {
 extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is HistoryMapOverlay {
-            historyMapImage = UIImage(named: "Newark1800.jpg")
+//            historyMapImage = UIImage(named: "Newark1800.jpg")
             let overlayView = HistoryMapOverlayView(overlay: overlay, overlayImage: historyMapImage!)
 //            overlayView.alpha = 1.0
             self.overlayView = overlayView
@@ -607,3 +627,28 @@ extension MapViewController: UIScrollViewDelegate {
 //        opacity = brushSettingsViewController.opacity
 //    }
 //}
+
+// MARK: - PhotoPickedDelegate
+
+extension MapViewController: PhotoPickedDelegate {
+    func photoPicked(image: UIImage) {
+        historyMapImage = image
+//        overlayView?.overlayImage = historyMapImage!
+        mapView.removeOverlays(mapView.overlays)
+        scrollView.hidden = false
+        scrollView.userInteractionEnabled = true
+        mapView.userInteractionEnabled = true
+        drawMapImageView.hidden = false
+        drawMapImageView.hidden = false
+        drawMapImageView.image = historyMapImage
+        drawMapImageView.userInteractionEnabled = false
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension MapViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+}
