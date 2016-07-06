@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B5ABFB31D2C4AE50058AEE4 /* InformationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5ABFB21D2C4AE50058AEE4 /* InformationAnnotation.swift */; };
+		3B5ABFB51D2C4C180058AEE4 /* InformationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5ABFB41D2C4C180058AEE4 /* InformationAnnotationView.swift */; };
 		3B5D65461D271F2B0085D057 /* BrushSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D65451D271F2B0085D057 /* BrushSettingsViewController.swift */; };
 		3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B60997F1D1FCB6700BBA9E8 /* AppDelegate.swift */; };
 		3B6099821D1FCB6700BBA9E8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B5ABFB21D2C4AE50058AEE4 /* InformationAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationAnnotation.swift; sourceTree = "<group>"; };
+		3B5ABFB41D2C4C180058AEE4 /* InformationAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationAnnotationView.swift; sourceTree = "<group>"; };
 		3B5D65451D271F2B0085D057 /* BrushSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrushSettingsViewController.swift; sourceTree = "<group>"; };
 		3B60997C1D1FCB6700BBA9E8 /* TimeTravellerMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTravellerMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B60997F1D1FCB6700BBA9E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +96,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B5ABFB11D2C4A970058AEE4 /* Anotation */ = {
+			isa = PBXGroup;
+			children = (
+				3B5ABFB21D2C4AE50058AEE4 /* InformationAnnotation.swift */,
+				3B5ABFB41D2C4C180058AEE4 /* InformationAnnotationView.swift */,
+			);
+			name = Anotation;
+			sourceTree = "<group>";
+		};
 		3B6099731D1FCB6700BBA9E8 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +128,7 @@
 		3B60997E1D1FCB6700BBA9E8 /* TimeTravellerMap */ = {
 			isa = PBXGroup;
 			children = (
+				3B5ABFB11D2C4A970058AEE4 /* Anotation */,
 				3BC3AE3D1D20692A00EF2D26 /* Overlays */,
 				3BC3AE3A1D2068EE00EF2D26 /* HistoryMap */,
 				3BC3AE371D205ED800EF2D26 /* Model */,
@@ -314,9 +328,11 @@
 			files = (
 				3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */,
 				3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */,
+				3B5ABFB51D2C4C180058AEE4 /* InformationAnnotationView.swift in Sources */,
 				3B6099841D1FCB6700BBA9E8 /* SecondViewController.swift in Sources */,
 				3BC3AE361D205ECE00EF2D26 /* HistoryMapOverlay.swift in Sources */,
 				3BC3AE3F1D20693F00EF2D26 /* HistoryMapOverlayView.swift in Sources */,
+				3B5ABFB31D2C4AE50058AEE4 /* InformationAnnotation.swift in Sources */,
 				3B5D65461D271F2B0085D057 /* BrushSettingsViewController.swift in Sources */,
 				3BC3AE391D205F7B00EF2D26 /* HistoryMap.swift in Sources */,
 				3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */,

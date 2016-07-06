@@ -100,6 +100,7 @@ class MapViewController: UIViewController {
 //        mapView.showsTraffic = true
         historyMapImage = UIImage(named: "Newark1800.jpg")
         addOverlay()
+        addInformationPins()
         print(overlayView?.overlayImage.size)
         
         // picker
@@ -172,6 +173,52 @@ class MapViewController: UIViewController {
     }
     
     
+    @IBAction func getCoordinate(sender: UITapGestureRecognizer) {
+        
+        let point = sender.locationInView(mapView)
+        let tapPoint = mapView.convertPoint(point, toCoordinateFromView: view)
+        print("tap coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
+    }
+    
+    @IBAction func addAnnotation(sender: UILongPressGestureRecognizer) {
+        
+        guard sender.state == .Began else {
+            return
+        }
+        
+        let point = sender.locationInView(mapView)
+        let tapPoint = mapView.convertPoint(point, toCoordinateFromView: view)
+        print("long press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
+        let coordinate = tapPoint
+        var title = "no title"
+        var subtitle = "no subtitle"
+        let alertController = UIAlertController(title: "Add a annotation pin", message: "Add a pin in this place", preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
+            _ in
+//            let titleTextFiled = alertController.textFields![0] as UITextField
+//            title = titleTextFiled.text!
+//            let subtitleTextFiled = alertController.textFields![1] as UITextField
+//            subtitle = subtitleTextFiled.text!
+            let annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+            self.mapView.addAnnotation(annotation)
+            
+        })
+        
+//        alertController.addTextFieldWithConfigurationHandler() { textField in
+//            textField.keyboardType = .Default
+//        }
+//        alertController.addTextFieldWithConfigurationHandler() { textField in
+//            textField.keyboardType = .Default
+//        }
+
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+        
+    }
     func showLocationServicesDeniedAlert() {
         let alertController = UIAlertController(title: "Location Services Disabled", message: "Please enable location services in settings.", preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -382,6 +429,26 @@ class MapViewController: UIViewController {
         mapView.addOverlay(overlay)
     }
     
+    func addInformationPins() {
+        var coordinate = CLLocationCoordinate2DMake(40.72422, -74.22544)
+        var title = "Newark"
+        var subtitle = "This is a test"
+        var annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+        mapView.addAnnotation(annotation)
+        
+        coordinate = CLLocationCoordinate2DMake(40.712216, -74.22655)
+        title = "Newark1"
+        subtitle = "This is a test1"
+        annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+        mapView.addAnnotation(annotation)
+        
+        coordinate = CLLocationCoordinate2DMake(40.773941, -74.12544)
+        title = "Newark2"
+        subtitle = "This is a test2"
+        annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+        mapView.addAnnotation(annotation)
+    }
+    
     // TODO: add share function
     func share() {
         UIGraphicsBeginImageContext(drawMapImageView.bounds.size)
@@ -431,7 +498,11 @@ class MapViewController: UIViewController {
         drawMapImageView.image = historyMapImage
     }
     
-    func photoPicked() {
+//    func photoPicked() {
+//        
+//    }
+    
+    func getMoreInformation() {
         
     }
     
@@ -513,6 +584,61 @@ extension MapViewController: MKMapViewDelegate {
         } 
         
         return MKOverlayRenderer()
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            // return nil so map view draws "blue dot" for standard user location
+        }
+//        let annotationView = InformationAnnotationView(annotation: annotation, reuseIdentifier: "Information")
+//        annotationView.canShowCallout = true
+        
+        let identifier = "Information"
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.pinTintColor = UIColor.orangeColor()
+            annotationView?.canShowCallout = true
+            
+            let button = UIButton(type: .DetailDisclosure)
+            annotationView?.rightCalloutAccessoryView = button
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+//        let smallSquare = CGSize(width: 30, height: 30)
+//        let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
+//        button.setBackgroundImage(UIImage(named: "car"), forState: .Normal)
+//        button.addTarget(self, action: Selector("getMoreInformation"), forControlEvents: .TouchUpInside)
+//        pinView?.leftCalloutAccessoryView = button
+        return annotationView
+        
+//        return annotationView
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let information = view.annotation as! InformationAnnotation
+        let title = information.title
+        let subtitle = information.subtitle
+        
+        let controller = UIAlertController(title: "Information", message: title, preferredStyle: .ActionSheet)
+        let action = UIAlertAction(title: subtitle, style: .Default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { _ in
+            for subview in view.subviews {
+                subview.removeFromSuperview()
+            }
+        })
+        controller.addAction(action)
+        controller.addAction(okAction)
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
+        if view is MKPinAnnotationView {
+            for subview in view.subviews {
+                subview.removeFromSuperview()
+            }
+        }
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
