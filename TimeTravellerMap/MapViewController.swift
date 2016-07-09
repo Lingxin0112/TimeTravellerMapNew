@@ -190,8 +190,8 @@ class MapViewController: UIViewController {
         let tapPoint = mapView.convertPoint(point, toCoordinateFromView: view)
         print("long press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
         let coordinate = tapPoint
-        var title = "no title"
-        var subtitle = "no subtitle"
+        let title = "no title"
+        let subtitle = "no subtitle"
         let alertController = UIAlertController(title: "Add a annotation pin", message: "Add a pin in this place", preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
@@ -311,6 +311,21 @@ class MapViewController: UIViewController {
             green = controller.green
             blue = controller.blue
             print("brushWidth \(controller.brush) + opacity \(controller.opacity)")
+        }
+    }
+    
+    var mapType: String?
+    @IBAction func chooseMapType(segue: UIStoryboardSegue) {
+        if segue.identifier == "ChooseMapType" {
+            let controller = segue.sourceViewController as! ToolsTableViewController
+            mapType = controller.mapType
+            if mapType == "standard" {
+                mapView.mapType = .Standard
+            } else if mapType == "hybrid" {
+                mapView.mapType = .Hybrid
+            } else {
+                mapView.mapType = .Satellite
+            }
         }
     }
     

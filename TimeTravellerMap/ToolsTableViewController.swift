@@ -14,9 +14,32 @@ protocol PhotoPickedDelegate: class {
 
 class ToolsTableViewController: UITableViewController {
     
+    enum ToolType {
+        
+        enum Tools {
+            case pencil
+            case photo
+            case zoom
+        }
+        
+        enum MapType {
+            case Standard
+            case Hybrid
+            case Satellite
+        }
+        
+        enum Others {
+            case share
+            case reset
+            case overlay
+        }
+    }
+    
     let tools = ["pencil", "photo", "zoom"]
     let newTools = ["sahre", "reset", "overlay"]
+    let mapTypes = ["standard", "hybrid", "satellite"]
     var tool: String?
+    var mapType: String?
     
     var brush: CGFloat = 10.0
     var opacity: CGFloat = 1.0
@@ -46,12 +69,14 @@ class ToolsTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 3
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if section == 0 {
+            return 3
+        } else if section == 1{
             return 3
         } else {
             return 3
@@ -128,8 +153,12 @@ class ToolsTableViewController: UITableViewController {
             vc.red = red
             vc.green = green
             vc.blue = blue
+        } else if segue.identifier == "ChooseMapType" {
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPathForCell(cell) where indexPath.section == 2{
+                mapType = mapTypes[indexPath.row]
+            }
         }
-
     }
 
 }
