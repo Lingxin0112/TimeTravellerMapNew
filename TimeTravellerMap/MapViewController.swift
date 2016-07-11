@@ -21,6 +21,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var drawMapImageView: UIImageView!
 //    @IBOutlet weak var tempImageView: UIImageView!
+    @IBOutlet weak var containerView: UIView!
+    
 
     let locationManager = CLLocationManager()
     
@@ -176,7 +178,7 @@ class MapViewController: UIViewController {
     @IBAction func getCoordinate(sender: UITapGestureRecognizer) {
         
         let point = sender.locationInView(mapView)
-        let tapPoint = mapView.convertPoint(point, toCoordinateFromView: view)
+        let tapPoint = mapView.convertPoint(point, toCoordinateFromView: containerView)
         print("tap coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
     }
     
@@ -187,7 +189,7 @@ class MapViewController: UIViewController {
         }
         
         let point = sender.locationInView(mapView)
-        let tapPoint = mapView.convertPoint(point, toCoordinateFromView: view)
+        let tapPoint = mapView.convertPoint(point, toCoordinateFromView: containerView)
         print("long press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
         let coordinate = tapPoint
         let title = "no title"

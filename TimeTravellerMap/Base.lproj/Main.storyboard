@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Tools Table View Controller-->
@@ -275,101 +274,123 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-SG-RJw">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-WV-xjt" userLabel="Content View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outlet property="delegate" destination="9pv-A4-QxB" id="M6e-Y1-Gny"/>
-                                    <outletCollection property="gestureRecognizers" destination="KfQ-Gx-uVX" appends="YES" id="aed-bB-aie"/>
-                                    <outletCollection property="gestureRecognizers" destination="0u8-zN-Jfw" appends="YES" id="j1J-pr-kgA"/>
-                                </connections>
-                            </mapView>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2016" minValue="1800" maxValue="2016" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-DU-4sy">
-                                <rect key="frame" x="-2" y="521" width="604" height="31"/>
-                                <connections>
-                                    <action selector="dateSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="Y1p-B5-LFT"/>
-                                </connections>
-                            </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1800" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pvt-pm-iPn">
-                                <rect key="frame" x="0.0" y="492" width="39" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGi-bl-CmG">
-                                <rect key="frame" x="561" y="492" width="39" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input year" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vM6-rw-gD9">
-                                <rect key="frame" x="514" y="64" width="86" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="9pv-A4-QxB" id="bh2-ef-yyM"/>
-                                </connections>
-                            </textField>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-9k-hRX">
-                                <rect key="frame" x="18" y="64" width="490" height="31"/>
-                                <connections>
-                                    <action selector="alphaSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="oPe-sB-hpf"/>
-                                </connections>
-                            </slider>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCw-So-CmS">
-                                <rect key="frame" x="20" y="102" width="32" height="30"/>
-                                <state key="normal" title="Hide"/>
-                                <connections>
-                                    <action selector="hideOverlay:" destination="9pv-A4-QxB" eventType="touchUpInside" id="pUf-cF-1P3"/>
-                                </connections>
-                            </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WY0-u7-kpn">
-                                <rect key="frame" x="0.0" y="128" width="600" height="360"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eeE-k4-wh8">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-SG-RJw">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                         <gestureRecognizers/>
-                                    </imageView>
+                                        <connections>
+                                            <outlet property="delegate" destination="9pv-A4-QxB" id="M6e-Y1-Gny"/>
+                                            <outletCollection property="gestureRecognizers" destination="0u8-zN-Jfw" appends="YES" id="j1J-pr-kgA"/>
+                                            <outletCollection property="gestureRecognizers" destination="KfQ-Gx-uVX" appends="YES" id="aed-bB-aie"/>
+                                        </connections>
+                                    </mapView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LbY-Dn-qVm">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
+                                        <subviews>
+                                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-9k-hRX">
+                                                <rect key="frame" x="-2" y="0.0" width="594" height="31"/>
+                                                <connections>
+                                                    <action selector="alphaSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="oPe-sB-hpf"/>
+                                                </connections>
+                                            </slider>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input year" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vM6-rw-gD9">
+                                                <rect key="frame" x="590" y="0.0" width="10" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="9pv-A4-QxB" id="bh2-ef-yyM"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCw-So-CmS">
+                                        <rect key="frame" x="40" y="58" width="32" height="30"/>
+                                        <state key="normal" title="Hide"/>
+                                        <connections>
+                                            <action selector="hideOverlay:" destination="9pv-A4-QxB" eventType="touchUpInside" id="pUf-cF-1P3"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WY0-u7-kpn">
+                                        <rect key="frame" x="0.0" y="84" width="600" height="360"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eeE-k4-wh8">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <gestureRecognizers/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="leading" secondItem="WY0-u7-kpn" secondAttribute="leading" id="8VJ-mt-nO6"/>
+                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="top" id="MDa-EO-VYS"/>
+                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="centerY" secondItem="WY0-u7-kpn" secondAttribute="centerY" id="a8s-0Q-bSj"/>
+                                            <constraint firstAttribute="bottom" secondItem="eeE-k4-wh8" secondAttribute="bottom" id="dAP-bq-ZKj"/>
+                                            <constraint firstAttribute="trailing" secondItem="eeE-k4-wh8" secondAttribute="trailing" id="dnG-Mq-t3e"/>
+                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="centerX" secondItem="WY0-u7-kpn" secondAttribute="centerX" id="zzq-wW-nVz"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="delegate" destination="9pv-A4-QxB" id="j4i-uc-ux1"/>
+                                        </connections>
+                                    </scrollView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4sX-FK-SXV">
+                                        <rect key="frame" x="-2" y="436" width="600" height="51"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="arz-V7-hqn">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="21"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1800" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pvt-pm-iPn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="39" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGi-bl-CmG">
+                                                        <rect key="frame" x="562" y="0.0" width="39" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2016" minValue="1800" maxValue="2016" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-DU-4sy">
+                                                <rect key="frame" x="-2" y="21" width="604" height="31"/>
+                                                <connections>
+                                                    <action selector="dateSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="Y1p-B5-LFT"/>
+                                                </connections>
+                                            </slider>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="arz-V7-hqn" firstAttribute="leading" secondItem="4sX-FK-SXV" secondAttribute="leading" id="TZj-IQ-9dA"/>
+                                            <constraint firstAttribute="trailing" secondItem="arz-V7-hqn" secondAttribute="trailing" id="o8X-aa-wgg"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="centerY" secondItem="WY0-u7-kpn" secondAttribute="centerY" id="Fjx-lr-qgi"/>
-                                    <constraint firstAttribute="trailing" secondItem="eeE-k4-wh8" secondAttribute="trailing" id="bA0-Zv-s5I"/>
-                                    <constraint firstAttribute="bottom" secondItem="eeE-k4-wh8" secondAttribute="bottom" id="byr-jk-Cns"/>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="top" id="eSF-oh-Ira"/>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="leading" secondItem="WY0-u7-kpn" secondAttribute="leading" id="rk2-3m-ciJ"/>
-                                    <constraint firstItem="eeE-k4-wh8" firstAttribute="centerX" secondItem="WY0-u7-kpn" secondAttribute="centerX" id="t9N-dQ-3l9"/>
+                                    <constraint firstAttribute="bottom" secondItem="4sX-FK-SXV" secondAttribute="bottom" id="976-lw-tc9"/>
+                                    <constraint firstItem="4sX-FK-SXV" firstAttribute="leading" secondItem="mDV-WV-xjt" secondAttribute="leading" id="Ms6-40-qdR"/>
+                                    <constraint firstItem="LbY-Dn-qVm" firstAttribute="leading" secondItem="mDV-WV-xjt" secondAttribute="leading" id="NgW-cB-4rO"/>
+                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="leading" secondItem="1cA-SG-RJw" secondAttribute="leading" id="Wo1-Q3-QNX"/>
+                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="trailing" secondItem="LbY-Dn-qVm" secondAttribute="trailing" id="XTa-NE-DxL"/>
+                                    <constraint firstItem="LbY-Dn-qVm" firstAttribute="top" secondItem="mDV-WV-xjt" secondAttribute="top" id="YxY-S5-K4i"/>
+                                    <constraint firstItem="1cA-SG-RJw" firstAttribute="top" secondItem="LbY-Dn-qVm" secondAttribute="top" id="aRC-hk-8I2"/>
+                                    <constraint firstAttribute="trailing" secondItem="LbY-Dn-qVm" secondAttribute="trailing" id="dVo-Uu-5EC"/>
+                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="leading" secondItem="LbY-Dn-qVm" secondAttribute="leading" id="jmW-b4-5jk"/>
+                                    <constraint firstAttribute="bottom" secondItem="WY0-u7-kpn" secondAttribute="bottom" constant="43" id="lEx-ys-BZT"/>
+                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="trailing" secondItem="1cA-SG-RJw" secondAttribute="trailing" id="qFU-Gz-LBa"/>
+                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="top" secondItem="LbY-Dn-qVm" secondAttribute="bottom" constant="54" id="sif-bA-r5S"/>
+                                    <constraint firstAttribute="trailing" secondItem="4sX-FK-SXV" secondAttribute="trailing" id="wPT-VP-Jnd"/>
+                                    <constraint firstItem="4sX-FK-SXV" firstAttribute="bottom" secondItem="1cA-SG-RJw" secondAttribute="bottom" id="zBp-ug-UKm"/>
                                 </constraints>
-                                <connections>
-                                    <outlet property="delegate" destination="9pv-A4-QxB" id="j4i-uc-ux1"/>
-                                </connections>
-                            </scrollView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Pvt-pm-iPn" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="1Qq-gl-Iuc"/>
-                            <constraint firstAttribute="trailing" secondItem="rRx-DU-4sy" secondAttribute="trailing" id="CUK-XL-fiJ"/>
-                            <constraint firstItem="1cA-SG-RJw" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="CY6-NV-2cP"/>
-                            <constraint firstItem="WY0-u7-kpn" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-20" id="GRa-lT-GML"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="1cA-SG-RJw" secondAttribute="bottom" id="IYP-id-tXf"/>
-                            <constraint firstItem="VCw-So-CmS" firstAttribute="leading" secondItem="aZV-9k-hRX" secondAttribute="leading" id="PP3-5g-j81"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="bottom" constant="63" id="QgV-OC-jLv"/>
-                            <constraint firstItem="rRx-DU-4sy" firstAttribute="top" secondItem="dGi-bl-CmG" secondAttribute="bottom" constant="8" id="RO4-rZ-Vwv"/>
-                            <constraint firstItem="vM6-rw-gD9" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Rfh-YE-Om4"/>
-                            <constraint firstItem="aZV-9k-hRX" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Waa-a4-2Au"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="WY0-u7-kpn" secondAttribute="trailing" constant="-20" id="XA7-zO-fTq"/>
-                            <constraint firstAttribute="trailing" secondItem="dGi-bl-CmG" secondAttribute="trailing" id="aso-IG-yTj"/>
-                            <constraint firstItem="1cA-SG-RJw" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="gIo-0T-Mzd"/>
-                            <constraint firstAttribute="trailing" secondItem="1cA-SG-RJw" secondAttribute="trailing" id="iag-mY-5ZW"/>
-                            <constraint firstItem="rRx-DU-4sy" firstAttribute="top" secondItem="Pvt-pm-iPn" secondAttribute="bottom" constant="8" id="lBS-ON-hjY"/>
-                            <constraint firstAttribute="trailing" secondItem="vM6-rw-gD9" secondAttribute="trailing" id="rfS-qd-50K"/>
-                            <constraint firstItem="vM6-rw-gD9" firstAttribute="leading" secondItem="aZV-9k-hRX" secondAttribute="trailing" constant="8" id="sDo-0N-nCn"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="rRx-DU-4sy" secondAttribute="bottom" id="vHx-oc-voB"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="aZV-9k-hRX" secondAttribute="leading" id="vxI-KT-ae0"/>
-                            <constraint firstItem="aZV-9k-hRX" firstAttribute="bottom" secondItem="vM6-rw-gD9" secondAttribute="bottom" id="wnW-TF-He4"/>
-                            <constraint firstItem="rRx-DU-4sy" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="x0w-5n-Nmq"/>
-                            <constraint firstItem="WY0-u7-kpn" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="64" id="y8D-I1-PMI"/>
-                            <constraint firstItem="VCw-So-CmS" firstAttribute="top" secondItem="aZV-9k-hRX" secondAttribute="bottom" constant="8" symbolic="YES" id="yVN-ph-JBn"/>
+                            <constraint firstAttribute="trailing" secondItem="mDV-WV-xjt" secondAttribute="trailing" id="Tss-h7-eJg"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="mDV-WV-xjt" secondAttribute="bottom" id="cQy-hE-i7t"/>
+                            <constraint firstItem="mDV-WV-xjt" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="dIw-EV-uxS"/>
+                            <constraint firstItem="mDV-WV-xjt" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="w3x-Ef-izE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vrd-Xw-aJi">
@@ -382,6 +403,7 @@
                     <connections>
                         <outlet property="alphaSlider" destination="aZV-9k-hRX" id="sHb-JR-0jM"/>
                         <outlet property="chooseDateTextField" destination="vM6-rw-gD9" id="qiL-NV-GsC"/>
+                        <outlet property="containerView" destination="mDV-WV-xjt" id="0yt-HI-btn"/>
                         <outlet property="dateSlider" destination="rRx-DU-4sy" id="J5j-ju-EGi"/>
                         <outlet property="drawMapImageView" destination="eeE-k4-wh8" id="32d-GQ-Laa"/>
                         <outlet property="endDateLabel" destination="dGi-bl-CmG" id="5f8-9W-qkK"/>
