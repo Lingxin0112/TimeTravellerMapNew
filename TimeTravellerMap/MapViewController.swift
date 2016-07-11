@@ -174,11 +174,29 @@ class MapViewController: UIViewController {
         
     }
     
+    let EARTH_RADIUS = 6371
+    func convertLatLongToConvert(point: CGPoint) {
+//        let x =
+    }
+    
+    var left: CGPoint?
+    var right: CGPoint?
     
     @IBAction func getCoordinate(sender: UITapGestureRecognizer) {
         
         let point = sender.locationInView(mapView)
         let tapPoint = mapView.convertPoint(point, toCoordinateFromView: containerView)
+        let a = containerView.convertPoint(point, fromCoordinateSpace: mapView)
+        print("aaaa \(a)")
+        let southWestCoordinate = CLLocationCoordinate2D(latitude: 40.712216, longitude: -74.22655)
+        let northEastCoordinate = CLLocationCoordinate2D(latitude: 40.773941, longitude: -74.12544)
+        left = mapView.convertCoordinate(southWestCoordinate, toPointToView: containerView)
+        right = mapView.convertCoordinate(northEastCoordinate, toPointToView: containerView)
+        print("left:\(left), right:\(right)")
+        let b = containerView.convertPoint(overlayView!.overlayRect.origin, fromCoordinateSpace: mapView)
+        print("bbbb\(b)")
+//        let c = containerView.convertPoint(overlayView!.overlayRect.size, fromCoordinateSpace: mapView)
+//        print("bbbb\(b)")
         print("tap coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
     }
     
@@ -191,28 +209,29 @@ class MapViewController: UIViewController {
         let point = sender.locationInView(mapView)
         let tapPoint = mapView.convertPoint(point, toCoordinateFromView: containerView)
         print("long press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
+        
         let coordinate = tapPoint
-        let title = "no title"
-        let subtitle = "no subtitle"
-        let alertController = UIAlertController(title: "Add a annotation pin", message: "Add a pin in this place", preferredStyle: .Alert)
+        var title = "no title"
+        var subtitle = "no subtitle"
+        let alertController = UIAlertController(title: "Add a annotation pin", message: "Add a pin in press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)", preferredStyle: .Alert)
+        alertController.addTextFieldWithConfigurationHandler() { textField in
+            textField.placeholder = "Title"
+        }
+        alertController.addTextFieldWithConfigurationHandler() { textField in
+            textField.placeholder = "Subtitle"
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
             _ in
-//            let titleTextFiled = alertController.textFields![0] as UITextField
-//            title = titleTextFiled.text!
-//            let subtitleTextFiled = alertController.textFields![1] as UITextField
-//            subtitle = subtitleTextFiled.text!
+            let titleTextFiled = alertController.textFields![0] as UITextField
+            title = titleTextFiled.text!
+            let subtitleTextFiled = alertController.textFields![1] as UITextField
+            subtitle = subtitleTextFiled.text!
+            
             let annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
             self.mapView.addAnnotation(annotation)
             
         })
-        
-//        alertController.addTextFieldWithConfigurationHandler() { textField in
-//            textField.keyboardType = .Default
-//        }
-//        alertController.addTextFieldWithConfigurationHandler() { textField in
-//            textField.keyboardType = .Default
-//        }
 
         
         alertController.addAction(cancelAction)
@@ -282,6 +301,7 @@ class MapViewController: UIViewController {
                 opacity = controller.opacity
             } else if tool == "reset" {
                 resetDrawing()
+                overlayView?.overlayImage = UIImage(named: "Newark1800.jpg")!
             } else if tool == "zoom" {
                 
                 mapView.removeOverlays(mapView.overlays)
@@ -397,20 +417,37 @@ class MapViewController: UIViewController {
     
     
     @IBAction func hideOverlay(sender: UIButton) {
-        let secondImageView = UIImageView(image: UIImage(named: "Newark1916"))
-        secondImageView.alpha = 0.0
-        secondImageView.frame = CGRectMake(100, 50, 200, 100)
-        view.addSubview(secondImageView)
-        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
-            secondImageView.alpha = 1.0
+        let secondImageView = UIImageView(image: UIImage(named: "Newark1800.jpg"))
+//        mapView.removeOverlays(mapView.overlays)
+        overlayView?.alpha = 0.0
+        secondImageView.alpha = 1.0
+//        secondImageView.frame = CGRectMake(100, 50, 200, 100)
+//        secondImageView.frame = CGRectMake(left!.x, right!.y, fabs(right!.x - left!.x), fabs(right!.y - left!.y))
+        let overlayRect = overlayView!.overlay.boundingMapRect
+        let region = MKCoordinateRegionForMapRect(overlayRect)
+        let rect = mapView.convertRegion(region, toRectToView: containerView)
+        print("rect \(rect)")
+        secondImageView.frame = rect
+        containerView.addSubview(secondImageView)
+        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+            secondImageView.alpha = 0.0
+            self.overlayView?.overlayImage = UIImage(named: "Newark1916")!
             }, completion: { _ in
+//                self.historyMapImage = UIImage(named: "Newark1916")
+//                self.addOverlay()
+                
+//                self.overlayView?.alpha = 1.0
         })
         
         UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
             secondImageView.alpha = 0.0
-            self.overlayView?.overlayImage = secondImageView.image!
+            self.overlayView?.alpha = 1.0
+//            self.overlayView?.overlayImage = secondImageView.image!
             }, completion: { _ in
-                secondImageView.removeFromSuperview()
+//                secondImageView.removeFromSuperview()
+//                self.historyMapImage = UIImage(named: "Newark1916")
+//                self.addOverlay()
+//                self.overlayView?.alpha = 1.0
         })
     }
     
@@ -594,6 +631,7 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is HistoryMapOverlay {
 //            historyMapImage = UIImage(named: "Newark1800.jpg")
+            print("overlay \(overlay.boundingMapRect.origin)")
             let overlayView = HistoryMapOverlayView(overlay: overlay, overlayImage: historyMapImage!)
 //            overlayView.alpha = 1.0
             self.overlayView = overlayView
@@ -663,6 +701,15 @@ extension MapViewController: MKMapViewDelegate {
         let eastPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMidY(mapRect));
         let westPoint = MKMapPointMake(MKMapRectGetMaxX(mapRect), MKMapRectGetMidY(mapRect));
         let currentMapDist = MKMetersBetweenMapPoints(eastPoint, westPoint);
+//        if mapView.overlays.count > 0 {
+//            let overlaysOrigin = mapView.overlays[0].coordinate
+//            let aaa = mapView.convertCoordinate(overlaysOrigin, toPointToView: containerView)
+//            print("center \(aaa)")
+//            let overlayRect = mapView.overlays[0].boundingMapRect
+//            let region = MKCoordinateRegionForMapRect(overlayRect)
+//            let rect = mapView.convertRegion(region, toRectToView: containerView)
+//            print("rect \(rect)")
+//        }
         print("Current map distance is \(currentMapDist)");
     }
 }
