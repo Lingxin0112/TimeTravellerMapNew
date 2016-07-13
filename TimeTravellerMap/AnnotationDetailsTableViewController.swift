@@ -34,6 +34,8 @@ class AnnotationDetailsTableViewController: UITableViewController {
         if let url = annotation?.videoURL {
             playVideo(url)
         }
+        
+        descriptionTextView.text = info
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,7 +103,7 @@ class AnnotationDetailsTableViewController: UITableViewController {
     }
     
     let moreInfoText = "Read more"
-    var isExpanded = false
+    var isExpanded = true
     let info = "In this component we will add  behaviour to text view. It will have two modes - full mode and trimmed mode. In full mode it will behave like standard UITextView. In trimmed mode it will trim text to some maximum numbers of lines and trim text with a string. When user taps on the component will switch from trimmed mode to full mode."
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // 1
