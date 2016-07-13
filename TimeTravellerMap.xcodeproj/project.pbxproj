@@ -25,6 +25,7 @@
 		3BC3AE3F1D20693F00EF2D26 /* HistoryMapOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3AE3E1D20693F00EF2D26 /* HistoryMapOverlayView.swift */; };
 		3BC3AE411D212D3C00EF2D26 /* Newark1916.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BC3AE401D212D3C00EF2D26 /* Newark1916.png */; };
 		3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */; };
+		3BFE73671D34FEE6003E851E /* AnnotationDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		3BC3AE3E1D20693F00EF2D26 /* HistoryMapOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMapOverlayView.swift; sourceTree = "<group>"; };
 		3BC3AE401D212D3C00EF2D26 /* Newark1916.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Newark1916.png; sourceTree = "<group>"; };
 		3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsTableViewController.swift; sourceTree = "<group>"; };
+		3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationDetailsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 				3B6099AF1D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift */,
 				3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */,
 				3B5D65451D271F2B0085D057 /* BrushSettingsViewController.swift */,
+				3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */,
 			);
 			path = TimeTravellerMap;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				3B5ABFB51D2C4C180058AEE4 /* InformationAnnotationView.swift in Sources */,
 				3B6099841D1FCB6700BBA9E8 /* SecondViewController.swift in Sources */,
 				3BC3AE361D205ECE00EF2D26 /* HistoryMapOverlay.swift in Sources */,
+				3BFE73671D34FEE6003E851E /* AnnotationDetailsTableViewController.swift in Sources */,
 				3BC3AE3F1D20693F00EF2D26 /* HistoryMapOverlayView.swift in Sources */,
 				3B5ABFB31D2C4AE50058AEE4 /* InformationAnnotation.swift in Sources */,
 				3B5D65461D271F2B0085D057 /* BrushSettingsViewController.swift in Sources */,

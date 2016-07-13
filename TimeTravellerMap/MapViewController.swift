@@ -220,6 +220,9 @@ class MapViewController: UIViewController {
         alertController.addTextFieldWithConfigurationHandler() { textField in
             textField.placeholder = "Subtitle"
         }
+        alertController.addTextFieldWithConfigurationHandler() { textField in
+            textField.placeholder = "Video Link"
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
             _ in
@@ -227,8 +230,10 @@ class MapViewController: UIViewController {
             title = titleTextFiled.text!
             let subtitleTextFiled = alertController.textFields![1] as UITextField
             subtitle = subtitleTextFiled.text!
+            let urlTextFiled = alertController.textFields![2] as UITextField
+            let videoURL = urlTextFiled.text!
             
-            let annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+            let annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle, url: videoURL)
             self.mapView.addAnnotation(annotation)
             
         })
@@ -417,38 +422,40 @@ class MapViewController: UIViewController {
     
     
     @IBAction func hideOverlay(sender: UIButton) {
-        let secondImageView = UIImageView(image: UIImage(named: "Newark1800.jpg"))
-//        mapView.removeOverlays(mapView.overlays)
+        let oldImageView = UIImageView(image: UIImage(named: "Newark1800.jpg"))
+        let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
         overlayView?.alpha = 0.0
-        secondImageView.alpha = 1.0
-//        secondImageView.frame = CGRectMake(100, 50, 200, 100)
-//        secondImageView.frame = CGRectMake(left!.x, right!.y, fabs(right!.x - left!.x), fabs(right!.y - left!.y))
+        oldImageView.alpha = 1.0
+        newImageView.alpha = 0.0
+        
         let overlayRect = overlayView!.overlay.boundingMapRect
         let region = MKCoordinateRegionForMapRect(overlayRect)
         let rect = mapView.convertRegion(region, toRectToView: containerView)
         print("rect \(rect)")
-        secondImageView.frame = rect
-        containerView.addSubview(secondImageView)
+        oldImageView.frame = rect
+        newImageView.frame = rect
+        newImageView.center.x -= 150
+        containerView.addSubview(oldImageView)
+        containerView.addSubview(newImageView)
         UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
-            secondImageView.alpha = 0.0
+            newImageView.alpha = 1.0
+            oldImageView.alpha = 0.0
+            oldImageView.center.x += 150
+            newImageView.center.x += 150
             self.overlayView?.overlayImage = UIImage(named: "Newark1916")!
             }, completion: { _ in
-//                self.historyMapImage = UIImage(named: "Newark1916")
-//                self.addOverlay()
-                
-//                self.overlayView?.alpha = 1.0
+                self.overlayView?.alpha = 1.0
+                newImageView.alpha = 0.0
+                newImageView.removeFromSuperview()
+                oldImageView.removeFromSuperview()
         })
         
-        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
-            secondImageView.alpha = 0.0
-            self.overlayView?.alpha = 1.0
-//            self.overlayView?.overlayImage = secondImageView.image!
-            }, completion: { _ in
-//                secondImageView.removeFromSuperview()
-//                self.historyMapImage = UIImage(named: "Newark1916")
-//                self.addOverlay()
-//                self.overlayView?.alpha = 1.0
-        })
+//        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
+//            newImageView.alpha = 0.0
+//            oldImageView.alpha = 0.0
+//            self.overlayView?.alpha = 1.0
+//            }, completion: { _ in
+//        })
     }
     
     @IBAction func popover(sender: UIBarButtonItem) {
@@ -575,6 +582,11 @@ class MapViewController: UIViewController {
             vc.red = red
             vc.green = green
             vc.blue = blue
+        } else if segue.identifier == "ShowAnnotationDetails" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let vc = navigationController.topViewController as! AnnotationDetailsTableViewController
+            let annotation = sender as! InformationAnnotation
+            vc.annotation = annotation
         }
     }
 }
@@ -673,19 +685,20 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let information = view.annotation as! InformationAnnotation
-        let title = information.title
-        let subtitle = information.subtitle
+//        let title = information.title
+//        let subtitle = information.subtitle
         
-        let controller = UIAlertController(title: "Information", message: title, preferredStyle: .ActionSheet)
-        let action = UIAlertAction(title: subtitle, style: .Default, handler: nil)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { _ in
-            for subview in view.subviews {
-                subview.removeFromSuperview()
-            }
-        })
-        controller.addAction(action)
-        controller.addAction(okAction)
-        presentViewController(controller, animated: true, completion: nil)
+//        let controller = UIAlertController(title: "Information", message: title, preferredStyle: .ActionSheet)
+//        let action = UIAlertAction(title: subtitle, style: .Default, handler: nil)
+//        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { _ in
+//            for subview in view.subviews {
+//                subview.removeFromSuperview()
+//            }
+//        })
+//        controller.addAction(action)
+//        controller.addAction(okAction)
+//        presentViewController(controller, animated: true, completion: nil)
+        performSegueWithIdentifier("ShowAnnotationDetails", sender: information)
     }
     
     func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
