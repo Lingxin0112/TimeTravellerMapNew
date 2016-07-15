@@ -7,15 +7,44 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        // save test event
+//        let event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: coreDataStack.context) as! Event
+//        event.area = "Sheffield"
+//        
+//        do {
+//            try coreDataStack.context.save()
+//        } catch let error as NSError{
+//            print("Saving error: \(error.localizedDescription)")
+//        }
+//        
+//        // retrieve test event
+//        var events: [Event]!
+//        do {
+//            let request = NSFetchRequest(entityName: "Event")
+//            events = try coreDataStack.context.executeFetchRequest(request) as! [Event]
+//        } catch let error as NSError{
+//            print("Fetching error: \(error.localizedDescription)")
+//        }
+        
+        let tabBarController = window?.rootViewController as! UITabBarController
+        if let tabBarViewControllers = tabBarController.viewControllers {
+            let navigationController = tabBarViewControllers[2] as! UINavigationController
+            let eventTableViewController = navigationController.topViewController as! EventTableViewController
+            eventTableViewController.managedContext = coreDataStack.context
+            //        eventTableViewController.events = events
+        }
+        
         return true
     }
 
