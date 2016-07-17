@@ -112,6 +112,8 @@ class AddEventTableViewController: UITableViewController {
             try managedContext.save()
             if let _ = eventToEdit {
                 performSegueWithIdentifier("UpdateEvent", sender: self)
+            } else if eventAddToMap {
+                performSegueWithIdentifier("AddEventAnnotation", sender: self)
             }
         } catch {
             print("error: \(error)")

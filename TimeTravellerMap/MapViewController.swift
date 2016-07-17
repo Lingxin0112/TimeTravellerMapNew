@@ -103,7 +103,6 @@ class MapViewController: UIViewController {
 //        mapView.showsTraffic = true
         historyMapImage = UIImage(named: "Newark1800.jpg")
         addOverlay()
-        addInformationPins()
         print(overlayView?.overlayImage.size)
         
         // picker
@@ -147,6 +146,13 @@ class MapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        mapView.removeAnnotations(mapView.annotations)
+        addInformationPins()
     }
 
     override func didReceiveMemoryWarning() {
@@ -249,14 +255,19 @@ class MapViewController: UIViewController {
         let controller = navigationControoler.topViewController as! AddEventTableViewController
         controller.managedContext = managedContext
         
-//        event.latitude = tapPoint.latitude
-//        event.longtitude = tapPoint.longitude
-//        controller.eventToAdd = event
         controller.coordinate = coordinate
         controller.eventAddToMap = true
         presentViewController(navigationControoler, animated: true, completion: nil)
         
     }
+    
+    @IBAction func addEventAnnotation(segue: UIStoryboardSegue) {
+        let controller = segue.sourceViewController as! AddEventTableViewController
+        let event = controller.event
+        let annotation = InformationAnnotation(coordinate: event!.coordinate, title: event!.name!, subtitle: event!.area!, url: nil)
+        self.mapView.addAnnotation(annotation)
+    }
+    
     func showLocationServicesDeniedAlert() {
         let alertController = UIAlertController(title: "Location Services Disabled", message: "Please enable location services in settings.", preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -520,6 +531,18 @@ class MapViewController: UIViewController {
         subtitle = "This is a test2"
         annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
         mapView.addAnnotation(annotation)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Event")
+        do {
+            let results = try managedContext.executeFetchRequest(fetchRequest) as! [Event]
+            for event in results {
+                annotation = InformationAnnotation(coordinate: event.coordinate, title: event.name!, subtitle: event.area!)
+                mapView.addAnnotation(annotation)
+            }
+            
+        } catch let error as NSError {
+            fatalError("Could not fetch \(error), \(error.userInfo)")
+        }
     }
     
     // TODO: add share function
