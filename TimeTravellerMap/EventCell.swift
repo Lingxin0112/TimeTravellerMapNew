@@ -11,7 +11,7 @@ import UIKit
 class EventCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
-    
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var areaLabel: UILabel!
     
     override func awakeFromNib() {
@@ -27,6 +27,7 @@ class EventCell: UITableViewCell {
     
     func configureCellForEvent(event: Event) {
         nameLabel.text = event.name
+        dateLabel.text = event.date
         areaLabel.text = event.area
     }
 

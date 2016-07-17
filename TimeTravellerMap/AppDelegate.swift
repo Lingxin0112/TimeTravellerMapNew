@@ -39,9 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabBarController = window?.rootViewController as! UITabBarController
         if let tabBarViewControllers = tabBarController.viewControllers {
+            let mapNavigationController = tabBarViewControllers[0] as! UINavigationController
+            let mapViewController = mapNavigationController.topViewController as! MapViewController
+            mapViewController.managedContext = coreDataStack.context
             let navigationController = tabBarViewControllers[2] as! UINavigationController
             let eventTableViewController = navigationController.topViewController as! EventTableViewController
             eventTableViewController.managedContext = coreDataStack.context
+            let _ = eventTableViewController.view
             //        eventTableViewController.events = events
         }
         

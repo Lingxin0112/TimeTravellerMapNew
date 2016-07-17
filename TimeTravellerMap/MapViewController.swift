@@ -8,9 +8,10 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapViewController: UIViewController {
-    
+    var managedContext: NSManagedObjectContext!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var dateSlider: UISlider!
     
@@ -213,36 +214,47 @@ class MapViewController: UIViewController {
         let coordinate = tapPoint
         var title = "no title"
         var subtitle = "no subtitle"
-        let alertController = UIAlertController(title: "Add a annotation pin", message: "Add a pin in press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)", preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler() { textField in
-            textField.placeholder = "Title"
-        }
-        alertController.addTextFieldWithConfigurationHandler() { textField in
-            textField.placeholder = "Subtitle"
-        }
-        alertController.addTextFieldWithConfigurationHandler() { textField in
-            textField.placeholder = "Video Link"
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
-        let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
-            _ in
-            let titleTextFiled = alertController.textFields![0] as UITextField
-            title = titleTextFiled.text!
-            let subtitleTextFiled = alertController.textFields![1] as UITextField
-            subtitle = subtitleTextFiled.text!
-            let urlTextFiled = alertController.textFields![2] as UITextField
-            let videoURL = urlTextFiled.text!
-            
-            let annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle, url: videoURL)
-            self.mapView.addAnnotation(annotation)
-            
-        })
-
+//        let alertController = UIAlertController(title: "Add a annotation pin", message: "Add a pin in press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)", preferredStyle: .Alert)
+//        alertController.addTextFieldWithConfigurationHandler() { textField in
+//            textField.placeholder = "Title"
+//        }
+//        alertController.addTextFieldWithConfigurationHandler() { textField in
+//            textField.placeholder = "Subtitle"
+//        }
+//        alertController.addTextFieldWithConfigurationHandler() { textField in
+//            textField.placeholder = "Video Link"
+//        }
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+//        let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
+//            _ in
+//            let titleTextFiled = alertController.textFields![0] as UITextField
+//            title = titleTextFiled.text!
+//            let subtitleTextFiled = alertController.textFields![1] as UITextField
+//            subtitle = subtitleTextFiled.text!
+//            let urlTextFiled = alertController.textFields![2] as UITextField
+//            let videoURL = urlTextFiled.text!
+//            
+//            let annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle, url: videoURL)
+//            self.mapView.addAnnotation(annotation)
+//            
+//        })
+//
+//        
+//        alertController.addAction(cancelAction)
+//        alertController.addAction(saveAction)
+//        
+//        presentViewController(alertController, animated: true, completion: nil)
+        let annotationStoryboard = UIStoryboard(name: "Annotation", bundle: nil)
+        let navigationControoler = annotationStoryboard.instantiateViewControllerWithIdentifier("AddEventNavigationController") as! UINavigationController
+        let controller = navigationControoler.topViewController as! AddEventTableViewController
+        controller.managedContext = managedContext
         
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
-        
-        presentViewController(alertController, animated: true, completion: nil)
+//        event.latitude = tapPoint.latitude
+//        event.longtitude = tapPoint.longitude
+//        controller.eventToAdd = event
+        controller.coordinate = coordinate
+        controller.eventAddToMap = true
+        presentViewController(navigationControoler, animated: true, completion: nil)
         
     }
     func showLocationServicesDeniedAlert() {
@@ -587,6 +599,8 @@ class MapViewController: UIViewController {
             let vc = navigationController.topViewController as! AnnotationDetailsTableViewController
             let annotation = sender as! InformationAnnotation
             vc.annotation = annotation
+        } else if segue.identifier == "AddEvent" {
+            
         }
     }
 }

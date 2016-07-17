@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B36D2E61D37903D00BACEF8 /* EventDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E51D37903D00BACEF8 /* EventDetailsTableViewController.swift */; };
+		3B36D2E61D37903D00BACEF8 /* AddEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E51D37903D00BACEF8 /* AddEventTableViewController.swift */; };
 		3B36D2E81D379A6D00BACEF8 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E71D379A6D00BACEF8 /* HudView.swift */; };
 		3B36D2EA1D38E09A00BACEF8 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E91D38E09A00BACEF8 /* EventCell.swift */; };
+		3B36D2ED1D39685D00BACEF8 /* Annotation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B36D2EB1D39685D00BACEF8 /* Annotation.storyboard */; };
+		3B36D2EF1D39755B00BACEF8 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2EE1D39755B00BACEF8 /* EventDetailsViewController.swift */; };
+		3B36D2F21D3ACA3100BACEF8 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2F01D3ACA3100BACEF8 /* Event+CoreDataProperties.swift */; };
+		3B36D2F31D3ACA3100BACEF8 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2F11D3ACA3100BACEF8 /* Event.swift */; };
 		3B5ABFB31D2C4AE50058AEE4 /* InformationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5ABFB21D2C4AE50058AEE4 /* InformationAnnotation.swift */; };
 		3B5ABFB51D2C4C180058AEE4 /* InformationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5ABFB41D2C4C180058AEE4 /* InformationAnnotationView.swift */; };
 		3B5D65461D271F2B0085D057 /* BrushSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D65451D271F2B0085D057 /* BrushSettingsViewController.swift */; };
@@ -32,12 +36,6 @@
 		3BFE73901D36C36C003E851E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE738E1D36C36C003E851E /* DataModel.xcdatamodeld */; };
 		3BFE73921D36CAB4003E851E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73911D36CAB4003E851E /* CoreDataStack.swift */; };
 		3BFE73941D36CD91003E851E /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73931D36CD91003E851E /* EventTableViewController.swift */; };
-		3BFE739C1D36D630003E851E /* Link+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73961D36D630003E851E /* Link+CoreDataProperties.swift */; };
-		3BFE739D1D36D630003E851E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73971D36D630003E851E /* Link.swift */; };
-		3BFE739E1D36D630003E851E /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73981D36D630003E851E /* Location+CoreDataProperties.swift */; };
-		3BFE739F1D36D630003E851E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73991D36D630003E851E /* Location.swift */; };
-		3BFE73A01D36D630003E851E /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE739A1D36D630003E851E /* Event+CoreDataProperties.swift */; };
-		3BFE73A11D36D630003E851E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE739B1D36D630003E851E /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,9 +56,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3B36D2E51D37903D00BACEF8 /* EventDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsTableViewController.swift; sourceTree = "<group>"; };
+		3B36D2E51D37903D00BACEF8 /* AddEventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventTableViewController.swift; sourceTree = "<group>"; };
 		3B36D2E71D379A6D00BACEF8 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		3B36D2E91D38E09A00BACEF8 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		3B36D2EC1D39685D00BACEF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Annotation.storyboard; sourceTree = "<group>"; };
+		3B36D2EE1D39755B00BACEF8 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		3B36D2F01D3ACA3100BACEF8 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3B36D2F11D3ACA3100BACEF8 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		3B5ABFB21D2C4AE50058AEE4 /* InformationAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationAnnotation.swift; sourceTree = "<group>"; };
 		3B5ABFB41D2C4C180058AEE4 /* InformationAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationAnnotationView.swift; sourceTree = "<group>"; };
 		3B5D65451D271F2B0085D057 /* BrushSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrushSettingsViewController.swift; sourceTree = "<group>"; };
@@ -89,12 +91,6 @@
 		3BFE738F1D36C36C003E851E /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3BFE73911D36CAB4003E851E /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		3BFE73931D36CD91003E851E /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
-		3BFE73961D36D630003E851E /* Link+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Link+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3BFE73971D36D630003E851E /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		3BFE73981D36D630003E851E /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3BFE73991D36D630003E851E /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		3BFE739A1D36D630003E851E /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3BFE739B1D36D630003E851E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +159,7 @@
 				3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */,
 				3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */,
 				3B6099851D1FCB6700BBA9E8 /* Main.storyboard */,
+				3B36D2EB1D39685D00BACEF8 /* Annotation.storyboard */,
 				3B6099881D1FCB6700BBA9E8 /* Assets.xcassets */,
 				3B60998A1D1FCB6700BBA9E8 /* LaunchScreen.storyboard */,
 				3B60998D1D1FCB6700BBA9E8 /* Info.plist */,
@@ -173,9 +170,10 @@
 				3BFE738E1D36C36C003E851E /* DataModel.xcdatamodeld */,
 				3BFE73911D36CAB4003E851E /* CoreDataStack.swift */,
 				3BFE73931D36CD91003E851E /* EventTableViewController.swift */,
-				3B36D2E51D37903D00BACEF8 /* EventDetailsTableViewController.swift */,
+				3B36D2E51D37903D00BACEF8 /* AddEventTableViewController.swift */,
 				3B36D2E71D379A6D00BACEF8 /* HudView.swift */,
 				3B36D2E91D38E09A00BACEF8 /* EventCell.swift */,
+				3B36D2EE1D39755B00BACEF8 /* EventDetailsViewController.swift */,
 			);
 			path = TimeTravellerMap;
 			sourceTree = "<group>";
@@ -227,12 +225,8 @@
 		3BFE73951D36D619003E851E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				3BFE73961D36D630003E851E /* Link+CoreDataProperties.swift */,
-				3BFE73971D36D630003E851E /* Link.swift */,
-				3BFE73981D36D630003E851E /* Location+CoreDataProperties.swift */,
-				3BFE73991D36D630003E851E /* Location.swift */,
-				3BFE739A1D36D630003E851E /* Event+CoreDataProperties.swift */,
-				3BFE739B1D36D630003E851E /* Event.swift */,
+				3B36D2F01D3ACA3100BACEF8 /* Event+CoreDataProperties.swift */,
+				3B36D2F11D3ACA3100BACEF8 /* Event.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -349,6 +343,7 @@
 				3B6099891D1FCB6700BBA9E8 /* Assets.xcassets in Resources */,
 				3BC3AE3C1D2068FE00EF2D26 /* Newark1800.jpg in Resources */,
 				3B6099871D1FCB6700BBA9E8 /* Main.storyboard in Resources */,
+				3B36D2ED1D39685D00BACEF8 /* Annotation.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,9 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BFE739D1D36D630003E851E /* Link.swift in Sources */,
 				3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */,
-				3BFE739C1D36D630003E851E /* Link+CoreDataProperties.swift in Sources */,
 				3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */,
 				3B36D2EA1D38E09A00BACEF8 /* EventCell.swift in Sources */,
 				3BFE73901D36C36C003E851E /* DataModel.xcdatamodeld in Sources */,
@@ -384,18 +377,17 @@
 				3B36D2E81D379A6D00BACEF8 /* HudView.swift in Sources */,
 				3B6099841D1FCB6700BBA9E8 /* SecondViewController.swift in Sources */,
 				3BC3AE361D205ECE00EF2D26 /* HistoryMapOverlay.swift in Sources */,
+				3B36D2EF1D39755B00BACEF8 /* EventDetailsViewController.swift in Sources */,
+				3B36D2F21D3ACA3100BACEF8 /* Event+CoreDataProperties.swift in Sources */,
 				3BFE73671D34FEE6003E851E /* AnnotationDetailsTableViewController.swift in Sources */,
-				3BFE73A01D36D630003E851E /* Event+CoreDataProperties.swift in Sources */,
 				3BFE73921D36CAB4003E851E /* CoreDataStack.swift in Sources */,
 				3BC3AE3F1D20693F00EF2D26 /* HistoryMapOverlayView.swift in Sources */,
 				3B5ABFB31D2C4AE50058AEE4 /* InformationAnnotation.swift in Sources */,
 				3B5D65461D271F2B0085D057 /* BrushSettingsViewController.swift in Sources */,
-				3BFE739F1D36D630003E851E /* Location.swift in Sources */,
-				3BFE739E1D36D630003E851E /* Location+CoreDataProperties.swift in Sources */,
 				3BC3AE391D205F7B00EF2D26 /* HistoryMap.swift in Sources */,
 				3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */,
-				3B36D2E61D37903D00BACEF8 /* EventDetailsTableViewController.swift in Sources */,
-				3BFE73A11D36D630003E851E /* Event.swift in Sources */,
+				3B36D2E61D37903D00BACEF8 /* AddEventTableViewController.swift in Sources */,
+				3B36D2F31D3ACA3100BACEF8 /* Event.swift in Sources */,
 				3B6099821D1FCB6700BBA9E8 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,6 +424,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		3B36D2EB1D39685D00BACEF8 /* Annotation.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3B36D2EC1D39685D00BACEF8 /* Base */,
+			);
+			name = Annotation.storyboard;
+			sourceTree = "<group>";
+		};
 		3B6099851D1FCB6700BBA9E8 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

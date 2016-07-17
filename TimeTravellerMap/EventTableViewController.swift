@@ -11,10 +11,7 @@ import CoreData
 
 class EventTableViewController: UITableViewController {
 
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
     var managedContext: NSManagedObjectContext!
-    
-    var sectionOrder: String = "area"
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest()
@@ -30,7 +27,7 @@ class EventTableViewController: UITableViewController {
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: self.managedContext,
-            sectionNameKeyPath: self.sectionOrder,
+            sectionNameKeyPath: "area",
             cacheName: "Events")
         fetchedResultsController.delegate = self
         return fetchedResultsController
@@ -60,9 +57,6 @@ class EventTableViewController: UITableViewController {
         }
     }
 
-    @IBAction func segmentControlChanged(sender: UISegmentedControl) {
-        sectionOrder = "name"
-    }
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -94,6 +88,11 @@ class EventTableViewController: UITableViewController {
     }
     */
 
+//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
+//        performSegueWithIdentifier("ShowEventDetails", sender: event)
+//    }
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
@@ -133,8 +132,18 @@ class EventTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "AddEvent" {
             let navController = segue.destinationViewController as! UINavigationController
-            let controller = navController.topViewController as! EventDetailsTableViewController
+            let controller = navController.topViewController as! AddEventTableViewController
             controller.managedContext = managedContext
+        } else if segue.identifier == "ShowEventDetails" {
+            let controller = segue.destinationViewController as! EventDetailsViewController
+//            let navController = segue.destinationViewController as! UINavigationController
+//            let controller = navController.topViewController as! AddEventTableViewController
+            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
+                controller.managedContext = managedContext
+                controller.event = event
+            }
+            
         }
     }
 }
@@ -154,11 +163,11 @@ extension EventTableViewController: NSFetchedResultsControllerDelegate {
             print("EventTableViewController delete")
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            print("EventTableViewController update")
             if let cell = tableView.cellForRowAtIndexPath(indexPath!) as? EventCell{
                 let event = controller.objectAtIndexPath(indexPath!) as! Event
                 cell.configureCellForEvent(event)
             }
+            print("EventTableViewController update")
         case .Move:
             print("EventTableViewController move")
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
