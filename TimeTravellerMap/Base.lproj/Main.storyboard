@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Tools Table View Controller-->
@@ -552,6 +553,33 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Other useful link" id="ROq-JM-Xzj">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="Run-nW-LVm">
+                                        <rect key="frame" x="0.0" y="484" width="600" height="88"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Run-nW-LVm" id="g8h-HE-unC">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HrL-oj-NfP">
+                                                    <rect key="frame" x="8" y="8" width="584" height="71.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="HrL-oj-NfP" secondAttribute="bottom" id="NBF-cu-D2g"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="HrL-oj-NfP" secondAttribute="trailing" id="Ud6-f3-848"/>
+                                                <constraint firstItem="HrL-oj-NfP" firstAttribute="top" secondItem="g8h-HE-unC" secondAttribute="topMargin" id="g83-Aj-AO9"/>
+                                                <constraint firstItem="HrL-oj-NfP" firstAttribute="leading" secondItem="g8h-HE-unC" secondAttribute="leadingMargin" id="jOm-yq-13i"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="JVI-Q0-QSp" id="ops-sv-Wgv"/>
@@ -569,6 +597,7 @@
                         <outlet property="descriptionTextView" destination="lQ7-p9-ShM" id="pES-CW-KFH"/>
                         <outlet property="latitudeLabel" destination="gSN-D9-air" id="QY3-YU-AaS"/>
                         <outlet property="longtitudeLabel" destination="Nys-3s-tw6" id="FaI-uR-Swe"/>
+                        <outlet property="otherURLsTextView" destination="HrL-oj-NfP" id="K2V-3a-9Px"/>
                         <outlet property="videoWebView" destination="YCQ-fg-oaA" id="5i7-41-ywH"/>
                     </connections>
                 </tableViewController>

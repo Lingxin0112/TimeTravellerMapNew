@@ -18,6 +18,7 @@ class AnnotationDetailsTableViewController: UITableViewController {
     @IBOutlet weak var longtitudeLabel: UILabel!
     
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var otherURLsTextView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,8 +35,8 @@ class AnnotationDetailsTableViewController: UITableViewController {
         if let url = annotation?.videoURL {
             playVideo(url)
         }
-        
         descriptionTextView.text = info
+        otherURLsTextView.text = annotation!.otherURLs
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,7 +59,7 @@ class AnnotationDetailsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,7 +70,7 @@ class AnnotationDetailsTableViewController: UITableViewController {
         } else if section == 2 {
             return 2
         }
-        return 0
+        return 1
     }
 
     /*
@@ -93,6 +94,9 @@ class AnnotationDetailsTableViewController: UITableViewController {
 //    
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            return 132
+        }
         return UITableViewAutomaticDimension
     }
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
@@ -106,29 +110,31 @@ class AnnotationDetailsTableViewController: UITableViewController {
     var isExpanded = true
     let info = "In this component we will add  behaviour to text view. It will have two modes - full mode and trimmed mode. In full mode it will behave like standard UITextView. In trimmed mode it will trim text to some maximum numbers of lines and trim text with a string. When user taps on the component will switch from trimmed mode to full mode."
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // 1
-        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
-        
-        // 2
-//        var work = selectedArtist.works[indexPath.row]
-//        work.isExpanded = !work.isExpanded
-//        selectedArtist.works[indexPath.row] = work
-        isExpanded = !isExpanded
-        // 3
-        descriptionTextView.text = isExpanded ? info : moreInfoText
-        descriptionTextView.textAlignment = isExpanded ? .Left : .Center
-        
-        // 4
-        UIView.animateWithDuration(0.3) {
-            cell.contentView.layoutIfNeeded()
+        if indexPath.section == 1 && indexPath.row == 0 {
+            // 1
+            guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+            
+            // 2
+            //        var work = selectedArtist.works[indexPath.row]
+            //        work.isExpanded = !work.isExpanded
+            //        selectedArtist.works[indexPath.row] = work
+            isExpanded = !isExpanded
+            // 3
+            descriptionTextView.text = isExpanded ? info : moreInfoText
+            descriptionTextView.textAlignment = isExpanded ? .Left : .Center
+            
+            // 4
+            UIView.animateWithDuration(0.3) {
+                cell.contentView.layoutIfNeeded()
+            }
+            
+            // 5
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            
+            // 6
+            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
-        
-        // 5
-        tableView.beginUpdates()
-        tableView.endUpdates()
-        
-        // 6
-        tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
 
     /*

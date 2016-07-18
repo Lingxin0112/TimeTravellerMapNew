@@ -449,7 +449,7 @@ class MapViewController: UIViewController {
         let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
         overlayView?.alpha = 0.0
         oldImageView.alpha = 1.0
-        newImageView.alpha = 0.0
+//        newImageView.alpha = 0.0
         
         let overlayRect = overlayView!.overlay.boundingMapRect
         let region = MKCoordinateRegionForMapRect(overlayRect)
@@ -462,7 +462,7 @@ class MapViewController: UIViewController {
         containerView.addSubview(newImageView)
         UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
             newImageView.alpha = 1.0
-            oldImageView.alpha = 0.0
+//            oldImageView.alpha = 0.0
             oldImageView.center.x += 150
             newImageView.center.x += 150
             self.overlayView?.overlayImage = UIImage(named: "Newark1916")!
@@ -536,7 +536,7 @@ class MapViewController: UIViewController {
         do {
             let results = try managedContext.executeFetchRequest(fetchRequest) as! [Event]
             for event in results {
-                annotation = InformationAnnotation(coordinate: event.coordinate, title: event.name!, subtitle: event.area!)
+                annotation = InformationAnnotation(event: event)
                 mapView.addAnnotation(annotation)
             }
             

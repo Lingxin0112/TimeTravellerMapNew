@@ -23,6 +23,10 @@ class AddEventTableViewController: UITableViewController {
     
     @IBOutlet weak var longtitudeTextField: UITextField!
     
+    @IBOutlet weak var videoLinkURLTextField: UITextField!
+    @IBOutlet weak var videoWebView: UIWebView!
+    
+    @IBOutlet weak var otherURLsTextView: UITextView!
     var event: Event?
     var name: String? = ""
     var date: String? = ""
@@ -31,6 +35,8 @@ class AddEventTableViewController: UITableViewController {
     var longtitude: String? = ""
     var coordinate = CLLocationCoordinate2DMake(0, 0)
     var eventDescription: String? = ""
+    var videoURL: String? = ""
+    var otherURLs: String? = ""
     var eventToEdit: Event? {
         didSet {
             if let event = eventToEdit {
@@ -40,6 +46,8 @@ class AddEventTableViewController: UITableViewController {
                 coordinate = CLLocationCoordinate2DMake(event.latitude, event.longtitude)
                 self.event = event
                 eventDescription = event.eventDescription
+                videoURL = event.videoURL
+                otherURLs = event.otherURLs
             }
         }
     }
@@ -68,6 +76,9 @@ class AddEventTableViewController: UITableViewController {
             latitudeTextField.text = String(format: "%.8f", coordinate.latitude)
             longtitudeTextField.text = String(format: "%.8f", coordinate.longitude)
             descriptionTextView.text = eventDescription
+            videoLinkURLTextField.text = videoURL
+            playVideo(videoURL!)
+            otherURLsTextView.text = otherURLs
         }
         
         if eventAddToMap {
@@ -76,6 +87,8 @@ class AddEventTableViewController: UITableViewController {
             reverseGeocodeLocation()
         }
         
+        tableView.estimatedRowHeight = 88
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     func hideKeyboard(gestureRecognizer: UIGestureRecognizer) {
@@ -107,6 +120,8 @@ class AddEventTableViewController: UITableViewController {
         event!.eventDescription = descriptionTextView.text
         event!.latitude = Double(latitudeTextField.text!)!
         event!.longtitude = Double(longtitudeTextField.text!)!
+        event!.videoURL = videoLinkURLTextField.text
+        event!.otherURLs = otherURLsTextView.text
         
         do {
             try managedContext.save()
@@ -219,6 +234,8 @@ class AddEventTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         if section == 0 {
             return 5
+        } else if section == 2 {
+            return 3
         }
         return 1
     }
@@ -227,6 +244,15 @@ class AddEventTableViewController: UITableViewController {
         return nil
     }
 
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 2 && indexPath.row == 1 {
+            return 132
+        } else if indexPath.section == 2 && indexPath.row == 2 {
+            return 88
+        }
+        return UITableViewAutomaticDimension
+    }
+    
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
@@ -315,6 +341,10 @@ extension AddEventTableViewController: UITextFieldDelegate {
             }
             textField.resignFirstResponder()
             return false
+        } else if textField == videoLinkURLTextField {
+            playVideo(textField.text!)
+            textField.resignFirstResponder()
+            return false
         }
         return true
     }
@@ -344,6 +374,9 @@ extension AddEventTableViewController: UITextFieldDelegate {
                 }
             }
             textField.resignFirstResponder()
+        } else if textField == videoLinkURLTextField {
+            playVideo(textField.text!)
+            textField.resignFirstResponder()
         }
     }
 }
@@ -355,5 +388,21 @@ extension AddEventTableViewController: UITextViewDelegate {
             return false
         }
         return true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        let currentOffset = tableView.contentOffset
+        UIView.setAnimationsEnabled(false)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
+        tableView.setContentOffset(currentOffset, animated: false)
+    }
+    
+    func playVideo(url: String) {
+        let videoURL = "https://www.youtube.com/embed/Rg6GLVUnnpM"
+        videoWebView.allowsInlineMediaPlayback = true
+        let videoString = "<iframe width=\(videoWebView.frame.width) height=\(videoWebView.frame.height) src=\(url)?&playsinline=1 frameborder=0 allowfullscreen></iframe>"
+        videoWebView.loadHTMLString(videoString, baseURL: nil)
     }
 }
