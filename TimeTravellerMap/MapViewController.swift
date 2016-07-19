@@ -55,6 +55,12 @@ class MapViewController: UIViewController {
     
     var overlayOrDraw: String = "overlay"
     
+    let oldImageView = UIImageView()
+    let newImageView = UIImageView()
+//    let oldImageview = UIImageView(image: UIImage(named: "Newark1800.jpg"))
+//    let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
+    let animationView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -125,6 +131,13 @@ class MapViewController: UIViewController {
         toolBar.userInteractionEnabled = true
         chooseDateTextField.inputAccessoryView = toolBar
         
+        animationView.hidden = true
+        containerView.addSubview(animationView)
+        oldImageView.hidden = true
+//        containerView.addSubview(oldImageView)
+        newImageView.hidden = true
+        containerView.addSubview(newImageView)
+        animationView.addSubview(oldImageView)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -181,10 +194,6 @@ class MapViewController: UIViewController {
         
     }
     
-    let EARTH_RADIUS = 6371
-    func convertLatLongToConvert(point: CGPoint) {
-//        let x =
-    }
     
     var left: CGPoint?
     var right: CGPoint?
@@ -443,35 +452,69 @@ class MapViewController: UIViewController {
 //        tempImageView.image = nil
     }
     
-    
+    var testOption = 0
     @IBAction func hideOverlay(sender: UIButton) {
-        let oldImageView = UIImageView(image: UIImage(named: "Newark1800.jpg"))
-        let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
-        overlayView?.alpha = 0.0
-        oldImageView.alpha = 1.0
+        
+        if testOption > 2 {
+            testOption  = 0
+        }
+        animationWithMapOverlay(testOption, future: false)
+        testOption += 1
+        
+//        let oldImageView = UIImageView(image: UIImage(named: "Newark1800.jpg"))
+//        let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
+        
+//        oldImageView.alpha = 1.0
 //        newImageView.alpha = 0.0
         
-        let overlayRect = overlayView!.overlay.boundingMapRect
-        let region = MKCoordinateRegionForMapRect(overlayRect)
-        let rect = mapView.convertRegion(region, toRectToView: containerView)
-        print("rect \(rect)")
-        oldImageView.frame = rect
-        newImageView.frame = rect
-        newImageView.center.x -= 150
-        containerView.addSubview(oldImageView)
-        containerView.addSubview(newImageView)
-        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
-            newImageView.alpha = 1.0
-//            oldImageView.alpha = 0.0
-            oldImageView.center.x += 150
-            newImageView.center.x += 150
-            self.overlayView?.overlayImage = UIImage(named: "Newark1916")!
-            }, completion: { _ in
-                self.overlayView?.alpha = 1.0
-                newImageView.alpha = 0.0
-                newImageView.removeFromSuperview()
-                oldImageView.removeFromSuperview()
-        })
+//        let overlayRect = overlayView!.overlay.boundingMapRect
+//        let region = MKCoordinateRegionForMapRect(overlayRect)
+//        let rect = mapView.convertRegion(region, toRectToView: containerView)
+////        print("rect \(rect)")
+////        let animationView = UIView(frame: rect)
+//        animationView.frame = rect
+//        oldImageView.frame = animationView.bounds
+//        newImageView.frame = animationView.bounds
+//        animationView.backgroundColor = UIColor.blueColor()
+//        animationView.addSubview(oldImageView)
+//        self.animationView.hidden = false
+//        overlayView?.alpha = 0.0
+//        containerView.addSubview(newImageView)
+//        containerView.addSubview(oldImageView)
+        
+//        containerView.addSubview(newImageView)
+//        oldImageView.frame = rect
+//        newImageView.frame = rect
+//        newImageView.center.x -= 150
+//        containerView.addSubview(oldImageView)
+//        containerView.addSubview(newImageView)
+//        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+//            newImageView.alpha = 1.0
+////            oldImageView.alpha = 0.0
+//            oldImageView.center.x += 150
+//            newImageView.center.x += 150
+//            self.overlayView?.overlayImage = UIImage(named: "Newark1916")!
+//            }, completion: { _ in
+//                self.overlayView?.alpha = 1.0
+//                newImageView.alpha = 0.0
+//                newImageView.removeFromSuperview()
+//                oldImageView.removeFromSuperview()
+//        })
+//
+        
+//        UIView.transitionWithView(animationView, duration: 2, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
+//                self.newImageView.hidden = false
+//                self.animationView.addSubview(self.newImageView)
+//            }, completion: { _ in
+//                self.overlayView?.alpha = 0.0
+//            }
+//        )
+        
+//        UIView.transitionWithView(newImageView, duration: 2, options: [.CurveEaseOut, .TransitionCurlDown], animations: {
+//            self.newImageView.hidden = false
+//            }, completion: nil)
+    
+//        UIView.transitionFromView(oldImageView, toView: newImageView, duration: 2, options: [.TransitionCurlDown], completion: nil)
         
 //        UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
 //            newImageView.alpha = 0.0
@@ -479,6 +522,71 @@ class MapViewController: UIViewController {
 //            self.overlayView?.alpha = 1.0
 //            }, completion: { _ in
 //        })
+    }
+    
+    // MARK: - Animation of map overlay
+    func animationWithMapOverlay(option: Int, future: Bool) {
+        oldImageView.image = UIImage(named: "Newark1800.jpg")
+        newImageView.image = UIImage(named: "Newark1916")
+        let overlayRect = overlayView!.overlay.boundingMapRect
+        let region = MKCoordinateRegionForMapRect(overlayRect)
+        let rect = mapView.convertRegion(region, toRectToView: containerView)
+        
+        if option == 0  {
+            newImageView.frame = rect
+            oldImageView.frame = animationView.bounds
+            
+            if future {
+                UIView.transitionWithView(newImageView, duration: 2, options: [.CurveEaseOut, .TransitionCurlDown], animations: {
+                    self.newImageView.hidden = false
+                    self.overlayView?.overlayImage = self.newImageView.image!
+                    }, completion: { _ in
+                        self.newImageView.hidden = true
+                })
+            } else {
+                oldImageView.hidden = false
+                animationView.hidden = false
+                UIView.transitionWithView(animationView, duration: 2, options: [.CurveEaseOut, .TransitionCurlUp], animations: {
+                    self.oldImageView.removeFromSuperview()
+                    self.overlayView?.overlayImage = self.newImageView.image!
+                    }, completion: { _ in
+                        self.oldImageView.hidden = true
+                        self.animationView.hidden = true
+                })
+            }
+        } else if option == 1 {
+            animationView.frame = rect
+            animationView.hidden = false
+            newImageView.frame = animationView.bounds
+            UIView.transitionWithView(animationView, duration: 2, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
+                    self.newImageView.hidden = false
+                    self.animationView.addSubview(self.newImageView)
+                }, completion: { _ in
+                    self.overlayView?.overlayImage = self.newImageView.image!
+                    self.animationView.hidden = true
+            })
+        } else if option == 2 {
+            oldImageView.frame = rect
+            newImageView.frame = rect
+            oldImageView.hidden = false
+            newImageView.hidden = false
+            newImageView.center.x -= 150
+            containerView.addSubview(oldImageView)
+            containerView.addSubview(newImageView)
+            
+            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                self.newImageView.alpha = 1.0
+                self.oldImageView.center.x += 300
+                self.newImageView.center.x += 150
+                self.overlayView?.overlayImage = self.newImageView.image!
+                }, completion: { _ in
+                    self.overlayView?.alpha = 1.0
+                    self.newImageView.hidden = true
+                    self.oldImageView.hidden = true
+//                    self.newImageView.removeFromSuperview()
+//                    self.oldImageView.removeFromSuperview()
+            })
+        }
     }
     
     @IBAction func popover(sender: UIBarButtonItem) {
@@ -559,22 +667,24 @@ class MapViewController: UIViewController {
     
     func updateMap(year: String) {
         if let newImage = UIImage(named: "Newark\(year)") {
-            let newImageView = UIImageView(image: newImage)
-            newImageView.alpha = 0.0
-            newImageView.frame = view.frame
-            view.addSubview(newImageView)
-            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
-                newImageView.alpha = 1.0
-                }, completion: { _ in
-            })
-            
-            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
-                newImageView.alpha = 0.0
-                self.overlayView?.setNeedsDisplay()
-                self.overlayView?.overlayImage = newImageView.image!
-                }, completion: { _ in
-                    newImageView.removeFromSuperview()
-            })
+            newImageView.image = newImage
+            animationWithMapOverlay(0, future: false)
+//            let newImageView = UIImageView(image: newImage)
+//            newImageView.alpha = 0.0
+//            newImageView.frame = view.frame
+//            view.addSubview(newImageView)
+//            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
+//                newImageView.alpha = 1.0
+//                }, completion: { _ in
+//            })
+//            
+//            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
+//                newImageView.alpha = 0.0
+//                self.overlayView?.setNeedsDisplay()
+//                self.overlayView?.overlayImage = newImageView.image!
+//                }, completion: { _ in
+//                    newImageView.removeFromSuperview()
+//            })
 
         }
     }
