@@ -35,7 +35,7 @@ class EventDetailsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         configureInterface()
-         let editBarItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: Selector("editEvent"))
+        let editBarItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: Selector("editEvent"))
         navigationItem.rightBarButtonItem = editBarItem
     }
     

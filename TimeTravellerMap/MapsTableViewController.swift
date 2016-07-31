@@ -1,25 +1,26 @@
 //
-//  EventTableViewController.swift
+//  MapsTableTableViewController.swift
 //  TimeTravellerMap
 //
-//  Created by Lingxin Gu on 13/07/2016.
+//  Created by Lingxin Gu on 21/07/2016.
 //  Copyright © 2016 Lingxin Gu. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class EventTableViewController: UITableViewController {
-
+class MapsTableViewController: UITableViewController {
+    
     var managedContext: NSManagedObjectContext!
+    let searchController = UISearchController(searchResultsController: nil)
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest()
-        let entity = NSEntityDescription.entityForName("Event", inManagedObjectContext: self.managedContext)
+        let entity = NSEntityDescription.entityForName("Map", inManagedObjectContext: self.managedContext)
         fetchRequest.entity = entity
         
-        let sortDescriptor1 = NSSortDescriptor(key: "area", ascending: true)
-        let sortDescriptor2 = NSSortDescriptor(key: "name", ascending: true)
+        let sortDescriptor1 = NSSortDescriptor(key: "name", ascending: true)
+        let sortDescriptor2 = NSSortDescriptor(key: "date", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2]
         
         fetchRequest.fetchBatchSize = 20
@@ -28,24 +29,27 @@ class EventTableViewController: UITableViewController {
             fetchRequest: fetchRequest,
             managedObjectContext: self.managedContext,
             sectionNameKeyPath: "area",
-            cacheName: "Events")
+            cacheName: nil)
         fetchedResultsController.delegate = self
         return fetchedResultsController
     }()
-    
-//    lazy var indexedList: Set<String> = {
-//        var index: Set<String> = []
-//        let sectionInfo = self.fetchedResultsController.sections
-//        for section in sectionInfo! {
-//            index.insert(section.indexTitle!)
-//        }
-//        return index
-//    }()
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = editButtonItem()
         performFetch()
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        
+        let searchBar = searchController.searchBar
+        searchBar.sizeToFit()
+        searchBar.searchBarStyle = .Minimal
+        searchBar.delegate = self
+        searchBar.placeholder = "search map"
+        tableView.tableHeaderView = searchBar
+        
+        navigationItem.leftBarButtonItem = editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,13 +61,27 @@ class EventTableViewController: UITableViewController {
         fetchedResultsController.delegate = nil
     }
     
-    // MARK: - Functions
+    // Functions
     func performFetch() {
         do {
             try fetchedResultsController.performFetch()
         } catch {
             fatalError("Error: \(error)")
         }
+    }
+    
+    func filterMapForSearch(searchText: String, scope: String = "All") {
+        NSFetchedResultsController.deleteCacheWithName("Maps")
+        if searchText.isEmpty {
+            fetchedResultsController.fetchRequest.predicate = nil
+        } else {
+            NSFetchedResultsController.deleteCacheWithName("Maps")
+            fetchedResultsController.fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+        }
+        
+        performFetch()
+        tableView.reloadData()
+
     }
 
     // MARK: - Table view data source
@@ -87,9 +105,12 @@ class EventTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventCell
-        let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
-        cell.configureCellForEvent(event)
+        let cell = tableView.dequeueReusableCellWithIdentifier("MapCell", forIndexPath: indexPath)
+
+        let map = fetchedResultsController.objectAtIndexPath(indexPath) as! Map
+        cell.textLabel?.text = map.name
+        cell.detailTextLabel?.text = map.date
+
         return cell
     }
 
@@ -101,16 +122,12 @@ class EventTableViewController: UITableViewController {
     }
     */
 
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
-//        performSegueWithIdentifier("ShowEventDetails", sender: event)
-//    }
-    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
-            managedContext.deleteObject(event)
+            // Delete the row from the data source
+            let map = fetchedResultsController.objectAtIndexPath(indexPath) as! Map
+            managedContext.deleteObject(map)
             
             do {
                 try managedContext.save()
@@ -118,10 +135,6 @@ class EventTableViewController: UITableViewController {
                 fatalError("Error: \(error)")
             }
         }
-    }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 57
     }
 
     /*
@@ -143,27 +156,37 @@ class EventTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "AddEvent" {
-            let navController = segue.destinationViewController as! UINavigationController
-            let controller = navController.topViewController as! AddEventTableViewController
+        if segue.identifier == "AddMap" {
+            let nvController = segue.destinationViewController as! UINavigationController
+            let controller = nvController.topViewController as! AddMapViewController
             controller.managedContext = managedContext
-        } else if segue.identifier == "ShowEventDetails" {
-            let controller = segue.destinationViewController as! EventDetailsViewController
-//            let navController = segue.destinationViewController as! UINavigationController
-//            let controller = navController.topViewController as! AddEventTableViewController
+        } else if segue.identifier == "ShowMapDetails" {
+            let controller = segue.destinationViewController as! MapDetailsViewController
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
+                let map = fetchedResultsController.objectAtIndexPath(indexPath) as! Map
                 controller.managedContext = managedContext
-                controller.event = event
+                controller.map = map
             }
-            
         }
+    }
+
+}
+
+extension MapsTableViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterMapForSearch(searchController.searchBar.text!)
     }
 }
 
-extension EventTableViewController: NSFetchedResultsControllerDelegate {
+extension MapsTableViewController: UISearchBarDelegate {
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        
+    }
+}
+
+extension MapsTableViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        print("EventTableViewController changed")
+        print("MapTableViewController changed")
         tableView.beginUpdates()
         
     }
@@ -171,19 +194,21 @@ extension EventTableViewController: NSFetchedResultsControllerDelegate {
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch type {
         case .Insert:
-            print("EventTableViewController insert")
+            print("MapTableViewController insert")
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         case .Delete:
-            print("EventTableViewController delete")
+            print("MapTableViewController delete")
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            if let cell = tableView.cellForRowAtIndexPath(indexPath!) as? EventCell{
-                let event = controller.objectAtIndexPath(indexPath!) as! Event
-                cell.configureCellForEvent(event)
+            if let cell = tableView.cellForRowAtIndexPath(indexPath!) {
+                let map = controller.objectAtIndexPath(indexPath!) as! Map
+                cell.textLabel?.text = map.name
+                cell.detailTextLabel?.text = map.date
+//                cell.configureCellForEvent(event)
             }
-            print("EventTableViewController update")
+            print("MapTableViewController update")
         case .Move:
-            print("EventTableViewController move")
+            print("MapTableViewController move")
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
@@ -193,20 +218,20 @@ extension EventTableViewController: NSFetchedResultsControllerDelegate {
         let indexSet = NSIndexSet(index: sectionIndex)
         switch type {
         case .Insert:
-            print("EventTableViewController section insert")
+            print("MapTableViewController section insert")
             tableView.insertSections(indexSet, withRowAnimation: .Fade)
         case .Delete:
-            print("EventTableViewController section delete")
+            print("MapTableViewController section delete")
             tableView.deleteSections(indexSet, withRowAnimation: .Fade)
         case .Update:
-            print("EventTableViewController section update")
+            print("MapTableViewController section update")
         case .Move:
-            print("EventTableViewController section move")
+            print("MapTableViewController section move")
         }
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        print("EventTableViewController changed finished")
+        print("MapTableViewController changed finished")
         tableView.endUpdates()
     }
 }

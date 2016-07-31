@@ -17,4 +17,8 @@ class Event: NSManagedObject {
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2DMake(latitude, longtitude)
     }
+    
+    var sectionIdentifier: String {
+        return "area"
+    }
 }

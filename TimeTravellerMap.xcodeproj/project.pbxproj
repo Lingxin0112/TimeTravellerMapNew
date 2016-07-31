@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B0F39361D40DBD1004B0B2C /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B0F39351D40DBD1004B0B2C /* Map.storyboard */; };
+		3B0F39381D40DED4004B0B2C /* MapsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F39371D40DED4004B0B2C /* MapsTableViewController.swift */; };
+		3B0F393B1D40E2FA004B0B2C /* Map+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F39391D40E2FA004B0B2C /* Map+CoreDataProperties.swift */; };
+		3B0F393C1D40E2FA004B0B2C /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F393A1D40E2FA004B0B2C /* Map.swift */; };
+		3B0F393E1D46027E004B0B2C /* AddMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F393D1D46027E004B0B2C /* AddMapViewController.swift */; };
+		3B0F39401D4DFB5C004B0B2C /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */; };
+		3B0F39421D4E122C004B0B2C /* MapDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F39411D4E122C004B0B2C /* MapDetailsViewController.swift */; };
 		3B36D2E61D37903D00BACEF8 /* AddEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E51D37903D00BACEF8 /* AddEventTableViewController.swift */; };
 		3B36D2E81D379A6D00BACEF8 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E71D379A6D00BACEF8 /* HudView.swift */; };
 		3B36D2EA1D38E09A00BACEF8 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E91D38E09A00BACEF8 /* EventCell.swift */; };
@@ -56,6 +63,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B0F39351D40DBD1004B0B2C /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
+		3B0F39371D40DED4004B0B2C /* MapsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsTableViewController.swift; sourceTree = "<group>"; };
+		3B0F39391D40E2FA004B0B2C /* Map+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Map+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3B0F393A1D40E2FA004B0B2C /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		3B0F393D1D46027E004B0B2C /* AddMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMapViewController.swift; sourceTree = "<group>"; };
+		3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
+		3B0F39411D4E122C004B0B2C /* MapDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailsViewController.swift; sourceTree = "<group>"; };
 		3B36D2E51D37903D00BACEF8 /* AddEventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventTableViewController.swift; sourceTree = "<group>"; };
 		3B36D2E71D379A6D00BACEF8 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		3B36D2E91D38E09A00BACEF8 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -159,7 +173,12 @@
 				3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */,
 				3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */,
 				3B6099851D1FCB6700BBA9E8 /* Main.storyboard */,
+				3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */,
 				3B36D2EB1D39685D00BACEF8 /* Annotation.storyboard */,
+				3B0F39351D40DBD1004B0B2C /* Map.storyboard */,
+				3B0F39411D4E122C004B0B2C /* MapDetailsViewController.swift */,
+				3B0F39371D40DED4004B0B2C /* MapsTableViewController.swift */,
+				3B0F393D1D46027E004B0B2C /* AddMapViewController.swift */,
 				3B6099881D1FCB6700BBA9E8 /* Assets.xcassets */,
 				3B60998A1D1FCB6700BBA9E8 /* LaunchScreen.storyboard */,
 				3B60998D1D1FCB6700BBA9E8 /* Info.plist */,
@@ -225,6 +244,8 @@
 		3BFE73951D36D619003E851E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				3B0F39391D40E2FA004B0B2C /* Map+CoreDataProperties.swift */,
+				3B0F393A1D40E2FA004B0B2C /* Map.swift */,
 				3B36D2F01D3ACA3100BACEF8 /* Event+CoreDataProperties.swift */,
 				3B36D2F11D3ACA3100BACEF8 /* Event.swift */,
 			);
@@ -339,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BC3AE411D212D3C00EF2D26 /* Newark1916.png in Resources */,
+				3B0F39361D40DBD1004B0B2C /* Map.storyboard in Resources */,
 				3B60998C1D1FCB6700BBA9E8 /* LaunchScreen.storyboard in Resources */,
 				3B6099891D1FCB6700BBA9E8 /* Assets.xcassets in Resources */,
 				3BC3AE3C1D2068FE00EF2D26 /* Newark1800.jpg in Resources */,
@@ -371,11 +393,16 @@
 				3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */,
 				3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */,
 				3B36D2EA1D38E09A00BACEF8 /* EventCell.swift in Sources */,
+				3B0F39381D40DED4004B0B2C /* MapsTableViewController.swift in Sources */,
+				3B0F39421D4E122C004B0B2C /* MapDetailsViewController.swift in Sources */,
 				3BFE73901D36C36C003E851E /* DataModel.xcdatamodeld in Sources */,
 				3B5ABFB51D2C4C180058AEE4 /* InformationAnnotationView.swift in Sources */,
 				3BFE73941D36CD91003E851E /* EventTableViewController.swift in Sources */,
 				3B36D2E81D379A6D00BACEF8 /* HudView.swift in Sources */,
+				3B0F393B1D40E2FA004B0B2C /* Map+CoreDataProperties.swift in Sources */,
 				3B6099841D1FCB6700BBA9E8 /* SecondViewController.swift in Sources */,
+				3B0F393E1D46027E004B0B2C /* AddMapViewController.swift in Sources */,
+				3B0F393C1D40E2FA004B0B2C /* Map.swift in Sources */,
 				3BC3AE361D205ECE00EF2D26 /* HistoryMapOverlay.swift in Sources */,
 				3B36D2EF1D39755B00BACEF8 /* EventDetailsViewController.swift in Sources */,
 				3B36D2F21D3ACA3100BACEF8 /* Event+CoreDataProperties.swift in Sources */,
@@ -385,6 +412,7 @@
 				3B5ABFB31D2C4AE50058AEE4 /* InformationAnnotation.swift in Sources */,
 				3B5D65461D271F2B0085D057 /* BrushSettingsViewController.swift in Sources */,
 				3BC3AE391D205F7B00EF2D26 /* HistoryMap.swift in Sources */,
+				3B0F39401D4DFB5C004B0B2C /* TestTableViewController.swift in Sources */,
 				3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */,
 				3B36D2E61D37903D00BACEF8 /* AddEventTableViewController.swift in Sources */,
 				3B36D2F31D3ACA3100BACEF8 /* Event.swift in Sources */,

@@ -316,6 +316,7 @@ class MapViewController: UIViewController {
             let tool = controller.tool
             print(tool)
             if tool == "pencil" {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: Selector("saveDrawImageOverlay"))
                 overlayOrDraw = "draw"
                 mapView.removeOverlays(mapView.overlays)
 
@@ -338,7 +339,10 @@ class MapViewController: UIViewController {
                 opacity = controller.opacity
             } else if tool == "reset" {
                 resetDrawing()
-                overlayView?.overlayImage = UIImage(named: "Newark1800.jpg")!
+                if let historyMapImage = historyMapImage {
+                    overlayView?.overlayImage = historyMapImage
+                }
+                
             } else if tool == "zoom" {
                 
                 mapView.removeOverlays(mapView.overlays)
@@ -455,7 +459,7 @@ class MapViewController: UIViewController {
     var testOption = 0
     @IBAction func hideOverlay(sender: UIButton) {
         
-        if testOption > 2 {
+        if testOption > 3 {
             testOption  = 0
         }
         animationWithMapOverlay(testOption, future: false)
@@ -524,6 +528,13 @@ class MapViewController: UIViewController {
 //        })
     }
     
+    // TODO: Need to test in the real device
+    func saveDrawImageOverlay() {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            UIImageWriteToSavedPhotosAlbum(self.drawMapImageView.image!, nil, nil, nil)
+        }
+    }
+    
     // MARK: - Animation of map overlay
     func animationWithMapOverlay(option: Int, future: Bool) {
         oldImageView.image = UIImage(named: "Newark1800.jpg")
@@ -531,6 +542,7 @@ class MapViewController: UIViewController {
         let overlayRect = overlayView!.overlay.boundingMapRect
         let region = MKCoordinateRegionForMapRect(overlayRect)
         let rect = mapView.convertRegion(region, toRectToView: containerView)
+        historyMapImage = UIImage(named: "Newark1916")
         
         if option == 0  {
             newImageView.frame = rect
@@ -586,6 +598,12 @@ class MapViewController: UIViewController {
 //                    self.newImageView.removeFromSuperview()
 //                    self.oldImageView.removeFromSuperview()
             })
+        } else if option == 3 {
+            let imageArray = [oldImageView.image!, newImageView.image!]
+            newImageView.hidden = false
+            newImageView.animationImages = imageArray
+            newImageView.animationDuration = 2.0
+            newImageView.startAnimating()
         }
     }
     

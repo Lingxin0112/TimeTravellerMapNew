@@ -108,7 +108,7 @@ class AddEventTableViewController: UITableViewController {
         let hudView = HudView.hudInView(navigationController!.view, animated: true)
         
         if let temp = eventToEdit {
-            hudView.text = "update"
+            hudView.text = "updated"
         } else {
             hudView.text = "Saved"
             event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: managedContext) as! Event
@@ -116,7 +116,7 @@ class AddEventTableViewController: UITableViewController {
         
         event!.name = nameTextField.text
         event!.date = dateTextField.text
-        event!.area = areaTextField.text
+        event!.area = areaTextField.text?.uppercaseString
         event!.eventDescription = descriptionTextView.text
         event!.latitude = Double(latitudeTextField.text!)!
         event!.longtitude = Double(longtitudeTextField.text!)!
@@ -145,19 +145,23 @@ class AddEventTableViewController: UITableViewController {
         dispatch_after(when, dispatch_get_main_queue(), closure)
     }
     
-    func addNewEvent() {
-        let event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: managedContext) as! Event
-        event.name = nameTextField.text
-        event.date = dateTextField.text
-        event.area = areaTextField.text
-        event.eventDescription = descriptionTextView.text
-//        event.location = addLocation()
-        
-        do {
-            try managedContext.save()
-        } catch {
-            fatalError("Error: \(error)")
-        }
+//    func addNewEvent() {
+//        let event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: managedContext) as! Event
+//        event.name = nameTextField.text?.uppercaseString
+//        event.date = dateTextField.text
+//        event.area = areaTextField.text
+//        event.eventDescription = descriptionTextView.text
+////        event.location = addLocation()
+//        
+//        do {
+//            try managedContext.save()
+//        } catch {
+//            fatalError("Error: \(error)")
+//        }
+//    }
+    
+    func firstLetterUppercase(text: String) -> String {
+        return String(text.characters.first!).capitalizedString + String(text.characters.dropFirst())
     }
     
 //    func addLocation() -> Location? {

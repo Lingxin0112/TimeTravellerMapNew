@@ -42,10 +42,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let mapNavigationController = tabBarViewControllers[0] as! UINavigationController
             let mapViewController = mapNavigationController.topViewController as! MapViewController
             mapViewController.managedContext = coreDataStack.context
+            
             let navigationController = tabBarViewControllers[2] as! UINavigationController
             let eventTableViewController = navigationController.topViewController as! EventTableViewController
             eventTableViewController.managedContext = coreDataStack.context
             let _ = eventTableViewController.view
+            
+            let nvController = tabBarViewControllers[3] as! UINavigationController
+            let mapsTableViewController = nvController.topViewController as! MapsTableViewController
+            mapsTableViewController.managedContext = coreDataStack.context
+            let _ = mapsTableViewController.view
+            
             //        eventTableViewController.events = events
         }
         
