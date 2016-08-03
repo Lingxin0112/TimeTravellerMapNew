@@ -105,11 +105,10 @@ class MapsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MapCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("MapCell", forIndexPath: indexPath) as! MapViewCell
 
         let map = fetchedResultsController.objectAtIndexPath(indexPath) as! Map
-        cell.textLabel?.text = map.name
-        cell.detailTextLabel?.text = map.date
+        cell.configureMapForCell(map)
 
         return cell
     }

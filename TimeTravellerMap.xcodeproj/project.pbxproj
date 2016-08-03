@@ -14,6 +14,8 @@
 		3B0F393E1D46027E004B0B2C /* AddMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F393D1D46027E004B0B2C /* AddMapViewController.swift */; };
 		3B0F39401D4DFB5C004B0B2C /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */; };
 		3B0F39421D4E122C004B0B2C /* MapDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F39411D4E122C004B0B2C /* MapDetailsViewController.swift */; };
+		3B0F39441D4E76A6004B0B2C /* MapViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F39431D4E76A6004B0B2C /* MapViewCell.swift */; };
+		3B0F39461D4E7F2D004B0B2C /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0F39451D4E7F2D004B0B2C /* UIImage+Resize.swift */; };
 		3B36D2E61D37903D00BACEF8 /* AddEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E51D37903D00BACEF8 /* AddEventTableViewController.swift */; };
 		3B36D2E81D379A6D00BACEF8 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E71D379A6D00BACEF8 /* HudView.swift */; };
 		3B36D2EA1D38E09A00BACEF8 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D2E91D38E09A00BACEF8 /* EventCell.swift */; };
@@ -70,6 +72,8 @@
 		3B0F393D1D46027E004B0B2C /* AddMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMapViewController.swift; sourceTree = "<group>"; };
 		3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		3B0F39411D4E122C004B0B2C /* MapDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailsViewController.swift; sourceTree = "<group>"; };
+		3B0F39431D4E76A6004B0B2C /* MapViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewCell.swift; sourceTree = "<group>"; };
+		3B0F39451D4E7F2D004B0B2C /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		3B36D2E51D37903D00BACEF8 /* AddEventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventTableViewController.swift; sourceTree = "<group>"; };
 		3B36D2E71D379A6D00BACEF8 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		3B36D2E91D38E09A00BACEF8 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -176,6 +180,8 @@
 				3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */,
 				3B36D2EB1D39685D00BACEF8 /* Annotation.storyboard */,
 				3B0F39351D40DBD1004B0B2C /* Map.storyboard */,
+				3B0F39431D4E76A6004B0B2C /* MapViewCell.swift */,
+				3B0F39451D4E7F2D004B0B2C /* UIImage+Resize.swift */,
 				3B0F39411D4E122C004B0B2C /* MapDetailsViewController.swift */,
 				3B0F39371D40DED4004B0B2C /* MapsTableViewController.swift */,
 				3B0F393D1D46027E004B0B2C /* AddMapViewController.swift */,
@@ -414,7 +420,9 @@
 				3BC3AE391D205F7B00EF2D26 /* HistoryMap.swift in Sources */,
 				3B0F39401D4DFB5C004B0B2C /* TestTableViewController.swift in Sources */,
 				3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */,
+				3B0F39461D4E7F2D004B0B2C /* UIImage+Resize.swift in Sources */,
 				3B36D2E61D37903D00BACEF8 /* AddEventTableViewController.swift in Sources */,
+				3B0F39441D4E76A6004B0B2C /* MapViewCell.swift in Sources */,
 				3B36D2F31D3ACA3100BACEF8 /* Event.swift in Sources */,
 				3B6099821D1FCB6700BBA9E8 /* MapViewController.swift in Sources */,
 			);

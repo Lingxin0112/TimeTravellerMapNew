@@ -28,15 +28,16 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var resultSearchController: UISearchController? = nil
-    let historyMap = HistoryMap()
+    var historyMap = HistoryMap()
     var overlayView: HistoryMapOverlayView?
     var historyMapImage: UIImage?
     
     lazy var data: [String] = {
         var dataArray = [String]()
-        for i in 1800...2016 {
+        for i in -338...1500 {
             dataArray.append("\(i)")
         }
+        
         return dataArray
     }()
     var alpha = ["0.0", "0.1","0.2","0.3","0.4", "0.5", "0.6",  "0.7", "0.8", "0.9", "1.0"]
@@ -90,9 +91,11 @@ class MapViewController: UIViewController {
         
         dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
         dateAndAlphaDict["alpha"] = String(format: "%.1f", Float(self.alphaSlider.maximumValue))
-        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        dateAndAlphaDict["term"] = "ad"
+        self.chooseDateTextField.text = "\(dateAndAlphaDict["term"]!)\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
         newDateAndAlphaDict["date"] = dateAndAlphaDict["date"]
         newDateAndAlphaDict["alpha"] = dateAndAlphaDict["alpha"]
+        newDateAndAlphaDict["term"] = dateAndAlphaDict["term"]
         
         // 
         let latDelta = historyMap.southWestCoordinate.latitude -
@@ -117,6 +120,7 @@ class MapViewController: UIViewController {
         chooseDateTextField.inputView = picker
         picker.selectRow(2, inComponent: 0, animated: true)
         picker.selectRow(2, inComponent: 1, animated: true)
+        picker.selectRow(2, inComponent: 2, animated: true)
         
         let toolBar = UIToolbar()
         toolBar.barStyle = .Default
@@ -178,7 +182,14 @@ class MapViewController: UIViewController {
     @IBAction func dateSliderChanged(sender: UISlider) {
         let year = String(Int(self.dateSlider.value))
         dateAndAlphaDict["date"] = year
-        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        if Int(year) < 0 {
+           dateAndAlphaDict["term"] = "bc"
+           self.chooseDateTextField.text = "\(dateAndAlphaDict["term"]!)\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        } else {
+            dateAndAlphaDict["term"] = "ad"
+            self.chooseDateTextField.text = "\(dateAndAlphaDict["term"]!)\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        }
+        
         updateMap(year)
     }
     
@@ -360,6 +371,11 @@ class MapViewController: UIViewController {
                 scrollView.hidden = true
                 scrollView.userInteractionEnabled = false
                 mapView.userInteractionEnabled = true
+                historyMap.midCoordinate = mapView.centerCoordinate
+                historyMap.overlayBoudingMapRect = mapView.visibleMapRect
+                
+                
+        
                 addOverlay()
             }
         }
@@ -462,8 +478,10 @@ class MapViewController: UIViewController {
         if testOption > 3 {
             testOption  = 0
         }
-        animationWithMapOverlay(testOption, future: false)
+        animationWithMapOverlay(testOption, future: true)
         testOption += 1
+        let coordinate = self.overlayView?.overlay.coordinate
+        print("Overlay mid coordinate: \(coordinate)")
         
 //        let oldImageView = UIImageView(image: UIImage(named: "Newark1800.jpg"))
 //        let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
@@ -537,11 +555,12 @@ class MapViewController: UIViewController {
     
     // MARK: - Animation of map overlay
     func animationWithMapOverlay(option: Int, future: Bool) {
-        oldImageView.image = UIImage(named: "Newark1800.jpg")
-        newImageView.image = UIImage(named: "Newark1916")
+//        oldImageView.image = UIImage(named: "Newark1800.jpg")
+//        newImageView.image = UIImage(named: "RE-812ad")
         let overlayRect = overlayView!.overlay.boundingMapRect
         let region = MKCoordinateRegionForMapRect(overlayRect)
         let rect = mapView.convertRegion(region, toRectToView: containerView)
+    
         historyMapImage = UIImage(named: "Newark1916")
         
         if option == 0  {
@@ -605,6 +624,7 @@ class MapViewController: UIViewController {
             newImageView.animationDuration = 2.0
             newImageView.startAnimating()
         }
+        oldImageView.image = newImageView.image
     }
     
     @IBAction func popover(sender: UIBarButtonItem) {
@@ -623,7 +643,10 @@ class MapViewController: UIViewController {
 //    }
     
     func updateSlider() {
-        if let date = dateAndAlphaDict["date"] {
+        if let date = dateAndAlphaDict["date"], let term = dateAndAlphaDict["term"] {
+            if term == "bc" {
+                dateSlider.setValue(-Float(date)!, animated: true)
+            }
             dateSlider.setValue(Float(date)!, animated: true)
         }
         
@@ -684,9 +707,14 @@ class MapViewController: UIViewController {
     }
     
     func updateMap(year: String) {
-        if let newImage = UIImage(named: "Newark\(year)") {
+        if Int(year) < 0, let newImage = UIImage(named: "RE-\(year)bc") {
             newImageView.image = newImage
             animationWithMapOverlay(0, future: false)
+        } else if Int(year) >= 0, let newImage = UIImage(named: "RE-\(year)ad")
+        {
+            newImageView.image = newImage
+            animationWithMapOverlay(0, future: false)
+            
 //            let newImageView = UIImageView(image: newImage)
 //            newImageView.alpha = 0.0
 //            newImageView.frame = view.frame
@@ -710,9 +738,10 @@ class MapViewController: UIViewController {
     func donePicker() {
         dateAndAlphaDict["date"] = newDateAndAlphaDict["date"]
         dateAndAlphaDict["alpha"] = newDateAndAlphaDict["alpha"]
-        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
+        dateAndAlphaDict["term"] = newDateAndAlphaDict["term"]
+        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"], let term = dateAndAlphaDict["term"] {
             updateMap(date)
-            chooseDateTextField.text = "\(date) + \(alpha)"
+            chooseDateTextField.text = "\(term)\(date) + \(alpha)"
         }
         updateSlider()
         chooseDateTextField.resignFirstResponder()
@@ -798,6 +827,8 @@ extension MapViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
         picker.selectRow(data.indexOf(dateAndAlphaDict["date"]!)!, inComponent: 0, animated: true)
         picker.selectRow(alpha.indexOf(dateAndAlphaDict["alpha"]!)!, inComponent: 1, animated: true)
+        picker.selectRow(term.indexOf(dateAndAlphaDict["term"]!)!, inComponent: 2, animated: true)
+        
         print("beigin editing")
     }
     
@@ -897,14 +928,16 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: UIPickerViewDataSource {
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 2
+        return 3
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if component == 0 {
             return data.count
-        } else {
+        } else if component == 1 {
             return alpha.count
+        } else {
+            return 2
         }
     }
     
@@ -913,12 +946,16 @@ extension MapViewController: UIPickerViewDataSource {
 
 // MARK: - UIPickerViewDelegate
 
+let term = ["ad", "bc"]
+
 extension MapViewController: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
             newDateAndAlphaDict["date"] = data[row]
-        } else {
+        } else if component == 1 {
             newDateAndAlphaDict["alpha"] = alpha[row]
+        } else {
+            newDateAndAlphaDict["term"] = term[row]
         }
         
 //        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
@@ -929,17 +966,21 @@ extension MapViewController: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {
             return data[row]
-        } else {
+        } else if component == 1{
             return alpha[row]
+        } else {
+            return term[row]
         }
     }
     
     func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         let pickerWidth = pickerView.bounds.size.width
         if component == 0 {
-            return pickerWidth/3 * 2
+            return pickerWidth / 2
+        } else if component == 1{
+            return pickerWidth / 4
         } else {
-            return pickerWidth/3
+            return pickerWidth / 4
         }
     }
 }
@@ -984,6 +1025,7 @@ extension MapViewController: UIScrollViewDelegate {
             let shiftwidth = boundsSize.width/2.0 - self.scrollView.contentSize.width/2.0
             self.scrollView.contentInset.left = shiftwidth
         }
+        
     }
 }
 
