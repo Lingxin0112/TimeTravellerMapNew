@@ -19,9 +19,10 @@ class MapsTableViewController: UITableViewController {
         let entity = NSEntityDescription.entityForName("Map", inManagedObjectContext: self.managedContext)
         fetchRequest.entity = entity
         
-        let sortDescriptor1 = NSSortDescriptor(key: "name", ascending: true)
-        let sortDescriptor2 = NSSortDescriptor(key: "date", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2]
+        let sortDescriptor1 = NSSortDescriptor(key: "era", ascending: true)
+        let sortDescriptor2 = NSSortDescriptor(key: "year", ascending: true)
+        let sortDescriptor3 = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2, sortDescriptor3]
         
         fetchRequest.fetchBatchSize = 20
         
@@ -199,11 +200,11 @@ extension MapsTableViewController: NSFetchedResultsControllerDelegate {
             print("MapTableViewController delete")
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            if let cell = tableView.cellForRowAtIndexPath(indexPath!) {
+            if let cell = tableView.cellForRowAtIndexPath(indexPath!) as? MapViewCell {
                 let map = controller.objectAtIndexPath(indexPath!) as! Map
-                cell.textLabel?.text = map.name
-                cell.detailTextLabel?.text = map.date
-//                cell.configureCellForEvent(event)
+//                cell.textLabel?.text = map.name
+//                cell.detailTextLabel?.text = map.date
+                cell.configureMapForCell(map)
             }
             print("MapTableViewController update")
         case .Move:

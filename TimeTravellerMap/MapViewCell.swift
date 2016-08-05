@@ -30,7 +30,7 @@ class MapViewCell: UITableViewCell {
 
     func configureMapForCell(map: Map) {
         nameLabel.text = map.name
-        dateLabel.text = map.date
+        dateLabel.text = "\(map.era!)\(String(abs(Int(map.year!))))"
         areaLabel.text = map.area
         mapImageView.image = UIImage(data: map.mapImageData!)
     }

@@ -354,7 +354,7 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1500" minValue="-338" maxValue="1500" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-DU-4sy">
+                                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1500" minValue="-338" maxValue="1500" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-DU-4sy">
                                                 <rect key="frame" x="-2" y="21" width="604" height="31"/>
                                                 <connections>
                                                     <action selector="dateSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="Y1p-B5-LFT"/>

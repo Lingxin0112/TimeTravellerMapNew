@@ -19,6 +19,16 @@ class AddMapViewController: UIViewController {
     
     @IBOutlet weak var mapImageView: UIImageView!
     
+    @IBOutlet weak var swLatitudeTextField: UITextField!
+    
+    @IBOutlet weak var swLongtitudeTextField: UITextField!
+    
+    @IBOutlet weak var neLatitudeTextField: UITextField!
+    
+    @IBOutlet weak var neLongtitudeTextField: UITextField!
+    
+    @IBOutlet weak var eraSegmentedControl: UISegmentedControl!
+    
     var scrollView: UIScrollView?
     var newImageView: UIImageView?
     
@@ -42,7 +52,15 @@ class AddMapViewController: UIViewController {
         if let map = mapToEdit {
             nameTextField.text = map.name
             areaTextField.text = map.area
-            dateTextField.text = map.date
+            dateTextField.text = String(abs(Int(map.year!)))
+            neLatitudeTextField.text = String(map.neLatitude!)
+            neLongtitudeTextField.text = String(map.neLongtitude!)
+            swLatitudeTextField.text = String(map.swLatitude!)
+            swLongtitudeTextField.text = String(map.swLongtitude!)
+            if map.era! == "AD" {
+                eraSegmentedControl.selectedSegmentIndex = 1
+            }
+            mapImageView.image = UIImage(data: map.mapImageData!)
         }
     }
 
@@ -66,8 +84,17 @@ class AddMapViewController: UIViewController {
         
         map!.name = nameTextField.text
         map!.area = areaTextField.text
-        map!.date = dateTextField.text
+        map!.era = eraSegmentedControl.titleForSegmentAtIndex(eraSegmentedControl.selectedSegmentIndex)
+        if eraSegmentedControl.selectedSegmentIndex == 0 {
+            map!.year = -Int(dateTextField.text!)!
+        } else {
+            map!.year = Int(dateTextField.text!)
+        }
         map!.mapImageData = UIImagePNGRepresentation(mapImageView.image!)
+        map!.neLatitude = Double(neLatitudeTextField.text!)
+        map!.neLongtitude = Double(neLongtitudeTextField.text!)
+        map!.swLatitude = Double(swLatitudeTextField.text!)
+        map!.swLongtitude = Double(swLongtitudeTextField.text!)
 
         do {
             try managedContext.save()

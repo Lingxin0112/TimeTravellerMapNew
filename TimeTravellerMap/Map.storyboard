@@ -133,6 +133,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u9s-63-Vz0">
+                                <rect key="frame" x="46" y="371" width="240" height="128"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="5yl-9U-3LW" appends="YES" id="dXi-8s-cVJ"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -141,11 +148,17 @@
                     <connections>
                         <outlet property="areaLabel" destination="qB6-JN-olD" id="B4l-y8-Kzm"/>
                         <outlet property="dateLabel" destination="etz-IF-OG8" id="Q5O-3a-sOA"/>
+                        <outlet property="mapImageView" destination="u9s-63-Vz0" id="GcB-hh-P4s"/>
                         <outlet property="nameLabel" destination="JXy-i3-b9i" id="Rox-Qk-Rkl"/>
                         <segue destination="XpH-go-tEf" kind="presentation" identifier="EditMap" id="Zip-Nx-iKB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJn-ns-VVT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="5yl-9U-3LW">
+                    <connections>
+                        <action selector="showMapImageTapGesture:" destination="7zc-a6-qM6" id="dr8-0P-qJq"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2389" y="2107"/>
         </scene>
@@ -174,7 +187,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zo-br-u85">
-                                <rect key="frame" x="26" y="185" width="36" height="21"/>
+                                <rect key="frame" x="26" y="189" width="36" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -192,7 +205,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jgq-hL-AG2">
                                 <rect key="frame" x="91" y="185" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9UC-0J-FHY">
                                 <rect key="frame" x="16" y="384" width="240" height="128"/>
@@ -252,6 +265,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-Wg-brk">
+                                <rect key="frame" x="215" y="186" width="67" height="29"/>
+                                <segments>
+                                    <segment title="BC"/>
+                                    <segment title="AD"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -270,8 +290,13 @@
                     <connections>
                         <outlet property="areaTextField" destination="yO7-ye-TpF" id="ybT-bP-0w7"/>
                         <outlet property="dateTextField" destination="Jgq-hL-AG2" id="V9s-XN-AyQ"/>
+                        <outlet property="eraSegmentedControl" destination="iYo-Wg-brk" id="OEO-rL-x4s"/>
                         <outlet property="mapImageView" destination="9UC-0J-FHY" id="o4g-Fa-fWr"/>
                         <outlet property="nameTextField" destination="S8k-JQ-ne8" id="lPA-z7-g1d"/>
+                        <outlet property="neLatitudeTextField" destination="rG9-D0-LKN" id="V2k-3J-hlg"/>
+                        <outlet property="neLongtitudeTextField" destination="4o4-W5-Gyc" id="1Wm-dK-W1t"/>
+                        <outlet property="swLatitudeTextField" destination="Xlp-81-FTm" id="9oG-ub-zzC"/>
+                        <outlet property="swLongtitudeTextField" destination="hxG-MK-MJR" id="hCJ-wl-ynw"/>
                         <segue destination="mKo-JE-l8Q" kind="unwind" identifier="UpdateMap" unwindAction="updateMap:" id="xi1-i3-dkC"/>
                     </connections>
                 </viewController>
@@ -329,6 +354,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eIf-sn-zl9"/>
+        <segue reference="Zip-Nx-iKB"/>
     </inferredMetricsTieBreakers>
 </document>
