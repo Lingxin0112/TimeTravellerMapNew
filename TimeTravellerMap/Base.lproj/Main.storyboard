@@ -409,6 +409,8 @@
                         <outlet property="drawMapImageView" destination="eeE-k4-wh8" id="32d-GQ-Laa"/>
                         <outlet property="endDateLabel" destination="dGi-bl-CmG" id="5f8-9W-qkK"/>
                         <outlet property="mapView" destination="1cA-SG-RJw" id="vtO-aA-wId"/>
+                        <outlet property="maxYearLabel" destination="dGi-bl-CmG" id="nIU-2E-g5M"/>
+                        <outlet property="minYearLabel" destination="Pvt-pm-iPn" id="rhY-Xn-ewi"/>
                         <outlet property="scrollView" destination="WY0-u7-kpn" id="rd0-cf-Iv1"/>
                         <outlet property="startDateLabel" destination="Pvt-pm-iPn" id="WoE-zJ-1zn"/>
                         <segue destination="AUF-Lp-FTo" kind="popoverPresentation" identifier="ShowTools" popoverAnchorBarButtonItem="7ye-lz-Ajg" id="fxo-EA-0xk">

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 class AddMapViewController: UIViewController {
     
@@ -28,6 +29,9 @@ class AddMapViewController: UIViewController {
     @IBOutlet weak var neLongtitudeTextField: UITextField!
     
     @IBOutlet weak var eraSegmentedControl: UISegmentedControl!
+    
+    var neLocationCoordinate: CLLocationCoordinate2D?
+    var swLocationCoordinate: CLLocationCoordinate2D?
     
     var scrollView: UIScrollView?
     var newImageView: UIImageView?
@@ -179,10 +183,24 @@ class AddMapViewController: UIViewController {
     }
     
     // MARK: - Navigation
+    
+    @IBAction func updateMapCoordinate(segue: UIStoryboardSegue) {
+        let controller = segue.sourceViewController as! MapLocationViewController
+        neLocationCoordinate = controller.neLocationCoordinate
+        swLocationCoordinate = controller.swLocationCoordinate
+        neLatitudeTextField.text = String(neLocationCoordinate!.latitude)
+        neLongtitudeTextField.text = String(neLocationCoordinate!.longitude)
+        swLatitudeTextField.text = String(swLocationCoordinate!.latitude)
+        swLongtitudeTextField.text = String(swLocationCoordinate!.longitude)
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+        if segue.identifier == "ChooseMapLocation" {
+            let nvController = segue.destinationViewController as! UINavigationController
+            let controller = nvController.topViewController as! MapLocationViewController
+            controller.image = sender as? UIImage
+        }
     }
 
 }
@@ -230,9 +248,10 @@ extension AddMapViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let image = info[UIImagePickerControllerEditedImage] as? UIImage
         mapImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
-        
         dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier("ChooseMapLocation", sender: image)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

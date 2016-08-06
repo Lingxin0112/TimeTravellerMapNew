@@ -192,17 +192,17 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-ye-TpF">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Area" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-ye-TpF">
                                 <rect key="frame" x="91" y="68" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S8k-JQ-ne8">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Map Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S8k-JQ-ne8">
                                 <rect key="frame" x="91" y="123" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jgq-hL-AG2">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Map Year" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jgq-hL-AG2">
                                 <rect key="frame" x="91" y="185" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -239,32 +239,26 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xlp-81-FTm">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SouthWest Latitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xlp-81-FTm">
                                 <rect key="frame" x="199" y="226" width="255" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hxG-MK-MJR">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SouthWest Longtitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hxG-MK-MJR">
                                 <rect key="frame" x="199" y="259" width="255" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rG9-D0-LKN">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="NorthEast Latitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rG9-D0-LKN">
                                 <rect key="frame" x="199" y="292" width="255" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4o4-W5-Gyc">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="NorthEast  Longtitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4o4-W5-Gyc">
                                 <rect key="frame" x="199" y="325" width="255" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHV-mU-r3i">
-                                <rect key="frame" x="98" y="437" width="59" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-Wg-brk">
                                 <rect key="frame" x="215" y="186" width="67" height="29"/>
                                 <segments>
@@ -272,6 +266,10 @@
                                     <segment title="AD"/>
                                 </segments>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEa-sO-D0v">
+                                <rect key="frame" x="16" y="351" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -298,6 +296,7 @@
                         <outlet property="swLatitudeTextField" destination="Xlp-81-FTm" id="9oG-ub-zzC"/>
                         <outlet property="swLongtitudeTextField" destination="hxG-MK-MJR" id="hCJ-wl-ynw"/>
                         <segue destination="mKo-JE-l8Q" kind="unwind" identifier="UpdateMap" unwindAction="updateMap:" id="xi1-i3-dkC"/>
+                        <segue destination="Byc-cq-KxK" kind="presentation" identifier="ChooseMapLocation" id="TBz-lP-1gH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UGq-9S-8HM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -314,6 +313,78 @@
                 </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2978" y="1375"/>
+        </scene>
+        <!--Map Location View Controller-->
+        <scene sceneID="epB-7h-7dS">
+            <objects>
+                <viewController id="wQf-1X-9t4" customClass="MapLocationViewController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ssa-0Q-crv"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tvp-Q2-U0p"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hKZ-kC-iIo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-yj-b1Z">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="LZG-Y9-qlp" appends="YES" id="HMC-ip-2ak"/>
+                                </connections>
+                            </mapView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RE-1040ad" translatesAutoresizingMaskIntoConstraints="NO" id="Ysb-uX-Rld">
+                                <rect key="frame" x="150" y="180" width="300" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="gLt-GQ-QPR"/>
+                                    <constraint firstAttribute="height" constant="240" id="tN3-YJ-QvI"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6s-nS-gA6">
+                                <rect key="frame" x="20" y="77" width="118" height="30"/>
+                                <state key="normal" title="Get The Location"/>
+                                <connections>
+                                    <action selector="getTheLocation:" destination="wQf-1X-9t4" eventType="touchUpInside" id="D6Z-IV-0yZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aZV-yj-b1Z" firstAttribute="top" secondItem="ssa-0Q-crv" secondAttribute="bottom" id="0RS-wI-WV2"/>
+                            <constraint firstAttribute="trailing" secondItem="aZV-yj-b1Z" secondAttribute="trailing" id="GTj-ft-1lp"/>
+                            <constraint firstItem="Tvp-Q2-U0p" firstAttribute="top" secondItem="aZV-yj-b1Z" secondAttribute="bottom" id="f17-bK-dj3"/>
+                            <constraint firstItem="Ysb-uX-Rld" firstAttribute="centerY" secondItem="hKZ-kC-iIo" secondAttribute="centerY" id="lzI-DJ-XRh"/>
+                            <constraint firstItem="Ysb-uX-Rld" firstAttribute="centerX" secondItem="hKZ-kC-iIo" secondAttribute="centerX" id="meP-JG-gLf"/>
+                            <constraint firstItem="aZV-yj-b1Z" firstAttribute="leading" secondItem="hKZ-kC-iIo" secondAttribute="leading" id="vWF-ER-wZ7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="pyJ-rk-tpi">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="kbz-2s-p36">
+                            <connections>
+                                <action selector="cancel:" destination="wQf-1X-9t4" id="ULa-iP-d1p"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="9ol-fa-u1q">
+                            <connections>
+                                <action selector="done:" destination="wQf-1X-9t4" id="eA2-uR-Fol"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapImageView" destination="Ysb-uX-Rld" id="NTb-aH-eav"/>
+                        <outlet property="mapView" destination="aZV-yj-b1Z" id="BkV-XL-Guz"/>
+                        <segue destination="8LQ-4s-QPz" kind="unwind" identifier="UpdateMapCoordinate" unwindAction="updateMapCoordinate:" id="Wne-H1-peh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UG1-iz-eXB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8LQ-4s-QPz" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="LZG-Y9-qlp">
+                    <connections>
+                        <action selector="getCoordinateTapGesture:" destination="wQf-1X-9t4" id="Z0z-nk-uuW"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="4514" y="1382"/>
         </scene>
         <!--Maps-->
         <scene sceneID="Nuh-3j-tTi">
@@ -352,7 +423,28 @@
             </objects>
             <point key="canvasLocation" x="2257" y="1375"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="idR-QO-urX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Byc-cq-KxK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LBK-Se-s1T">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wQf-1X-9t4" kind="relationship" relationship="rootViewController" id="cjv-sy-l2C"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tsx-dY-177" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3702" y="1382"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="RE-1040ad" width="547" height="393"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Zip-Nx-iKB"/>
     </inferredMetricsTieBreakers>

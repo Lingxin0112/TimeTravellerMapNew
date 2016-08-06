@@ -14,7 +14,9 @@ class MapViewController: UIViewController {
     var managedContext: NSManagedObjectContext!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var dateSlider: UISlider!
+    @IBOutlet weak var minYearLabel: UILabel!
     
+    @IBOutlet weak var maxYearLabel: UILabel!
     @IBOutlet weak var alphaSlider: UISlider!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var chooseDateTextField: UITextField!
@@ -32,14 +34,15 @@ class MapViewController: UIViewController {
     var overlayView: HistoryMapOverlayView?
     var historyMapImage: UIImage?
     
-    lazy var data: [String] = {
-        var dataArray = [String]()
-        for i in -338...1500 {
-            dataArray.append("\(i)")
-        }
-        
-        return dataArray
-    }()
+//    lazy var data: [String] = {
+//        var dataArray = [String]()
+//        for i in -338...1500 {
+//            dataArray.append("\(i)")
+//        }
+//        
+//        return dataArray
+//    }()
+    var data: [String] = []
     var alpha = ["0.0", "0.1","0.2","0.3","0.4", "0.5", "0.6",  "0.7", "0.8", "0.9", "1.0"]
     var picker = UIPickerView()
     var dateAndAlphaDict = [String: String]()
@@ -58,6 +61,7 @@ class MapViewController: UIViewController {
     
     let oldImageView = UIImageView()
     let newImageView = UIImageView()
+    let testImageView = UIImageView()
 //    let oldImageview = UIImageView(image: UIImage(named: "Newark1800.jpg"))
 //    let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
     let animationView = UIView()
@@ -94,13 +98,7 @@ class MapViewController: UIViewController {
         
         definesPresentationContext = true
         
-        dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
-        dateAndAlphaDict["alpha"] = String(format: "%.1f", Float(self.alphaSlider.maximumValue))
-        dateAndAlphaDict["term"] = "ad"
-        self.chooseDateTextField.text = "\(dateAndAlphaDict["term"]!)\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
-        newDateAndAlphaDict["date"] = dateAndAlphaDict["date"]
-        newDateAndAlphaDict["alpha"] = dateAndAlphaDict["alpha"]
-        newDateAndAlphaDict["term"] = dateAndAlphaDict["term"]
+        
         
         // 
         let latDelta = historyMap.southWestCoordinate.latitude -
@@ -206,13 +204,7 @@ class MapViewController: UIViewController {
     @IBAction func dateSliderChanged(sender: UISlider) {
         let year = String(Int(self.dateSlider.value))
         dateAndAlphaDict["date"] = year
-        if Int(year) < 0 {
-           dateAndAlphaDict["term"] = "bc"
-           self.chooseDateTextField.text = "\(dateAndAlphaDict["term"]!)\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
-        } else {
-            dateAndAlphaDict["term"] = "ad"
-            self.chooseDateTextField.text = "\(dateAndAlphaDict["term"]!)\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
-        }
+        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
         
 //        newYear = Int(self.dateSlider.value)
         updateMap(year)
@@ -230,6 +222,57 @@ class MapViewController: UIViewController {
         
     }
     
+    func configureRangeOfDateSlider(maps: [Map]) {
+//        let fetchRequest = NSFetchRequest(entityName: "Map")
+//        let sortDescriptor = NSSortDescriptor(key: "year", ascending: true)
+//        let predict = NSPredicate(format: "comment = Yes")
+//        fetchRequest.sortDescriptors = [sortDescriptor]
+//        fetchRequest.predicate = predict
+//        do {
+//            let maps = try managedContext.executeFetchRequest(fetchRequest) as! [Map]
+            if maps.count == 0 {
+                let date = NSDate()
+                let calendar = NSCalendar.currentCalendar()
+                let components = calendar.components([.Year], fromDate: date)
+                let year = components.year
+                minYearLabel.text = String(year)
+                maxYearLabel.text = String(year)
+                dateSlider.minimumValue = Float(year)
+                dateSlider.maximumValue = Float(year)
+                data = []
+                data.append(String(year))
+            } else if maps.count == 1 {
+                let year = maps[0].year! as Int
+                minYearLabel.text = String(year - 100)
+                maxYearLabel.text = String(year + 100)
+                dateSlider.minimumValue = Float(year - 100)
+                dateSlider.maximumValue = Float(year + 100)
+                data = []
+                data.append(String(year - 100))
+                data.append(String(year + 100))
+            } else if maps.count > 1 {
+                let minMap = maps[0]
+                let maxMap = maps[maps.count - 1]
+                let minYear = minMap.year! as Int
+                let maxYear = maxMap.year! as Int
+                minYearLabel.text = String(minYear - 100)
+                maxYearLabel.text = String(maxYear + 100)
+                dateSlider.minimumValue = Float(minYear - 100)
+                dateSlider.maximumValue = Float(maxYear + 100)
+                data = []
+                for i in (minYear - 100)...(maxYear + 100) {
+                    data.append("\(i)")
+                }
+            }
+        dateSlider.value = dateSlider.maximumValue
+        
+        dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
+        dateAndAlphaDict["alpha"] = String(format: "%.1f", Float(self.alphaSlider.maximumValue))
+        
+        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        newDateAndAlphaDict["date"] = dateAndAlphaDict["date"]
+        newDateAndAlphaDict["alpha"] = dateAndAlphaDict["alpha"]
+    }
     
     var left: CGPoint?
     var right: CGPoint?
@@ -656,6 +699,18 @@ class MapViewController: UIViewController {
             newImageView.startAnimating()
         }
         oldImageView.image = newImageView.image
+        
+        // 2222222
+        let newRect = mapView.convertRegion(region, toRectToView: view)
+        testImageView.frame = newRect
+        testImageView.image = UIImage(named: "RE-9ad")
+        self.view.addSubview(testImageView)
+        let point = mapView.convertPoint(testImageView.frame.origin, toCoordinateFromView: view)
+        print("newImageview point:\(point)")
+        
+        let newPoint = CGPoint(x: testImageView.frame.origin.x + testImageView.frame.size.width, y: testImageView.frame.origin.y + testImageView.frame.size.height)
+        let eastPoint = mapView.convertPoint(newPoint, toCoordinateFromView: view)
+        print("newImageview SE_point:\(eastPoint)")
     }
     
     @IBAction func popover(sender: UIBarButtonItem) {
@@ -674,10 +729,7 @@ class MapViewController: UIViewController {
 //    }
     
     func updateSlider() {
-        if let date = dateAndAlphaDict["date"], let term = dateAndAlphaDict["term"] {
-            if term == "bc" {
-                dateSlider.setValue(-Float(date)!, animated: true)
-            }
+        if let date = dateAndAlphaDict["date"] {
             dateSlider.setValue(Float(date)!, animated: true)
         }
         
@@ -724,6 +776,8 @@ class MapViewController: UIViewController {
             fatalError("Could not fetch \(error), \(error.userInfo)")
         }
     }
+    
+
     
     // TODO: add share function
     func share() {
@@ -810,10 +864,9 @@ class MapViewController: UIViewController {
     func donePicker() {
         dateAndAlphaDict["date"] = newDateAndAlphaDict["date"]
         dateAndAlphaDict["alpha"] = newDateAndAlphaDict["alpha"]
-        dateAndAlphaDict["term"] = newDateAndAlphaDict["term"]
-        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"], let term = dateAndAlphaDict["term"] {
+        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
             updateMap(date)
-            chooseDateTextField.text = "\(term)\(date) + \(alpha)"
+            chooseDateTextField.text = "\(date) + \(alpha)"
         }
         updateSlider()
         chooseDateTextField.resignFirstResponder()
@@ -838,7 +891,10 @@ class MapViewController: UIViewController {
         
         
         var maps: [Map] = []
+        var localMaps: [Map] = []
         let fetchRequest = NSFetchRequest(entityName: "Map")
+        let sortDescriptor = NSSortDescriptor(key: "year", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         do {
             maps = try managedContext.executeFetchRequest(fetchRequest) as! [Map]
         } catch {
@@ -857,10 +913,13 @@ class MapViewController: UIViewController {
             if MKMapRectIntersectsRect(visibleRect, mapRect) {
                 print("in in in .....")
                 map.comment = "Yes"
+                localMaps.append(map)
             } else {
                 print("out out out .....")
                 map.comment = "No"
             }
+            
+            configureRangeOfDateSlider(localMaps)
             
             do {
 //                try managedContext.save()
@@ -938,7 +997,6 @@ extension MapViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
         picker.selectRow(data.indexOf(dateAndAlphaDict["date"]!)!, inComponent: 0, animated: true)
         picker.selectRow(alpha.indexOf(dateAndAlphaDict["alpha"]!)!, inComponent: 1, animated: true)
-        picker.selectRow(term.indexOf(dateAndAlphaDict["term"]!)!, inComponent: 2, animated: true)
         
         print("beigin editing")
     }
@@ -1068,16 +1126,12 @@ extension MapViewController: UIPickerViewDataSource {
 
 // MARK: - UIPickerViewDelegate
 
-let term = ["ad", "bc"]
-
 extension MapViewController: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
             newDateAndAlphaDict["date"] = data[row]
         } else if component == 1 {
             newDateAndAlphaDict["alpha"] = alpha[row]
-        } else {
-            newDateAndAlphaDict["term"] = term[row]
         }
         
 //        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
@@ -1088,21 +1142,17 @@ extension MapViewController: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {
             return data[row]
-        } else if component == 1{
-            return alpha[row]
         } else {
-            return term[row]
+            return alpha[row]
         }
     }
     
     func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         let pickerWidth = pickerView.bounds.size.width
         if component == 0 {
-            return pickerWidth / 2
-        } else if component == 1{
-            return pickerWidth / 4
+            return pickerWidth * 2 / 3
         } else {
-            return pickerWidth / 4
+            return pickerWidth / 3
         }
     }
 }
