@@ -333,7 +333,7 @@
                                     <outletCollection property="gestureRecognizers" destination="LZG-Y9-qlp" appends="YES" id="HMC-ip-2ak"/>
                                 </connections>
                             </mapView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RE-1040ad" translatesAutoresizingMaskIntoConstraints="NO" id="Ysb-uX-Rld">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ysb-uX-Rld">
                                 <rect key="frame" x="150" y="180" width="300" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="gLt-GQ-QPR"/>
@@ -384,7 +384,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4514" y="1382"/>
+            <point key="canvasLocation" x="4509" y="1382"/>
         </scene>
         <!--Maps-->
         <scene sceneID="Nuh-3j-tTi">
@@ -442,9 +442,6 @@
             <point key="canvasLocation" x="3702" y="1382"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="RE-1040ad" width="547" height="393"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Zip-Nx-iKB"/>
     </inferredMetricsTieBreakers>

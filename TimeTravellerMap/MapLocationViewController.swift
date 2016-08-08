@@ -19,6 +19,7 @@ class MapLocationViewController: UIViewController {
     var swLocationCoordinate: CLLocationCoordinate2D?
     
     var image: UIImage?
+    var resultSearchController: UISearchController? = nil
     
     // set initial location in Honolulu
     let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
@@ -28,7 +29,28 @@ class MapLocationViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // add search controller
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let searchLocationsTableViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SearchLocationsTableViewController") as! SearchLocationsTableViewController
+        searchLocationsTableViewController.mapView = mapView
+        searchLocationsTableViewController.mark = "NotMain"
+        resultSearchController = UISearchController(searchResultsController: searchLocationsTableViewController)
+        resultSearchController?.searchResultsUpdater = searchLocationsTableViewController
+        
+        let searchBar = resultSearchController!.searchBar
+        searchBar.delegate = self
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Search Places"
+        navigationItem.titleView = searchBar
+        
+        resultSearchController?.hidesNavigationBarDuringPresentation =  false
+        resultSearchController?.dimsBackgroundDuringPresentation = true
+        
+        definesPresentationContext = true
+        
         centerMapOnLocation(initialLocation)
+        
         mapImageView.alpha = 0.6
         
         mapImageView.image = image
@@ -86,7 +108,22 @@ class MapLocationViewController: UIViewController {
         print("Point: \(imagePoint)")
     }
     
+    func updateMapLocation(placemark: MKPlacemark) {
+        let span = MKCoordinateSpanMake(0.05, 0.05)
+        let region = MKCoordinateRegionMake(placemark.coordinate, span)
+        mapView.setRegion(region, animated: true)
+    }
+    
     // MARK: - Navigation
+    
+    @IBAction func chooseMapLocation(segue: UIStoryboardSegue) {
+        if segue.identifier == "ChooseMapLocation" {
+            let controller = segue.sourceViewController as! SearchLocationsTableViewController
+            let chooseLocation = controller.selectedItem
+            updateMapLocation(chooseLocation.placemark)
+            print(chooseLocation.name)
+        }
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -97,4 +134,12 @@ class MapLocationViewController: UIViewController {
         }
     }
 
+}
+
+// MARK: - UISearchBarDelegate
+
+extension MapLocationViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+//        dismissViewControllerAnimated(true, completion: nil)
+    }
 }

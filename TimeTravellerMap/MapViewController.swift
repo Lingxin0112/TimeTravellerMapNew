@@ -84,6 +84,7 @@ class MapViewController: UIViewController {
         
         let searchLocationsTableViewController = storyboard!.instantiateViewControllerWithIdentifier("SearchLocationsTableViewController") as! SearchLocationsTableViewController
         searchLocationsTableViewController.mapView = mapView
+        searchLocationsTableViewController.mark = "Main"
         resultSearchController = UISearchController(searchResultsController: searchLocationsTableViewController)
         resultSearchController?.searchResultsUpdater = searchLocationsTableViewController
         

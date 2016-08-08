@@ -14,6 +14,7 @@ class SearchLocationsTableViewController: UITableViewController {
     var matchingItems = [MKMapItem]()
     var mapView: MKMapView? = nil
     var selectedItem = MKMapItem()
+    var mark: String = "Main"
     
     deinit {
         print("deinit '\(self)'")
@@ -47,10 +48,15 @@ class SearchLocationsTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ChooseLocation" {
-            let cell = sender as! UITableViewCell
-            if let indexPath = tableView.indexPathForCell(cell) {
-                selectedItem = matchingItems[indexPath.row]
-            }
+//            let cell = sender as! UITableViewCell
+//            if let indexPath = tableView.indexPathForCell(cell) {
+//                selectedItem = matchingItems[indexPath.row]
+//            }
+            let indexPath = sender as! NSIndexPath
+            selectedItem = matchingItems[indexPath.row]
+        } else if segue.identifier == "ChooseMapLocation" {
+            let indexPath = sender as! NSIndexPath
+            selectedItem = matchingItems[indexPath.row]
         }
     }
 }
@@ -76,7 +82,13 @@ extension SearchLocationsTableViewController: UISearchResultsUpdating {
 // MARK: - UITableViewDelegate
 
 extension SearchLocationsTableViewController {
-    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if mark == "Main" {
+            performSegueWithIdentifier("ChooseLocation", sender: indexPath)
+        } else {
+            performSegueWithIdentifier("ChooseMapLocation", sender: indexPath)
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource

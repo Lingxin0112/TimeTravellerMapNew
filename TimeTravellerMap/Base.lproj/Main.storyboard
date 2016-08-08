@@ -639,9 +639,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="7sK-0p-HHi" kind="unwind" identifier="ChooseLocation" unwindAction="searchLocation:" id="hV4-X7-3rm"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -650,6 +647,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="KJC-SV-H8s"/>
+                    <connections>
+                        <segue destination="7sK-0p-HHi" kind="unwind" identifier="ChooseMapLocation" unwindAction="chooseMapLocation:" id="YM7-dm-mez"/>
+                        <segue destination="7sK-0p-HHi" kind="unwind" identifier="ChooseLocation" unwindAction="searchLocation:" id="WiN-jj-x15"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhV-Mv-UKw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="7sK-0p-HHi" userLabel="Exit" sceneMemberID="exit"/>
