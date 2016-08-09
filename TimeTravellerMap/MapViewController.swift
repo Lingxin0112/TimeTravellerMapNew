@@ -452,17 +452,17 @@ class MapViewController: UIViewController {
         }
     }
     
-    @IBAction func chooseBrush(segue: UIStoryboardSegue) {
-        if segue.identifier == "ChooseBrush" {
-            let controller = segue.sourceViewController as! BrushSettingsViewController
-            brushWidth = controller.brush
-            opacity = controller.opacity
-            red = controller.red
-            green = controller.green
-            blue = controller.blue
-            print("brushWidth \(controller.brush) + opacity \(controller.opacity)")
-        }
-    }
+//    @IBAction func chooseBrush(segue: UIStoryboardSegue) {
+//        if segue.identifier == "ChooseBrush" {
+//            let controller = segue.sourceViewController as! BrushSettingsViewController
+//            brushWidth = controller.brush
+//            opacity = controller.opacity
+//            red = controller.red
+//            green = controller.green
+//            blue = controller.blue
+//            print("brushWidth \(controller.brush) + opacity \(controller.opacity)")
+//        }
+//    }
     
     var mapType: String?
     @IBAction func chooseMapType(segue: UIStoryboardSegue) {

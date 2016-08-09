@@ -19,6 +19,7 @@ class MapLocationViewController: UIViewController {
     var swLocationCoordinate: CLLocationCoordinate2D?
     
     var image: UIImage?
+    var coordinateRegion: MKCoordinateRegion?
     var resultSearchController: UISearchController? = nil
     
     // set initial location in Honolulu
@@ -70,13 +71,18 @@ class MapLocationViewController: UIViewController {
     }
     
     func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
+        coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion!, animated: true)
     }
 
     @IBAction func cancel(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func drawMap(sender: AnyObject) {
+//        performSegueWithIdentifier("MapDrawing", sender: nil)
+    }
+    
     
     func getTheLocation() {
         swLocationCoordinate = mapView.convertPoint(mapImageView.frame.origin, toCoordinateFromView: view)
@@ -131,6 +137,10 @@ class MapLocationViewController: UIViewController {
             let controller = segue.destinationViewController as! AddMapViewController
             controller.neLocationCoordinate = neLocationCoordinate
             controller.swLocationCoordinate = swLocationCoordinate
+        } else if segue.identifier == "MapDrawing" {
+            let controller = segue.destinationViewController as! MapDrawingViewController
+            controller.image = image
+            controller.coordinateRegion = coordinateRegion
         }
     }
 
