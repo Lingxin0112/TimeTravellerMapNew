@@ -122,6 +122,14 @@ class MapLocationViewController: UIViewController {
     
     // MARK: - Navigation
     
+    @IBAction func saveMapDrawing(segue: UIStoryboardSegue) {
+        if segue.identifier == "SaveMapDrawing" {
+            let controller = segue.sourceViewController as! MapDrawingViewController
+            image = controller.image
+            mapImageView.image = image
+        }
+    }
+    
     @IBAction func chooseMapLocation(segue: UIStoryboardSegue) {
         if segue.identifier == "ChooseMapLocation" {
             let controller = segue.sourceViewController as! SearchLocationsTableViewController

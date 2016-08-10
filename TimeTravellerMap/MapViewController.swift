@@ -626,13 +626,13 @@ class MapViewController: UIViewController {
     
     // MARK: - Animation of map overlay
     func animationWithMapOverlay(option: Int, future: Bool) {
-        oldImageView.image = UIImage(named: "Newark1800.jpg")
+//        oldImageView.image = UIImage(named: "Newark1800.jpg")
 //        newImageView.image = UIImage(named: "RE-812ad")
         let overlayRect = overlayView!.overlay.boundingMapRect
         let region = MKCoordinateRegionForMapRect(overlayRect)
         let rect = mapView.convertRegion(region, toRectToView: containerView)
     
-        historyMapImage = UIImage(named: "Newark1916")
+//        historyMapImage = UIImage(named: "Newark1916")
         
         if option == 0  {
             newImageView.frame = rect
@@ -702,16 +702,16 @@ class MapViewController: UIViewController {
         oldImageView.image = newImageView.image
         
         // 2222222
-        let newRect = mapView.convertRegion(region, toRectToView: view)
-        testImageView.frame = newRect
-        testImageView.image = UIImage(named: "RE-9ad")
-        self.view.addSubview(testImageView)
-        let point = mapView.convertPoint(testImageView.frame.origin, toCoordinateFromView: view)
-        print("newImageview point:\(point)")
-        
-        let newPoint = CGPoint(x: testImageView.frame.origin.x + testImageView.frame.size.width, y: testImageView.frame.origin.y + testImageView.frame.size.height)
-        let eastPoint = mapView.convertPoint(newPoint, toCoordinateFromView: view)
-        print("newImageview SE_point:\(eastPoint)")
+//        let newRect = mapView.convertRegion(region, toRectToView: view)
+//        testImageView.frame = newRect
+//        testImageView.image = UIImage(named: "RE-9ad")
+//        self.view.addSubview(testImageView)
+//        let point = mapView.convertPoint(testImageView.frame.origin, toCoordinateFromView: view)
+//        print("newImageview point:\(point)")
+//        
+//        let newPoint = CGPoint(x: testImageView.frame.origin.x + testImageView.frame.size.width, y: testImageView.frame.origin.y + testImageView.frame.size.height)
+//        let eastPoint = mapView.convertPoint(newPoint, toCoordinateFromView: view)
+//        print("newImageview SE_point:\(eastPoint)")
     }
     
     @IBAction func popover(sender: UIBarButtonItem) {

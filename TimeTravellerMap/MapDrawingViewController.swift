@@ -43,6 +43,24 @@ class MapDrawingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func Save(sender: UIButton) {
+        image = mapDrawingImageView.image
+        performSegueWithIdentifier("SaveMapDrawing", sender: nil)
+    }
+    
+    @IBAction func cancel(sender: UIButton) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func fullScreen(sender: UIBarButtonItem) {
+    }
+    
+    
+    @IBAction func reset(sender: UIBarButtonItem) {
+        mapDrawingImageView.image = image
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         swiped = false
         if let touch = touches.first {
@@ -125,6 +143,9 @@ class MapDrawingViewController: UIViewController {
             vc.red = red
             vc.green = green
             vc.blue = blue
+        } else if segue.identifier == "SaveMapDrawing" {
+            let controller = segue.destinationViewController as! MapLocationViewController
+            controller.image = image
         }
     }
 
