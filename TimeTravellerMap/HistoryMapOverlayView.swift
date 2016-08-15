@@ -24,6 +24,8 @@ class HistoryMapOverlayView: MKOverlayRenderer {
         super.init(overlay: overlay)
     }
     
+    
+    
     override func drawMapRect(mapRect: MKMapRect, zoomScale: MKZoomScale, inContext context: CGContext) {
     
         let imageReference = overlayImage.CGImage

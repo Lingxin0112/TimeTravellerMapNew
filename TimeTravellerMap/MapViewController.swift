@@ -99,7 +99,7 @@ class MapViewController: UIViewController {
         
         definesPresentationContext = true
         
-        
+        historyMapImage = UIImage(named: "Newark1800.jpg")
         
         // 
         let latDelta = historyMap.southWestCoordinate.latitude -
@@ -107,14 +107,17 @@ class MapViewController: UIViewController {
         
         // think of a span as a tv size, measure from one corner to another
 //        let span = MKCoordinateSpanMake(fabs(latDelta), 0.0)
-        let span = MKCoordinateSpanMake(0.2, 0.0)
-        let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
-        
-        mapView.region = region
+//        let span = MKCoordinateSpanMake(0.2, 0.0)
+//        let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
+//        
+//        mapView.region = region
+        let initialLocation = CLLocation(latitude: 53.3811, longitude: -1.4701)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate, 1000 * 2.0, 1000 * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
         mapView.showsCompass = true
         mapView.showsScale = true
 //        mapView.showsTraffic = true
-        historyMapImage = UIImage(named: "Newark1800.jpg")
+        
         addOverlay()
         print(overlayView?.overlayImage.size)
         
@@ -192,7 +195,7 @@ class MapViewController: UIViewController {
         super.viewWillAppear(true)
         mapView.removeAnnotations(mapView.annotations)
         state = "refresh"
-        addInformationPins()
+//        addInformationPins()
     }
 
     override func didReceiveMemoryWarning() {
@@ -204,11 +207,17 @@ class MapViewController: UIViewController {
     
     @IBAction func dateSliderChanged(sender: UISlider) {
         let year = String(Int(self.dateSlider.value))
+        var ascending: Bool = false
+        if year > dateAndAlphaDict["date"] {
+            ascending = true
+        } else {
+            ascending = false
+        }
         dateAndAlphaDict["date"] = year
         self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
         
 //        newYear = Int(self.dateSlider.value)
-        updateMap(year)
+        updateMap(year, ascending: ascending)
     }
     
     @IBAction func alphaSliderChanged(sender: UISlider) {
@@ -545,11 +554,11 @@ class MapViewController: UIViewController {
     
     var testOption = 0
     @IBAction func hideOverlay(sender: UIButton) {
-        
+        performSegueWithIdentifier("MapsAnimation", sender: nil)
         if testOption > 3 {
             testOption  = 0
         }
-        animationWithMapOverlay(2, future: true)
+//        animationWithMapOverlay(2, ascending: true)
         testOption += 1
         let coordinate = self.overlayView?.overlay.coordinate
         print("Overlay mid coordinate: \(coordinate)")
@@ -625,7 +634,7 @@ class MapViewController: UIViewController {
     }
     
     // MARK: - Animation of map overlay
-    func animationWithMapOverlay(option: Int, future: Bool) {
+    func animationWithMapOverlay(option: Int, ascending: Bool) {
 //        oldImageView.image = UIImage(named: "Newark1800.jpg")
 //        newImageView.image = UIImage(named: "RE-812ad")
         let overlayRect = overlayView!.overlay.boundingMapRect
@@ -638,7 +647,7 @@ class MapViewController: UIViewController {
             newImageView.frame = rect
             oldImageView.frame = animationView.bounds
             
-            if future {
+            if ascending {
                 UIView.transitionWithView(newImageView, duration: 2, options: [.CurveEaseOut, .TransitionCurlDown], animations: {
                     self.newImageView.hidden = false
                     self.overlayView?.overlayImage = self.newImageView.image!
@@ -672,24 +681,43 @@ class MapViewController: UIViewController {
             newImageView.frame = rect
             oldImageView.hidden = false
             newImageView.hidden = false
-            newImageView.center.x -= 150
+            
             containerView.addSubview(oldImageView)
             containerView.addSubview(newImageView)
             overlayView?.alpha = 0.0
             
-            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
-                self.newImageView.alpha = 1.0
-                self.oldImageView.center.x += 300
-                self.newImageView.center.x += 150
-                self.overlayView?.overlayImage = self.newImageView.image!
-                }, completion: { _ in
-                    
-//                    self.newImageView.hidden = true
-                    self.oldImageView.hidden = true
-                    self.overlayView?.alpha = 1.0
-//                    self.newImageView.removeFromSuperview()
-//                    self.oldImageView.removeFromSuperview()
-            })
+            if ascending {
+                newImageView.center.x -= 300
+                UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    self.newImageView.alpha = 1.0
+                    self.oldImageView.center.x += 300
+                    self.newImageView.center.x += 300
+                    self.overlayView?.overlayImage = self.newImageView.image!
+                    }, completion: { _ in
+                        
+                        //                    self.newImageView.hidden = true
+                        self.oldImageView.hidden = true
+                        self.overlayView?.alpha = 1.0
+                        //                    self.newImageView.removeFromSuperview()
+                        //                    self.oldImageView.removeFromSuperview()
+                })
+            } else {
+                newImageView.center.x += 300
+                UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    self.newImageView.alpha = 1.0
+                    self.oldImageView.center.x -= 300
+                    self.newImageView.center.x -= 300
+                    self.overlayView?.overlayImage = self.newImageView.image!
+                    }, completion: { _ in
+                        
+                        //                    self.newImageView.hidden = true
+                        self.oldImageView.hidden = true
+                        self.overlayView?.alpha = 1.0
+                        //                    self.newImageView.removeFromSuperview()
+                        //                    self.oldImageView.removeFromSuperview()
+                })
+
+            }
             
             
         } else if option == 3 {
@@ -712,6 +740,59 @@ class MapViewController: UIViewController {
 //        let newPoint = CGPoint(x: testImageView.frame.origin.x + testImageView.frame.size.width, y: testImageView.frame.origin.y + testImageView.frame.size.height)
 //        let eastPoint = mapView.convertPoint(newPoint, toCoordinateFromView: view)
 //        print("newImageview SE_point:\(eastPoint)")
+    }
+    
+    func transform(oldMap: Map, newMap: Map, ascending: Bool) {
+//        let oldHistoryMap = HistoryMap(map: oldMap)
+//        let newHistoryMap = HistoryMap(map: newMap)
+//        let oldMapOverlay = HistoryMapOverlay(historyMap: oldHistoryMap)
+//        let newMapOverlay = HistoryMapOverlay(historyMap: newHistoryMap)
+//        let oldOverlayRect = oldMapOverlay.boundingMapRect
+//        let newOverlayRect = newMapOverlay.boundingMapRect
+//        let oldRegion = MKCoordinateRegionForMapRect(oldOverlayRect)
+//        let newRegion = MKCoordinateRegionForMapRect(newOverlayRect)
+        let oldRect = mapView.convertRegion(oldMap.getMapRegion(), toRectToView: containerView)
+        let newRect = mapView.convertRegion(newMap.getMapRegion(), toRectToView: containerView)
+        
+        let oldMapImageView = UIImageView(frame: oldRect)
+        let newMapImageView = UIImageView(frame: newRect)
+        oldMapImageView.image = UIImage(data: oldMap.mapImageData!)
+        newMapImageView.image = UIImage(data: newMap.mapImageData!)
+        
+        containerView.addSubview(oldMapImageView)
+        containerView.addSubview(newMapImageView)
+        
+        addMapOverlay(newMap)
+        historyMapImage = newMapImageView.image
+        overlayView?.alpha = 0.0
+        
+        if ascending {
+            newMapImageView.center.x -= 300
+            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                oldMapImageView.center.x += 300
+                newMapImageView.center.x += 300
+//                self.overlayView?.overlayImage = newMapImageView.image!
+                }, completion: { _ in
+                    newMapImageView.removeFromSuperview()
+                    oldMapImageView.removeFromSuperview()
+                    
+                    self.overlayView?.alpha = 1.0
+            })
+        } else {
+            newMapImageView.center.x += 300
+            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                oldMapImageView.center.x -= 300
+                newMapImageView.center.x -= 300
+//                self.overlayView?.overlayImage = newMapImageView.image!
+                }, completion: { _ in
+                    newMapImageView.removeFromSuperview()
+                    oldMapImageView.removeFromSuperview()
+                    self.overlayView?.alpha = 1.0
+            })
+        }
+        
+        self.oldMap = self.newMap
+        
     }
     
     @IBAction func popover(sender: UIBarButtonItem) {
@@ -746,31 +827,43 @@ class MapViewController: UIViewController {
         mapView.addOverlay(overlay)
     }
     
+    func addMapOverlay(map: Map) {
+//        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
+        historyMap = HistoryMap(map: map)
+        let overlay = HistoryMapOverlay(historyMap: historyMap)
+        historyMapImage = historyMap.image
+        mapView.addOverlay(overlay)
+    }
+    
     func addInformationPins() {
-        var coordinate = CLLocationCoordinate2DMake(40.72422, -74.22544)
-        var title = "Newark"
-        var subtitle = "This is a test"
-        var annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
-        mapView.addAnnotation(annotation)
-        
-        coordinate = CLLocationCoordinate2DMake(40.712216, -74.22655)
-        title = "Newark1"
-        subtitle = "This is a test1"
-        annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
-        mapView.addAnnotation(annotation)
-        
-        coordinate = CLLocationCoordinate2DMake(40.773941, -74.12544)
-        title = "Newark2"
-        subtitle = "This is a test2"
-        annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
-        mapView.addAnnotation(annotation)
+//        var coordinate = CLLocationCoordinate2DMake(40.72422, -74.22544)
+//        var title = "Newark"
+//        var subtitle = "This is a test"
+//        var annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+//        mapView.addAnnotation(annotation)
+//        
+//        coordinate = CLLocationCoordinate2DMake(40.712216, -74.22655)
+//        title = "Newark1"
+//        subtitle = "This is a test1"
+//        annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+//        mapView.addAnnotation(annotation)
+//        
+//        coordinate = CLLocationCoordinate2DMake(40.773941, -74.12544)
+//        title = "Newark2"
+//        subtitle = "This is a test2"
+//        annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle)
+//        mapView.addAnnotation(annotation)
         
         let fetchRequest = NSFetchRequest(entityName: "Event")
         do {
             let results = try managedContext.executeFetchRequest(fetchRequest) as! [Event]
             for event in results {
-                annotation = InformationAnnotation(event: event)
-                mapView.addAnnotation(annotation)
+                if event.isInThisArea(mapView.visibleMapRect)
+                {
+                    let annotation = InformationAnnotation(event: event)
+                    mapView.addAnnotation(annotation)
+                }
             }
             
         } catch let error as NSError {
@@ -795,11 +888,14 @@ class MapViewController: UIViewController {
     func updateNewMap(map: Map) {
         if let newImage = UIImage(data: map.mapImageData!) {
             newImageView.image = newImage
-            animationWithMapOverlay(0, future: false)
+            animationWithMapOverlay(0, ascending: false)
         }
     }
     
-    func updateMap(year: String) {
+    var oldMap: Map?
+    var newMap: Map?
+    
+    func updateMap(year: String, ascending: Bool) {
         newImageView.stopAnimating()
         newYear = Int(year)!
         let fetchRequest = NSFetchRequest(entityName: "Map")
@@ -816,57 +912,46 @@ class MapViewController: UIViewController {
             let maps = try managedContext.executeFetchRequest(fetchRequest) as! [Map]
             if maps.count == 1 {
                 print("find a map:\(maps[0].name!)")
-                newImageView.image = UIImage(data: maps[0].mapImageData!)
-                animationWithMapOverlay(2, future: false)
+                newMap = maps[0]
+                if newMap != oldMap {
+                    transform(oldMap!, newMap: newMap!, ascending: ascending)
+                }
+                
             } else if maps.count > 1 {
                 var imageArray : [UIImage] = []
                 for map in maps {
                     let image = UIImage(data: map.mapImageData!)
                     imageArray.append(image!)
                 }
-                newImageView.hidden = false
-                newImageView.animationImages = imageArray
-                newImageView.animationDuration = 2.0
-                newImageView.startAnimating()
+
+                if ascending {
+                    addMapOverlay(maps[maps.count - 1])
+                } else {
+                    addMapOverlay(maps[0])
+                }
+                
+                overlayView?.alpha = 1.0
+                performSegueWithIdentifier("MapsAnimation", sender: imageArray)
             }
             oldYear = newYear
         } catch {
             fatalError("Error: \(error)")
         }
         
-//        if Int(year) < 0, let newImage = UIImage(named: "RE-\(year)bc") {
-//            newImageView.image = newImage
-//            animationWithMapOverlay(0, future: false)
-//        } else if Int(year) >= 0, let newImage = UIImage(named: "RE-\(year)ad")
-//        {
-//            newImageView.image = newImage
-//            animationWithMapOverlay(0, future: false)
-        
-//            let newImageView = UIImageView(image: newImage)
-//            newImageView.alpha = 0.0
-//            newImageView.frame = view.frame
-//            view.addSubview(newImageView)
-//            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
-//                newImageView.alpha = 1.0
-//                }, completion: { _ in
-//            })
-//            
-//            UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: {
-//                newImageView.alpha = 0.0
-//                self.overlayView?.setNeedsDisplay()
-//                self.overlayView?.overlayImage = newImageView.image!
-//                }, completion: { _ in
-//                    newImageView.removeFromSuperview()
-//            })
-
-//        }
     }
     
     func donePicker() {
+        var ascending: Bool = false
+        if dateAndAlphaDict["date"] < newDateAndAlphaDict["date"] {
+            ascending = true
+        } else {
+            ascending = false
+        }
         dateAndAlphaDict["date"] = newDateAndAlphaDict["date"]
         dateAndAlphaDict["alpha"] = newDateAndAlphaDict["alpha"]
+        
         if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
-            updateMap(date)
+            updateMap(date, ascending: ascending)
             chooseDateTextField.text = "\(date) + \(alpha)"
         }
         updateSlider()
@@ -876,10 +961,6 @@ class MapViewController: UIViewController {
     func resetDrawing() {
         drawMapImageView.image = historyMapImage
     }
-    
-//    func photoPicked() {
-//        
-//    }
     
     func getMoreInformation() {
         
@@ -920,14 +1001,19 @@ class MapViewController: UIViewController {
                 map.comment = "No"
             }
             
-            configureRangeOfDateSlider(localMaps)
             
             do {
-//                try managedContext.save()
+                try managedContext.save()
             } catch {
                 fatalError("Error: \(error)")
             }
         }
+        
+        if maps.count > 0 {
+            addMapOverlay(maps[0])
+            oldMap = maps[0]
+        }
+        configureRangeOfDateSlider(localMaps)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -952,6 +1038,10 @@ class MapViewController: UIViewController {
             vc.annotation = annotation
         } else if segue.identifier == "AddEvent" {
             
+        } else if segue.identifier == "MapsAnimation" {
+            let controller = segue.destinationViewController as! MapsAnimationViewController
+            let imageArray = sender as! [UIImage]
+            controller.imageArray = imageArray
         }
     }
 }
@@ -966,9 +1056,12 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            let span = MKCoordinateSpanMake(0.05, 0.05)
-            let region = MKCoordinateRegion(center: location.coordinate, span: span)
+//            let span = MKCoordinateSpanMake(0.5 0.5)
+//            let region = MKCoordinateRegion(center: location.coordinate, span: span)
 //            mapView.setRegion(region, animated: true)
+//            let initialLocation = CLLocation(latitude: 53.3811, longitude: -1.4701)
+//            let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate, 1000 * 2.0, 1000 * 2.0)
+//            mapView.setRegion(coordinateRegion, animated: true)
         }
     }
     
@@ -992,7 +1085,7 @@ extension MapViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        updateMap(dateAndAlphaDict["date"]!)
+//        updateMap(dateAndAlphaDict["date"]!)
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -1032,6 +1125,7 @@ extension MapViewController: MKMapViewDelegate {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView?.pinTintColor = UIColor.orangeColor()
             annotationView?.canShowCallout = true
+            annotationView?.tintColor = UIColor(white: 0.0, alpha: 0.5)
             
             let button = UIButton(type: .DetailDisclosure)
             annotationView?.rightCalloutAccessoryView = button
@@ -1081,21 +1175,12 @@ extension MapViewController: MKMapViewDelegate {
         let eastPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMidY(mapRect));
         let westPoint = MKMapPointMake(MKMapRectGetMaxX(mapRect), MKMapRectGetMidY(mapRect));
         let currentMapDist = MKMetersBetweenMapPoints(eastPoint, westPoint);
-//        if mapView.overlays.count > 0 {
-//            let overlaysOrigin = mapView.overlays[0].coordinate
-//            let aaa = mapView.convertCoordinate(overlaysOrigin, toPointToView: containerView)
-//            print("center \(aaa)")
-//            let overlayRect = mapView.overlays[0].boundingMapRect
-//            let region = MKCoordinateRegionForMapRect(overlayRect)
-//            let rect = mapView.convertRegion(region, toRectToView: containerView)
-//            print("rect \(rect)")
-//        }
-        
+
         if state == "first" || state == "search" || state == "refresh" {
             chooseMapInTheArea()
             state = "finish"
         }
-        
+        addInformationPins()
         if let view = overlayView where MKMapRectIntersectsRect(mapRect, view.overlay.boundingMapRect) {
             print("In this area!!!!!!")
         }

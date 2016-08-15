@@ -33,19 +33,14 @@ class AddMapViewController: UIViewController {
     var neLocationCoordinate: CLLocationCoordinate2D?
     var swLocationCoordinate: CLLocationCoordinate2D?
     
-    var scrollView: UIScrollView?
+    
+//    @IBOutlet weak var scrollView: UIScrollView!
+    
+    var mapScrollView: UIScrollView?
     var newImageView: UIImageView?
     
     var map: Map?
     var mapToEdit: Map?
-    
-//    lazy var data: [String] = {
-//        var dataArray = [String]()
-//        for i in 1800...2016 {
-//            dataArray.append("\(i)")
-//        }
-//        return dataArray
-//    }()
     
     var managedContext: NSManagedObjectContext!
 
@@ -53,6 +48,13 @@ class AddMapViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddMapViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddMapViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        
+        view.endEditing(true)
+        
         if let map = mapToEdit {
             nameTextField.text = map.name
             areaTextField.text = map.area
@@ -71,6 +73,10 @@ class AddMapViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     
@@ -124,6 +130,82 @@ class AddMapViewController: UIViewController {
         }
     }
     
+    @IBAction func hideKeyboard(sender: AnyObject) {
+        view.endEditing(true)
+    }
+    
+//    func adjustInsetForKeyboardShow(show: Bool, notification: NSNotification) {
+//        guard let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+//        let keyboardFrame = value.CGRectValue()
+//        
+//        var originY: CGFloat = 0
+//        if nameTextField.editing {
+//            originY = nameTextField.frame.origin.y
+//        } else if areaTextField.editing {
+//            originY = areaTextField.frame.origin.y
+//        } else if dateTextField.editing {
+//            originY = dateTextField.frame.origin.y
+//        } else if swLatitudeTextField.editing {
+//            originY = swLatitudeTextField.frame.origin.y
+//        } else if swLongtitudeTextField.editing {
+//            originY = swLongtitudeTextField.frame.origin.y
+//        } else if neLatitudeTextField.editing {
+//            originY = neLatitudeTextField.frame.origin.y
+//        } else if neLongtitudeTextField.editing {
+//            originY = neLongtitudeTextField.frame.origin.y
+//        }
+//        
+//        let offset = (originY + neLongtitudeTextField.frame.size.height + 64) - (view.frame.size.height - keyboardFrame.height);
+//        
+//        guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue  else {return}
+//        
+//        if(offset > 0) {
+//            UIView.animateWithDuration(duration, animations: { _ in
+//                self.view.frame = CGRectMake(0.0, -offset, self.view.frame.size.width, self.view.frame.size.height);
+//            })
+//        }
+//        
+//    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        guard let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardFrame = value.CGRectValue()
+        
+        var originY: CGFloat = 0
+        if nameTextField.editing {
+            originY = nameTextField.frame.origin.y
+        } else if areaTextField.editing {
+            originY = areaTextField.frame.origin.y
+        } else if dateTextField.editing {
+            originY = dateTextField.frame.origin.y
+        } else if swLatitudeTextField.editing {
+            originY = swLatitudeTextField.frame.origin.y
+        } else if swLongtitudeTextField.editing {
+            originY = swLongtitudeTextField.frame.origin.y
+        } else if neLatitudeTextField.editing {
+            originY = neLatitudeTextField.frame.origin.y
+        } else if neLongtitudeTextField.editing {
+            originY = neLongtitudeTextField.frame.origin.y
+        }
+        
+        let offset = (originY + neLongtitudeTextField.frame.size.height + 64) - (view.frame.size.height - keyboardFrame.height);
+        
+        guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue  else {return}
+        
+        if(offset > 0) {
+            UIView.animateWithDuration(duration, animations: { _ in
+                self.view.frame = CGRectMake(0.0, -offset, self.view.frame.size.width, self.view.frame.size.height);
+            })
+        }
+
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+            if view.frame.origin.y != 0 {
+                view.frame.origin.y = 0
+            }
+    }
+    
     var oldframe: CGRect!
     
     func showImage(imageView: UIImageView) {
@@ -136,14 +218,14 @@ class AddMapViewController: UIViewController {
         newImageView = UIImageView(frame: oldframe)
         newImageView!.image = image
         newImageView!.tag = 1
-        scrollView = UIScrollView(frame: UIScreen.mainScreen().bounds)
-        scrollView!.addSubview(newImageView!)
-        scrollView!.contentSize = newImageView!.image!.size
-        backgroundView.addSubview(scrollView!)
+        mapScrollView = UIScrollView(frame: UIScreen.mainScreen().bounds)
+        mapScrollView!.addSubview(newImageView!)
+        mapScrollView!.contentSize = newImageView!.image!.size
+        backgroundView.addSubview(mapScrollView!)
         window?.addSubview(backgroundView)
-        scrollView!.delegate = self;
-        scrollView!.maximumZoomScale=5.0;
-        scrollView!.minimumZoomScale=1;
+        mapScrollView!.delegate = self;
+        mapScrollView!.maximumZoomScale=5.0;
+        mapScrollView!.minimumZoomScale=1;
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("hideImage:"))
         backgroundView.addGestureRecognizer(tap)
@@ -207,7 +289,8 @@ class AddMapViewController: UIViewController {
 
 extension AddMapViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func takePhotoWithCamera() {
-        let imagePicker = UIImagePickerController()
+        let imagePicker = MyImagePickerController()
+        imagePicker.view.tintColor = view.tintColor
         imagePicker.sourceType = .Camera
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -215,7 +298,8 @@ extension AddMapViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func chooseFromLibrary() {
-        let imagePicker = UIImagePickerController()
+        let imagePicker = MyImagePickerController()
+        imagePicker.view.tintColor = view.tintColor
         imagePicker.sourceType = .PhotoLibrary
         imagePicker.delegate = self
         imagePicker.allowsEditing = true

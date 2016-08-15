@@ -19,10 +19,12 @@ class MapsTableViewController: UITableViewController {
         let entity = NSEntityDescription.entityForName("Map", inManagedObjectContext: self.managedContext)
         fetchRequest.entity = entity
         
-        let sortDescriptor1 = NSSortDescriptor(key: "era", ascending: true)
-        let sortDescriptor2 = NSSortDescriptor(key: "year", ascending: true)
-        let sortDescriptor3 = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2, sortDescriptor3]
+        let sortDescriptor1 = NSSortDescriptor(key: "area", ascending: true)
+        let sortDescriptor2 = NSSortDescriptor(key: "era", ascending: true)
+        let sortDescriptor3 = NSSortDescriptor(key: "year", ascending: true)
+        let sortDescriptor4 = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2, sortDescriptor3, sortDescriptor4]
+
         
         fetchRequest.fetchBatchSize = 20
         
@@ -48,9 +50,19 @@ class MapsTableViewController: UITableViewController {
         searchBar.searchBarStyle = .Minimal
         searchBar.delegate = self
         searchBar.placeholder = "search map"
+        let textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
         tableView.tableHeaderView = searchBar
         
         navigationItem.leftBarButtonItem = editButtonItem()
+        
+        // appearance
+        tableView.backgroundColor = UIColor.blackColor()
+        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.2)
+        tableView.indicatorStyle = .White
+        
+        tableView.sectionIndexBackgroundColor = UIColor.blackColor()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,7 +88,7 @@ class MapsTableViewController: UITableViewController {
         if searchText.isEmpty {
             fetchedResultsController.fetchRequest.predicate = nil
         } else {
-            NSFetchedResultsController.deleteCacheWithName("Maps")
+//            NSFetchedResultsController.deleteCacheWithName("Maps")
             fetchedResultsController.fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
         }
         
@@ -94,6 +106,31 @@ class MapsTableViewController: UITableViewController {
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
         return fetchedResultsController.sectionIndexTitles
     }
+    
+//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let labelRect = CGRect(x: 15, y: tableView.sectionHeaderHeight - 14, width: 300, height: 14)
+//        let label = UILabel(frame: labelRect)
+//        label.font = UIFont.boldSystemFontOfSize(11)
+//        
+//        label.text = tableView.dataSource!.tableView!(tableView, titleForFooterInSection: section)
+//        
+//        label.textColor = UIColor(white: 1.0, alpha: 0.4)
+//        label.backgroundColor = UIColor.clearColor()
+//        
+//        let seperatorRect = CGRect(x: 15,
+//                                   y: tableView.sectionHeaderHeight - 0.5,
+//                                   width: tableView.bounds.size.width - 15,
+//                                   height: 0.5)
+//        let seperator = UIView(frame: seperatorRect)
+//        seperator.backgroundColor = tableView.separatorColor
+//        
+//        let viewRect = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.sectionHeaderHeight)
+//        let view = UIView(frame: viewRect)
+//        view.backgroundColor = UIColor(white: 0, alpha: 0.85)
+//        view.addSubview(label)
+//        view.addSubview(seperator)
+//        return view
+//    }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionInfo = fetchedResultsController.sections![section]
@@ -181,6 +218,10 @@ extension MapsTableViewController: UISearchResultsUpdating {
 extension MapsTableViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         
+    }
+    
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
     }
 }
 

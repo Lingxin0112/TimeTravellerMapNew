@@ -20,6 +20,18 @@ class MapViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
 //        mapImageView.layer.cornerRadius = 
+        
+        backgroundColor = UIColor.blackColor()
+        nameLabel.textColor = UIColor.whiteColor()
+        nameLabel.highlightedTextColor = nameLabel.textColor
+        dateLabel.textColor = UIColor(white: 1.0, alpha: 0.6)
+        dateLabel.highlightedTextColor = dateLabel.textColor
+        areaLabel.textColor = UIColor(white: 1.0, alpha: 0.4)
+        areaLabel.highlightedTextColor = areaLabel.textColor
+        
+        let selectionView = UIView(frame: CGRect.zero)
+        selectionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        selectedBackgroundView = selectionView
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

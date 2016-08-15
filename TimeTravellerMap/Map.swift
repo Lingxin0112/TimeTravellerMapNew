@@ -8,10 +8,17 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 
 class Map: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
-
+    func getMapRegion() -> MKCoordinateRegion{
+        let historyMap = HistoryMap(map: self)
+        let mapOverlay = HistoryMapOverlay(historyMap: historyMap)
+        let overlayRect = mapOverlay.boundingMapRect
+        let region = MKCoordinateRegionForMapRect(overlayRect)
+        return region
+    }
 }

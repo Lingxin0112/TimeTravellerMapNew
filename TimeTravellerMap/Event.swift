@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import CoreLocation
+import MapKit
 
 class Event: NSManagedObject {
 
@@ -20,5 +21,14 @@ class Event: NSManagedObject {
     
     var sectionIdentifier: String {
         return "area"
+    }
+    
+    func isInThisArea(visibleRect: MKMapRect) -> Bool {
+        let coordinate = CLLocationCoordinate2D(latitude: Double(self.latitude), longitude: Double(self.longtitude))
+        let point = MKMapPointForCoordinate(coordinate)
+        if MKMapRectContainsPoint(visibleRect, point) {
+            return true
+        }
+        return false
     }
 }

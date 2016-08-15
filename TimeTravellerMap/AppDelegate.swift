@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        customizeAppearace()
+        
         // Override point for customization after application launch.
         
 //        // save test event
@@ -43,12 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let mapViewController = mapNavigationController.topViewController as! MapViewController
             mapViewController.managedContext = coreDataStack.context
             
-            let navigationController = tabBarViewControllers[2] as! UINavigationController
+            let navigationController = tabBarViewControllers[1] as! UINavigationController
             let eventTableViewController = navigationController.topViewController as! EventTableViewController
             eventTableViewController.managedContext = coreDataStack.context
             let _ = eventTableViewController.view
             
-            let nvController = tabBarViewControllers[3] as! UINavigationController
+            let nvController = tabBarViewControllers[2] as! UINavigationController
             let mapsTableViewController = nvController.topViewController as! MapsTableViewController
             mapsTableViewController.managedContext = coreDataStack.context
             let _ = mapsTableViewController.view
@@ -80,7 +83,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    func customizeAppearace() {
+        UINavigationBar.appearance().barTintColor = UIColor.blackColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        UITabBar.appearance().barTintColor = UIColor.blackColor()
+    }
 
 }
 

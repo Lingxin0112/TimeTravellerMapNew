@@ -14,6 +14,7 @@ class HistoryMap {
     var southWestCoordinate: CLLocationCoordinate2D
     var northEastCoordinate: CLLocationCoordinate2D
     var midCoordinate: CLLocationCoordinate2D
+    var image: UIImage
 //    var midCoordinate: CLLocationCoordinate2D {
 //        get {
 //            return CLLocationCoordinate2DMake((southWestCoordinate.latitude + northEastCoordinate.latitude) / 2, (southWestCoordinate.longitude + northEastCoordinate.longitude) / 2)
@@ -45,6 +46,18 @@ class HistoryMap {
         let southWest = MKMapPointForCoordinate(southWestCoordinate)
         let northEast = MKMapPointForCoordinate(northEastCoordinate)
         overlayBoudingMapRect =  MKMapRectMake(southWest.x, northEast.y, fabs(northEast.x - southWest.x), fabs(northEast.y - southWest.y))
+        image = UIImage()
+    }
+    
+    init(map: Map) {
+        southWestCoordinate = CLLocationCoordinate2D(latitude: Double(map.swLatitude!), longitude: Double(map.swLongtitude!))
+        northEastCoordinate = CLLocationCoordinate2D(latitude: Double(map.neLatitude!), longitude: Double(map.neLongtitude!))
+        midCoordinate = CLLocationCoordinate2DMake((southWestCoordinate.latitude + northEastCoordinate.latitude) / 2, (southWestCoordinate.longitude + northEastCoordinate.longitude) / 2)
+        
+        let southWest = MKMapPointForCoordinate(southWestCoordinate)
+        let northEast = MKMapPointForCoordinate(northEastCoordinate)
+        overlayBoudingMapRect =  MKMapRectMake(southWest.x, northEast.y, fabs(northEast.x - southWest.x), fabs(northEast.y - southWest.y))
+        image = UIImage(data: map.mapImageData!)!
     }
     
 }

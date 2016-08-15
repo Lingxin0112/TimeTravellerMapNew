@@ -46,6 +46,13 @@ class EventTableViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem()
         performFetch()
+        
+        // appearance
+        tableView.backgroundColor = UIColor.blackColor()
+        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.2)
+        tableView.indicatorStyle = .White
+        
+        tableView.sectionIndexBackgroundColor = UIColor.blackColor()
     }
 
     override func didReceiveMemoryWarning() {

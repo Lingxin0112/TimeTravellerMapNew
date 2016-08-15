@@ -35,13 +35,22 @@
 		3B6099971D1FCB6700BBA9E8 /* TimeTravellerMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099961D1FCB6700BBA9E8 /* TimeTravellerMapTests.swift */; };
 		3B6099A21D1FCB6700BBA9E8 /* TimeTravellerMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099A11D1FCB6700BBA9E8 /* TimeTravellerMapUITests.swift */; };
 		3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6099AF1D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift */; };
+		3B646C7F1D5D27180039F998 /* MapsAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B646C7E1D5D27180039F998 /* MapsAnimationViewController.swift */; };
+		3B646C811D5D29ED0039F998 /* MyPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B646C801D5D29ED0039F998 /* MyPresentationController.swift */; };
+		3B646C831D5DD0AB0039F998 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B646C821D5DD0AB0039F998 /* GradientView.swift */; };
 		3BA3CFB61D5898EB00A1071E /* MapDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFB51D5898EB00A1071E /* MapDrawingViewController.swift */; };
+		3BA3CFB81D5B226800A1071E /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFB71D5B226800A1071E /* MyTabBarController.swift */; };
+		3BA3CFBA1D5B230500A1071E /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFB91D5B230500A1071E /* MyNavigationController.swift */; };
+		3BA3CFBC1D5B23FE00A1071E /* MyImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFBB1D5B23FE00A1071E /* MyImagePickerController.swift */; };
+		3BA3CFBE1D5BA21800A1071E /* MySearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */; };
+		3BA3CFC01D5BA27D00A1071E /* MySearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */; };
 		3BAAABC01D5670950053A59D /* MapLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAAABBF1D5670950053A59D /* MapLocationViewController.swift */; };
 		3BC3AE361D205ECE00EF2D26 /* HistoryMapOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3AE351D205ECE00EF2D26 /* HistoryMapOverlay.swift */; };
 		3BC3AE391D205F7B00EF2D26 /* HistoryMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3AE381D205F7B00EF2D26 /* HistoryMap.swift */; };
 		3BC3AE3C1D2068FE00EF2D26 /* Newark1800.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3BC3AE3B1D2068FE00EF2D26 /* Newark1800.jpg */; };
 		3BC3AE3F1D20693F00EF2D26 /* HistoryMapOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3AE3E1D20693F00EF2D26 /* HistoryMapOverlayView.swift */; };
 		3BC3AE411D212D3C00EF2D26 /* Newark1916.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BC3AE401D212D3C00EF2D26 /* Newark1916.png */; };
+		3BC8E9FD1D61C8D5004230F4 /* AddEventTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8E9FC1D61C8D5004230F4 /* AddEventTableViewControllerTests.swift */; };
 		3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */; };
 		3BFE73671D34FEE6003E851E /* AnnotationDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */; };
 		3BFE73901D36C36C003E851E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE738E1D36C36C003E851E /* DataModel.xcdatamodeld */; };
@@ -101,13 +110,22 @@
 		3B6099A11D1FCB6700BBA9E8 /* TimeTravellerMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTravellerMapUITests.swift; sourceTree = "<group>"; };
 		3B6099A31D1FCB6700BBA9E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B6099AF1D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLocationsTableViewController.swift; sourceTree = "<group>"; };
+		3B646C7E1D5D27180039F998 /* MapsAnimationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsAnimationViewController.swift; sourceTree = "<group>"; };
+		3B646C801D5D29ED0039F998 /* MyPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPresentationController.swift; sourceTree = "<group>"; };
+		3B646C821D5DD0AB0039F998 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		3BA3CFB51D5898EB00A1071E /* MapDrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDrawingViewController.swift; sourceTree = "<group>"; };
+		3BA3CFB71D5B226800A1071E /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
+		3BA3CFB91D5B230500A1071E /* MyNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
+		3BA3CFBB1D5B23FE00A1071E /* MyImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImagePickerController.swift; sourceTree = "<group>"; };
+		3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySearchBar.swift; sourceTree = "<group>"; };
+		3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySearchController.swift; sourceTree = "<group>"; };
 		3BAAABBF1D5670950053A59D /* MapLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
 		3BC3AE351D205ECE00EF2D26 /* HistoryMapOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMapOverlay.swift; sourceTree = "<group>"; };
 		3BC3AE381D205F7B00EF2D26 /* HistoryMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMap.swift; sourceTree = "<group>"; };
 		3BC3AE3B1D2068FE00EF2D26 /* Newark1800.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Newark1800.jpg; sourceTree = "<group>"; };
 		3BC3AE3E1D20693F00EF2D26 /* HistoryMapOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMapOverlayView.swift; sourceTree = "<group>"; };
 		3BC3AE401D212D3C00EF2D26 /* Newark1916.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Newark1916.png; sourceTree = "<group>"; };
+		3BC8E9FC1D61C8D5004230F4 /* AddEventTableViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventTableViewControllerTests.swift; sourceTree = "<group>"; };
 		3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsTableViewController.swift; sourceTree = "<group>"; };
 		3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationDetailsTableViewController.swift; sourceTree = "<group>"; };
 		3BFE738F1D36C36C003E851E /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -178,13 +196,21 @@
 				3BC3AE3A1D2068EE00EF2D26 /* HistoryMap */,
 				3BC3AE371D205ED800EF2D26 /* Model */,
 				3B60997F1D1FCB6700BBA9E8 /* AppDelegate.swift */,
+				3BA3CFB71D5B226800A1071E /* MyTabBarController.swift */,
+				3BA3CFB91D5B230500A1071E /* MyNavigationController.swift */,
+				3BA3CFBB1D5B23FE00A1071E /* MyImagePickerController.swift */,
 				3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */,
+				3B646C821D5DD0AB0039F998 /* GradientView.swift */,
+				3B646C801D5D29ED0039F998 /* MyPresentationController.swift */,
 				3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */,
 				3B6099851D1FCB6700BBA9E8 /* Main.storyboard */,
+				3B646C7E1D5D27180039F998 /* MapsAnimationViewController.swift */,
 				3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */,
 				3B36D2EB1D39685D00BACEF8 /* Annotation.storyboard */,
 				3B0F39351D40DBD1004B0B2C /* Map.storyboard */,
 				3BAAABBF1D5670950053A59D /* MapLocationViewController.swift */,
+				3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */,
+				3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */,
 				3BA3CFB51D5898EB00A1071E /* MapDrawingViewController.swift */,
 				3B0F39431D4E76A6004B0B2C /* MapViewCell.swift */,
 				3B0F39451D4E7F2D004B0B2C /* UIImage+Resize.swift */,
@@ -214,6 +240,7 @@
 			children = (
 				3B6099961D1FCB6700BBA9E8 /* TimeTravellerMapTests.swift */,
 				3B6099981D1FCB6700BBA9E8 /* Info.plist */,
+				3BC8E9FC1D61C8D5004230F4 /* AddEventTableViewControllerTests.swift */,
 			);
 			path = TimeTravellerMapTests;
 			sourceTree = "<group>";
@@ -402,8 +429,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BA3CFBA1D5B230500A1071E /* MyNavigationController.swift in Sources */,
 				3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */,
 				3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */,
+				3BA3CFBC1D5B23FE00A1071E /* MyImagePickerController.swift in Sources */,
 				3B36D2EA1D38E09A00BACEF8 /* EventCell.swift in Sources */,
 				3B0F39381D40DED4004B0B2C /* MapsTableViewController.swift in Sources */,
 				3B0F39421D4E122C004B0B2C /* MapDetailsViewController.swift in Sources */,
@@ -411,19 +440,24 @@
 				3B5ABFB51D2C4C180058AEE4 /* InformationAnnotationView.swift in Sources */,
 				3BFE73941D36CD91003E851E /* EventTableViewController.swift in Sources */,
 				3B36D2E81D379A6D00BACEF8 /* HudView.swift in Sources */,
+				3BA3CFB81D5B226800A1071E /* MyTabBarController.swift in Sources */,
 				3B0F393B1D40E2FA004B0B2C /* Map+CoreDataProperties.swift in Sources */,
 				3B6099841D1FCB6700BBA9E8 /* SecondViewController.swift in Sources */,
 				3B0F393E1D46027E004B0B2C /* AddMapViewController.swift in Sources */,
 				3B0F393C1D40E2FA004B0B2C /* Map.swift in Sources */,
 				3BC3AE361D205ECE00EF2D26 /* HistoryMapOverlay.swift in Sources */,
 				3B36D2EF1D39755B00BACEF8 /* EventDetailsViewController.swift in Sources */,
+				3BA3CFBE1D5BA21800A1071E /* MySearchBar.swift in Sources */,
 				3B36D2F21D3ACA3100BACEF8 /* Event+CoreDataProperties.swift in Sources */,
 				3BFE73671D34FEE6003E851E /* AnnotationDetailsTableViewController.swift in Sources */,
 				3BFE73921D36CAB4003E851E /* CoreDataStack.swift in Sources */,
 				3BC3AE3F1D20693F00EF2D26 /* HistoryMapOverlayView.swift in Sources */,
+				3B646C831D5DD0AB0039F998 /* GradientView.swift in Sources */,
+				3BA3CFC01D5BA27D00A1071E /* MySearchController.swift in Sources */,
 				3B5ABFB31D2C4AE50058AEE4 /* InformationAnnotation.swift in Sources */,
 				3B5D65461D271F2B0085D057 /* BrushSettingsViewController.swift in Sources */,
 				3BC3AE391D205F7B00EF2D26 /* HistoryMap.swift in Sources */,
+				3B646C811D5D29ED0039F998 /* MyPresentationController.swift in Sources */,
 				3B0F39401D4DFB5C004B0B2C /* TestTableViewController.swift in Sources */,
 				3B6099801D1FCB6700BBA9E8 /* AppDelegate.swift in Sources */,
 				3B0F39461D4E7F2D004B0B2C /* UIImage+Resize.swift in Sources */,
@@ -433,6 +467,7 @@
 				3B36D2F31D3ACA3100BACEF8 /* Event.swift in Sources */,
 				3BAAABC01D5670950053A59D /* MapLocationViewController.swift in Sources */,
 				3B6099821D1FCB6700BBA9E8 /* MapViewController.swift in Sources */,
+				3B646C7F1D5D27180039F998 /* MapsAnimationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +475,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BC8E9FD1D61C8D5004230F4 /* AddEventTableViewControllerTests.swift in Sources */,
 				3B6099971D1FCB6700BBA9E8 /* TimeTravellerMapTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

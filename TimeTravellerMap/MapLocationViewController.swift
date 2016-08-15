@@ -20,10 +20,10 @@ class MapLocationViewController: UIViewController {
     
     var image: UIImage?
     var coordinateRegion: MKCoordinateRegion?
-    var resultSearchController: UISearchController? = nil
+    var resultSearchController: MySearchController? = nil
     
     // set initial location in Honolulu
-    let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
+    let initialLocation = CLLocation(latitude: 53.3811, longitude: -1.4701)
     let regionRadius: CLLocationDistance = 1000
     
     override func viewDidLoad() {
@@ -36,13 +36,15 @@ class MapLocationViewController: UIViewController {
         let searchLocationsTableViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SearchLocationsTableViewController") as! SearchLocationsTableViewController
         searchLocationsTableViewController.mapView = mapView
         searchLocationsTableViewController.mark = "NotMain"
-        resultSearchController = UISearchController(searchResultsController: searchLocationsTableViewController)
+        resultSearchController = MySearchController(searchResultsController: searchLocationsTableViewController)
         resultSearchController?.searchResultsUpdater = searchLocationsTableViewController
+        resultSearchController?.delegate = self
         
         let searchBar = resultSearchController!.searchBar
         searchBar.delegate = self
         searchBar.sizeToFit()
         searchBar.placeholder = "Search Places"
+        searchBar.showsCancelButton = false
         navigationItem.titleView = searchBar
         
         resultSearchController?.hidesNavigationBarDuringPresentation =  false
@@ -85,10 +87,11 @@ class MapLocationViewController: UIViewController {
     
     
     func getTheLocation() {
-        swLocationCoordinate = mapView.convertPoint(mapImageView.frame.origin, toCoordinateFromView: view)
+        let swPoint = CGPoint(x: mapImageView.frame.origin.x, y: mapImageView.frame.origin.y + mapImageView.frame.size.height)
+        swLocationCoordinate = mapView.convertPoint(swPoint, toCoordinateFromView: view)
         print("newImageview point:\(swLocationCoordinate)")
         
-        let nePoint = CGPoint(x: mapImageView.frame.origin.x + mapImageView.frame.size.width, y: mapImageView.frame.origin.y + mapImageView.frame.size.height)
+        let nePoint = CGPoint(x: mapImageView.frame.origin.x + mapImageView.frame.size.width, y: mapImageView.frame.origin.y)
         neLocationCoordinate = mapView.convertPoint(nePoint, toCoordinateFromView: view)
         print("newImageview SE_point:\(neLocationCoordinate)")
     }
@@ -159,5 +162,17 @@ class MapLocationViewController: UIViewController {
 extension MapLocationViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
 //        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
+    }
+}
+
+// MARK: - UISearchControllerDelegates
+
+extension MapLocationViewController: UISearchControllerDelegate {
+    func didPresentSearchController(searchController: UISearchController) {
+        searchController.searchBar.showsCancelButton = false
     }
 }
