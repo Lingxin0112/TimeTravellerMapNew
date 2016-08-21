@@ -292,6 +292,7 @@
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-9k-hRX">
                                                 <rect key="frame" x="-2" y="0.0" width="604" height="31"/>
+                                                <accessibility key="accessibilityConfiguration" label="alphaSlider"/>
                                                 <connections>
                                                     <action selector="alphaSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="oPe-sB-hpf"/>
                                                 </connections>
@@ -356,6 +357,7 @@
                                             </stackView>
                                             <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1500" minValue="-338" maxValue="1500" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-DU-4sy">
                                                 <rect key="frame" x="-2" y="21" width="604" height="31"/>
+                                                <accessibility key="accessibilityConfiguration" label="dateSlider"/>
                                                 <connections>
                                                     <action selector="dateSliderChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="Y1p-B5-LFT"/>
                                                 </connections>
@@ -670,7 +672,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X24-IX-HVC">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X24-IX-HVC">
                                 <rect key="frame" x="0.0" y="507" width="600" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="add" id="AMc-10-VaO"/>
@@ -725,7 +727,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="-528" y="-263"/>
         </scene>
         <!--Maps Animation View Controller-->
         <scene sceneID="zPe-f4-7Og">

@@ -33,4 +33,28 @@ class TimeTravellerMapUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testGetPermission() {
+        
+    }
+    
+    func testMoveMapFromNowToOld() {
+        XCUIApplication().childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).elementBoundByIndex(1).childrenMatchingType(.Other).elementBoundByIndex(3).sliders["100%"].tap()
+    }
+    
+    func testChangeAlpha() {
+        
+        let app = XCUIApplication()
+        let alphaSlider = app.sliders["alphaSlider"]
+        alphaSlider.adjustToNormalizedSliderPosition(0.7)
+    }
+    
+    func testMoveDateSlider() {
+        
+        let app = XCUIApplication()
+        let overlay = app.otherElements["overlayView"]
+    }
+    
+    func testAddNewMap() {
+        
+    }
 }

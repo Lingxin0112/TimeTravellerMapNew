@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         customizeAppearace()
+//        loadHistoryMap()
         
         // Override point for customization after application launch.
         
@@ -39,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        } catch let error as NSError{
 //            print("Fetching error: \(error.localizedDescription)")
 //        }
+        
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Launch")
         
         let tabBarController = window?.rootViewController as! UITabBarController
         if let tabBarViewControllers = tabBarController.viewControllers {
@@ -89,6 +92,81 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         UITabBar.appearance().barTintColor = UIColor.blackColor()
+    }
+    
+    func loadHistoryMap() {
+        let entity = NSEntityDescription.entityForName("Map", inManagedObjectContext: coreDataStack.context)
+        let map1 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        map1.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-9ad")!)
+        map1.name = "Test1"
+        map1.area = "Sheffield"
+        map1.era = "ad"
+        map1.year = 9
+        map1.neLatitude = 53.3861958137369
+        map1.neLongtitude = -1.46166889892051
+        map1.swLatitude = 53.3781495132825
+        map1.swLongtitude = -1.47853110107949
+        
+        let map2 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        map2.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-86bc")!)
+        map2.name = "Test2"
+        map2.area = "Sheffield"
+        map2.era = "bc"
+        map2.year = -86
+        map2.neLatitude = 53.3861958137369
+        map2.neLongtitude = -1.46166889892051
+        map2.swLatitude = 53.3781495132825
+        map2.swLongtitude = -1.47853110107949
+        
+        let map3 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        map3.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-116ad")!)
+        map3.name = "Test3"
+        map3.area = "Sheffield"
+        map3.era = "ad"
+        map3.year = 116
+        map3.neLatitude = 53.3861958137369
+        map3.neLongtitude = -1.46166889892051
+        map3.swLatitude = 53.3781495132825
+        map3.swLongtitude = -1.47853110107949
+        
+        let map4 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        map4.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-214bc")!)
+        map4.name = "Test4"
+        map4.area = "Sheffield"
+        map4.era = "bc"
+        map4.year = -214
+        map4.neLatitude = 53.3861958137369
+        map4.neLongtitude = -1.46166889892051
+        map4.swLatitude = 53.3781495132825
+        map4.swLongtitude = -1.47853110107949
+        
+        let map5 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        map5.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-269ad")!)
+        map5.name = "Test5"
+        map5.area = "Sheffield"
+        map5.era = "ad"
+        map5.year = 269
+        map5.neLatitude = 53.3861958137369
+        map5.neLongtitude = -1.46166889892051
+        map5.swLatitude = 53.3781495132825
+        map5.swLongtitude = -1.47853110107949
+        
+        let map6 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        map6.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-279bc")!)
+        map6.name = "Test6"
+        map6.area = "Sheffield"
+        map6.era = "bc"
+        map6.year = -279
+        map6.neLatitude = 53.3861958137369
+        map6.neLongtitude = -1.46166889892051
+        map6.swLatitude = 53.3781495132825
+        map6.swLongtitude = -1.47853110107949
+        
+        do {
+            try coreDataStack.context.save()
+        } catch {
+            fatalError("Error: \(error)")
+        }
     }
 
 }

@@ -8,17 +8,17 @@
 
 import XCTest
 import UIKit
-import CoreData
-import TimeTravellerMap
+@testable import TimeTravellerMap
 
 class AddEventTableViewControllerTests: XCTestCase {
     
-//    var viewController: AddEventTableViewController!
+    var viewController: AddEventTableViewController!
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
+        viewController = UIStoryboard(name: "Annotation", bundle: nil).instantiateViewControllerWithIdentifier("AddEventTableViewController") as! AddEventTableViewController
+        let _ = viewController.view
     }
     
     override func tearDown() {
@@ -26,4 +26,10 @@ class AddEventTableViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
+    func testAddNewEventIntoDatabase() {
+        viewController.nameTextField.text = "TestName"
+        viewController.areaTextField.text = "TestArea"
+        
+        viewController.done(viewController.navigationItem.rightBarButtonItem!)
+    }
 }

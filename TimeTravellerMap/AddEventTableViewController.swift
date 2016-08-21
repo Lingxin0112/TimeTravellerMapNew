@@ -26,7 +26,8 @@ class AddEventTableViewController: UITableViewController {
     @IBOutlet weak var videoLinkURLTextField: UITextField!
     @IBOutlet weak var videoWebView: UIWebView!
     
-    @IBOutlet weak var otherURLsTextView: UITextView!
+//    @IBOutlet weak var otherURLsTextView: UITextView!
+    var links: NSOrderedSet = NSOrderedSet()
     var event: Event?
     var name: String? = ""
     var date: String? = ""
@@ -48,6 +49,9 @@ class AddEventTableViewController: UITableViewController {
                 eventDescription = event.eventDescription
                 videoURL = event.videoURL
                 otherURLs = event.otherURLs
+                if let links = event.links {
+                    self.links = links
+                }
             }
         }
     }
@@ -68,6 +72,8 @@ class AddEventTableViewController: UITableViewController {
         gestureRecognizer.cancelsTouchesInView = false
         tableView.addGestureRecognizer(gestureRecognizer)
         
+        //Insert a new Walk entity into Core Data
+        
         if let _ = eventToEdit {
             title = "Edit Event"
             nameTextField.text = name
@@ -78,7 +84,8 @@ class AddEventTableViewController: UITableViewController {
             descriptionTextView.text = eventDescription
             videoLinkURLTextField.text = videoURL
             playVideo(videoURL!)
-            otherURLsTextView.text = otherURLs
+//            otherURLsTextView.text = otherURLs
+            
         }
         
         if eventAddToMap {
@@ -121,7 +128,8 @@ class AddEventTableViewController: UITableViewController {
         event!.latitude = Double(latitudeTextField.text!)!
         event!.longtitude = Double(longtitudeTextField.text!)!
         event!.videoURL = videoLinkURLTextField.text
-        event!.otherURLs = otherURLsTextView.text
+//        event!.otherURLs = otherURLsTextView.text
+        event!.links = links
         
         do {
             try managedContext.save()
@@ -227,6 +235,11 @@ class AddEventTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func SetLinks(segue: UIStoryboardSegue) {
+        let controller = segue.sourceViewController as! LinksTableViewController
+        links = controller.links
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -245,14 +258,15 @@ class AddEventTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if indexPath.section == 2 && indexPath.row == 2 {
+            return indexPath
+        }
         return nil
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 2 && indexPath.row == 1 {
             return 132
-        } else if indexPath.section == 2 && indexPath.row == 2 {
-            return 88
         }
         return UITableViewAutomaticDimension
     }
@@ -312,6 +326,11 @@ class AddEventTableViewController: UITableViewController {
 //        if segue.identifier == "UpdateEvent" {
 //            
 //        }
+        if segue.identifier == "ShowUserfulLinks" {
+            let controller = segue.destinationViewController as! LinksTableViewController
+            controller.managedContext = managedContext
+            controller.links = links
+        }
     }
 
 }

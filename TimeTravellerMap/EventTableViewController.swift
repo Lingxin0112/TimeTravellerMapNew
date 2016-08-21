@@ -164,7 +164,7 @@ class EventTableViewController: UITableViewController {
                 controller.event = event
             }
             
-        }
+        } 
     }
 }
 

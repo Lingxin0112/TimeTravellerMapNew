@@ -354,32 +354,33 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="i7p-Oy-tbr" userLabel="Other Link Table View Cell">
-                                        <rect key="frame" x="0.0" y="632" width="600" height="88"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="uPo-FT-5jr" detailTextLabel="4RI-jl-hVx" style="IBUITableViewCellStyleValue1" id="i7p-Oy-tbr" userLabel="Other Link Table View Cell">
+                                        <rect key="frame" x="0.0" y="632" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i7p-Oy-tbr" id="5mj-FN-WHx">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZpR-qw-x3x">
-                                                    <rect key="frame" x="8" y="8" width="584" height="71.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="RG4-tz-VDh" id="UaM-yd-q6x"/>
-                                                    </connections>
-                                                </textView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uPo-FT-5jr">
+                                                    <rect key="frame" x="15" y="12" width="31.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Links" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4RI-jl-hVx">
+                                                    <rect key="frame" x="527" y="12" width="38" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="ZpR-qw-x3x" secondAttribute="trailing" id="Is5-SD-xJn"/>
-                                                <constraint firstItem="ZpR-qw-x3x" firstAttribute="leading" secondItem="5mj-FN-WHx" secondAttribute="leadingMargin" id="Wqt-Ah-aWz"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ZpR-qw-x3x" secondAttribute="bottom" id="lxj-27-a3N"/>
-                                                <constraint firstItem="ZpR-qw-x3x" firstAttribute="top" secondItem="5mj-FN-WHx" secondAttribute="topMargin" id="qRw-ye-Jwq"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="LDI-bA-mkC" kind="show" identifier="ShowUserfulLinks" id="5AE-1a-L8d"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -408,7 +409,6 @@
                         <outlet property="latitudeTextField" destination="YVY-vu-hId" id="aBY-qn-MMc"/>
                         <outlet property="longtitudeTextField" destination="t2V-zf-ub7" id="xQX-hx-3wM"/>
                         <outlet property="nameTextField" destination="atD-Pj-1ap" id="dXP-he-MOv"/>
-                        <outlet property="otherURLsTextView" destination="ZpR-qw-x3x" id="uth-qe-bHF"/>
                         <outlet property="videoLinkURLTextField" destination="pgJ-FP-A1X" id="TUv-27-J0c"/>
                         <outlet property="videoWebView" destination="aD0-dN-gJ7" id="MM6-qf-oL0"/>
                         <segue destination="z4L-XP-afa" kind="unwind" identifier="UpdateEvent" unwindAction="updateEvent:" id="M4V-uw-qEV"/>
@@ -654,6 +654,49 @@
                 <exit id="z4L-XP-afa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2487" y="1891"/>
+        </scene>
+        <!--Links Table View Controller-->
+        <scene sceneID="DHa-rq-Fmv">
+            <objects>
+                <tableViewController id="LDI-bA-mkC" customClass="LinksTableViewController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="nWx-b8-Ye1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkCell" id="SEU-Zu-m1t" customClass="LinkCell" customModule="TimeTravellerMap" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SEU-Zu-m1t" id="VVd-cF-aaS">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input the link" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NlA-o1-RP0">
+                                            <rect key="frame" x="8" y="8" width="584" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="linkTextField" destination="NlA-o1-RP0" id="wSQ-P4-gF0"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="LDI-bA-mkC" id="5hL-5i-R5b"/>
+                            <outlet property="delegate" destination="LDI-bA-mkC" id="3ml-VF-zZl"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="wwS-f2-pnJ"/>
+                    <connections>
+                        <segue destination="Cs7-Go-SqO" kind="unwind" identifier="SetLinks" unwindAction="SetLinks:" id="D7I-jG-TBR"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ggl-i3-Qan" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Cs7-Go-SqO" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3433" y="1863"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

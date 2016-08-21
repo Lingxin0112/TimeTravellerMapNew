@@ -151,7 +151,9 @@ class MapViewController: UIViewController {
         animationView.addSubview(oldImageView)
         
         loadMaps()
+        overlayView?.accessibilityLabel = "overlayView"
     }
+    
     
     var maps: [Map]!
     
@@ -193,9 +195,21 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        
+        let isLaunch = NSUserDefaults.standardUserDefaults().boolForKey("Launch")
+        if isLaunch {
+
+            let launchView = LaunchView.launchView(view, animated: true)
+            let window = UIApplication.sharedApplication().keyWindow
+                        window?.addSubview(launchView)
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "Launch")
+        }
+        
         mapView.removeAnnotations(mapView.annotations)
         state = "refresh"
 //        addInformationPins()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -208,7 +222,7 @@ class MapViewController: UIViewController {
     @IBAction func dateSliderChanged(sender: UISlider) {
         let year = String(Int(self.dateSlider.value))
         var ascending: Bool = false
-        if year > dateAndAlphaDict["date"] {
+        if Int(year)! > Int(dateAndAlphaDict["date"]!) {
             ascending = true
         } else {
             ascending = false
@@ -233,47 +247,40 @@ class MapViewController: UIViewController {
     }
     
     func configureRangeOfDateSlider(maps: [Map]) {
-//        let fetchRequest = NSFetchRequest(entityName: "Map")
-//        let sortDescriptor = NSSortDescriptor(key: "year", ascending: true)
-//        let predict = NSPredicate(format: "comment = Yes")
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//        fetchRequest.predicate = predict
-//        do {
-//            let maps = try managedContext.executeFetchRequest(fetchRequest) as! [Map]
-            if maps.count == 0 {
-                let date = NSDate()
-                let calendar = NSCalendar.currentCalendar()
-                let components = calendar.components([.Year], fromDate: date)
-                let year = components.year
-                minYearLabel.text = String(year)
-                maxYearLabel.text = String(year)
-                dateSlider.minimumValue = Float(year)
-                dateSlider.maximumValue = Float(year)
-                data = []
-                data.append(String(year))
-            } else if maps.count == 1 {
-                let year = maps[0].year! as Int
-                minYearLabel.text = String(year - 100)
-                maxYearLabel.text = String(year + 100)
-                dateSlider.minimumValue = Float(year - 100)
-                dateSlider.maximumValue = Float(year + 100)
-                data = []
-                data.append(String(year - 100))
-                data.append(String(year + 100))
-            } else if maps.count > 1 {
-                let minMap = maps[0]
-                let maxMap = maps[maps.count - 1]
-                let minYear = minMap.year! as Int
-                let maxYear = maxMap.year! as Int
-                minYearLabel.text = String(minYear - 100)
-                maxYearLabel.text = String(maxYear + 100)
-                dateSlider.minimumValue = Float(minYear - 100)
-                dateSlider.maximumValue = Float(maxYear + 100)
-                data = []
-                for i in (minYear - 100)...(maxYear + 100) {
-                    data.append("\(i)")
-                }
+        if maps.count == 0 {
+            let date = NSDate()
+            let calendar = NSCalendar.currentCalendar()
+            let components = calendar.components([.Year], fromDate: date)
+            let year = components.year
+            minYearLabel.text = String(year)
+            maxYearLabel.text = String(year)
+            dateSlider.minimumValue = Float(year)
+            dateSlider.maximumValue = Float(year)
+            data = []
+            data.append(String(year))
+        } else if maps.count == 1 {
+            let year = maps[0].year! as Int
+            minYearLabel.text = String(year - 100)
+            maxYearLabel.text = String(year + 100)
+            dateSlider.minimumValue = Float(year - 100)
+            dateSlider.maximumValue = Float(year + 100)
+            data = []
+            data.append(String(year - 100))
+            data.append(String(year + 100))
+        } else if maps.count > 1 {
+            let minMap = maps[0]
+            let maxMap = maps[maps.count - 1]
+            let minYear = minMap.year! as Int
+            let maxYear = maxMap.year! as Int
+            minYearLabel.text = String(minYear - 100)
+            maxYearLabel.text = String(maxYear + 100)
+            dateSlider.minimumValue = Float(minYear - 100)
+            dateSlider.maximumValue = Float(maxYear + 100)
+            data = []
+            for i in (minYear - 100)...(maxYear + 100) {
+                data.append("\(i)")
             }
+        }
         dateSlider.value = dateSlider.maximumValue
         
         dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
@@ -318,36 +325,7 @@ class MapViewController: UIViewController {
         let coordinate = tapPoint
         var title = "no title"
         var subtitle = "no subtitle"
-//        let alertController = UIAlertController(title: "Add a annotation pin", message: "Add a pin in press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)", preferredStyle: .Alert)
-//        alertController.addTextFieldWithConfigurationHandler() { textField in
-//            textField.placeholder = "Title"
-//        }
-//        alertController.addTextFieldWithConfigurationHandler() { textField in
-//            textField.placeholder = "Subtitle"
-//        }
-//        alertController.addTextFieldWithConfigurationHandler() { textField in
-//            textField.placeholder = "Video Link"
-//        }
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
-//        let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
-//            _ in
-//            let titleTextFiled = alertController.textFields![0] as UITextField
-//            title = titleTextFiled.text!
-//            let subtitleTextFiled = alertController.textFields![1] as UITextField
-//            subtitle = subtitleTextFiled.text!
-//            let urlTextFiled = alertController.textFields![2] as UITextField
-//            let videoURL = urlTextFiled.text!
-//            
-//            let annotation = InformationAnnotation(coordinate: coordinate, title: title, subtitle: subtitle, url: videoURL)
-//            self.mapView.addAnnotation(annotation)
-//            
-//        })
-//
-//        
-//        alertController.addAction(cancelAction)
-//        alertController.addAction(saveAction)
-//        
-//        presentViewController(alertController, animated: true, completion: nil)
+        
         let annotationStoryboard = UIStoryboard(name: "Annotation", bundle: nil)
         let navigationControoler = annotationStoryboard.instantiateViewControllerWithIdentifier("AddEventNavigationController") as! UINavigationController
         let controller = navigationControoler.topViewController as! AddEventTableViewController
@@ -519,7 +497,6 @@ class MapViewController: UIViewController {
         
         // 5
         drawMapImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-//        drawMapImageView.alpha = opacity
         UIGraphicsEndImageContext()
         
     }

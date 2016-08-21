@@ -7,13 +7,31 @@
 //
 
 import XCTest
+import CoreData
 @testable import TimeTravellerMap
 
 class TimeTravellerMapTests: XCTestCase {
     
+    var mapViewController: MapViewController!
+    
+    var storeCoordinator: NSPersistentStoreCoordinator!
+    var managedObjectContext: NSManagedObjectContext!
+    var managedObjectModel: NSManagedObjectModel!
+    var store: NSPersistentStore!
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+//        mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MapViewController") as! MapViewController
+//        let _ = mapViewController.view
+        
+        managedObjectModel = NSManagedObjectModel.mergedModelFromBundles(nil)
+        storeCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        store = try? storeCoordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+        
+        managedObjectContext = NSManagedObjectContext()
+        managedObjectContext.persistentStoreCoordinator = storeCoordinator
+
     }
     
     override func tearDown() {
@@ -31,6 +49,21 @@ class TimeTravellerMapTests: XCTestCase {
         self.measureBlock {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testisInThisArea() {
+        let event = Event()
+        event.latitude = 53.3811
+        event.longtitude = 1.4701
+        XCTAssertNotNil(event.coordinate, "coordinate is not Nil")
+    }
+    
+    func testDonotAllowGetCurrentLocation() {
+        
+    }
+    
+    func testMapTransformation() {
+        
     }
     
 }
