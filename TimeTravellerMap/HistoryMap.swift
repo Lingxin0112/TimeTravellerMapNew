@@ -58,6 +58,7 @@ class HistoryMap {
         let northEast = MKMapPointForCoordinate(northEastCoordinate)
         overlayBoudingMapRect =  MKMapRectMake(southWest.x, northEast.y, fabs(northEast.x - southWest.x), fabs(northEast.y - southWest.y))
         image = UIImage(data: map.mapImageData!)!
+        
     }
     
 }

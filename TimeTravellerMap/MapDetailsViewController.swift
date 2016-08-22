@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 class MapDetailsViewController: UIViewController {
     
@@ -24,7 +25,7 @@ class MapDetailsViewController: UIViewController {
     var map: Map!
     var scrollView: UIScrollView?
     var newImageView: UIImageView?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,6 +34,7 @@ class MapDetailsViewController: UIViewController {
         
         let editBarItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: Selector("editMap"))
         navigationItem.rightBarButtonItem = editBarItem
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,7 +116,7 @@ class MapDetailsViewController: UIViewController {
         map = controller.mapToEdit
         configureInterface()
     }
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EditMap" {

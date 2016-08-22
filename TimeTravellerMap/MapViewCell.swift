@@ -19,7 +19,9 @@ class MapViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        mapImageView.layer.cornerRadius = 
+        mapImageView.layer.cornerRadius = mapImageView.bounds.size.width / 2
+        mapImageView.clipsToBounds = true
+        separatorInset = UIEdgeInsets(top: 0, left: 82, bottom: 0, right: 0)
         
         backgroundColor = UIColor.blackColor()
         nameLabel.textColor = UIColor.whiteColor()

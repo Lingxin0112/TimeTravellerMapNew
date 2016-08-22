@@ -148,10 +148,12 @@ class MapLocationViewController: UIViewController {
             let controller = segue.destinationViewController as! AddMapViewController
             controller.neLocationCoordinate = neLocationCoordinate
             controller.swLocationCoordinate = swLocationCoordinate
+            controller.image = image
         } else if segue.identifier == "MapDrawing" {
             let controller = segue.destinationViewController as! MapDrawingViewController
             controller.image = image
             controller.coordinateRegion = coordinateRegion
+            controller.isExistedMap = false
         }
     }
 

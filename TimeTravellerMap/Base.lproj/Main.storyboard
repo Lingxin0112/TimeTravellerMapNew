@@ -278,7 +278,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-WV-xjt" userLabel="Content View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <subviews>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-SG-RJw">
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-SG-RJw">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -314,27 +314,6 @@
                                             <action selector="hideOverlay:" destination="9pv-A4-QxB" eventType="touchUpInside" id="pUf-cF-1P3"/>
                                         </connections>
                                     </button>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WY0-u7-kpn">
-                                        <rect key="frame" x="0.0" y="84" width="600" height="360"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eeE-k4-wh8">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
-                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <gestureRecognizers/>
-                                            </imageView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="leading" secondItem="WY0-u7-kpn" secondAttribute="leading" id="8VJ-mt-nO6"/>
-                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="top" secondItem="WY0-u7-kpn" secondAttribute="top" id="MDa-EO-VYS"/>
-                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="centerY" secondItem="WY0-u7-kpn" secondAttribute="centerY" id="a8s-0Q-bSj"/>
-                                            <constraint firstAttribute="bottom" secondItem="eeE-k4-wh8" secondAttribute="bottom" id="dAP-bq-ZKj"/>
-                                            <constraint firstAttribute="trailing" secondItem="eeE-k4-wh8" secondAttribute="trailing" id="dnG-Mq-t3e"/>
-                                            <constraint firstItem="eeE-k4-wh8" firstAttribute="centerX" secondItem="WY0-u7-kpn" secondAttribute="centerX" id="zzq-wW-nVz"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="delegate" destination="9pv-A4-QxB" id="j4i-uc-ux1"/>
-                                        </connections>
-                                    </scrollView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4sX-FK-SXV">
                                         <rect key="frame" x="-2" y="436" width="600" height="51"/>
                                         <subviews>
@@ -371,18 +350,14 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="1cA-SG-RJw" firstAttribute="leading" secondItem="LbY-Dn-qVm" secondAttribute="leading" id="10Y-23-7xk"/>
                                     <constraint firstAttribute="bottom" secondItem="4sX-FK-SXV" secondAttribute="bottom" id="976-lw-tc9"/>
                                     <constraint firstItem="4sX-FK-SXV" firstAttribute="leading" secondItem="mDV-WV-xjt" secondAttribute="leading" id="Ms6-40-qdR"/>
+                                    <constraint firstItem="1cA-SG-RJw" firstAttribute="trailing" secondItem="LbY-Dn-qVm" secondAttribute="trailing" id="MyS-r1-M9A"/>
                                     <constraint firstItem="LbY-Dn-qVm" firstAttribute="leading" secondItem="mDV-WV-xjt" secondAttribute="leading" id="NgW-cB-4rO"/>
-                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="leading" secondItem="1cA-SG-RJw" secondAttribute="leading" id="Wo1-Q3-QNX"/>
-                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="trailing" secondItem="LbY-Dn-qVm" secondAttribute="trailing" id="XTa-NE-DxL"/>
                                     <constraint firstItem="LbY-Dn-qVm" firstAttribute="top" secondItem="mDV-WV-xjt" secondAttribute="top" id="YxY-S5-K4i"/>
                                     <constraint firstItem="1cA-SG-RJw" firstAttribute="top" secondItem="LbY-Dn-qVm" secondAttribute="top" id="aRC-hk-8I2"/>
                                     <constraint firstAttribute="trailing" secondItem="LbY-Dn-qVm" secondAttribute="trailing" id="dVo-Uu-5EC"/>
-                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="leading" secondItem="LbY-Dn-qVm" secondAttribute="leading" id="jmW-b4-5jk"/>
-                                    <constraint firstAttribute="bottom" secondItem="WY0-u7-kpn" secondAttribute="bottom" constant="43" id="lEx-ys-BZT"/>
-                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="trailing" secondItem="1cA-SG-RJw" secondAttribute="trailing" id="qFU-Gz-LBa"/>
-                                    <constraint firstItem="WY0-u7-kpn" firstAttribute="top" secondItem="LbY-Dn-qVm" secondAttribute="bottom" constant="54" id="sif-bA-r5S"/>
                                     <constraint firstAttribute="trailing" secondItem="4sX-FK-SXV" secondAttribute="trailing" id="wPT-VP-Jnd"/>
                                     <constraint firstItem="4sX-FK-SXV" firstAttribute="bottom" secondItem="1cA-SG-RJw" secondAttribute="bottom" id="zBp-ug-UKm"/>
                                 </constraints>
@@ -408,12 +383,10 @@
                         <outlet property="chooseDateTextField" destination="vM6-rw-gD9" id="qiL-NV-GsC"/>
                         <outlet property="containerView" destination="mDV-WV-xjt" id="0yt-HI-btn"/>
                         <outlet property="dateSlider" destination="rRx-DU-4sy" id="J5j-ju-EGi"/>
-                        <outlet property="drawMapImageView" destination="eeE-k4-wh8" id="32d-GQ-Laa"/>
                         <outlet property="endDateLabel" destination="dGi-bl-CmG" id="5f8-9W-qkK"/>
                         <outlet property="mapView" destination="1cA-SG-RJw" id="vtO-aA-wId"/>
                         <outlet property="maxYearLabel" destination="dGi-bl-CmG" id="nIU-2E-g5M"/>
                         <outlet property="minYearLabel" destination="Pvt-pm-iPn" id="rhY-Xn-ewi"/>
-                        <outlet property="scrollView" destination="WY0-u7-kpn" id="rd0-cf-Iv1"/>
                         <outlet property="startDateLabel" destination="Pvt-pm-iPn" id="WoE-zJ-1zn"/>
                         <segue destination="AUF-Lp-FTo" kind="popoverPresentation" identifier="ShowTools" popoverAnchorBarButtonItem="7ye-lz-Ajg" id="fxo-EA-0xk">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -784,7 +757,7 @@
         <scene sceneID="i4a-wF-kUX">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7zG-27-3LW" customClass="MyNavigationController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="world" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ws1-6V-PI8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1021,7 +994,7 @@
         <scene sceneID="7Nb-XH-4Nk">
             <objects>
                 <viewControllerPlaceholder storyboardName="Annotation" id="Nt5-Bw-7hw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="iDx-yy-H1J"/>
+                    <tabBarItem key="tabBarItem" title="Annotation" image="pin" id="iDx-yy-H1J"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4cJ-yt-4Y3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1060,7 +1033,7 @@
         <scene sceneID="0ZM-Jc-EhH">
             <objects>
                 <viewControllerPlaceholder storyboardName="Map" id="nxO-V0-2Qe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="0M3-kW-0GA"/>
+                    <tabBarItem key="tabBarItem" title="Overlay" image="map" id="0M3-kW-0GA"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xzz-wc-iHr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1087,7 +1060,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
+        <image name="map" width="29" height="29"/>
+        <image name="pin" width="29" height="29"/>
         <image name="second" width="30" height="30"/>
+        <image name="world" width="29" height="29"/>
     </resources>
 </document>

@@ -21,4 +21,10 @@ class Map: NSManagedObject {
         let region = MKCoordinateRegionForMapRect(overlayRect)
         return region
     }
+    
+    var midCoordinate: CLLocationCoordinate2D {
+        get {
+            return CLLocationCoordinate2DMake((Double(neLatitude!) + Double(swLatitude!)) / 2, (Double(swLongtitude!) + Double(neLongtitude!)) / 2)
+        }
+    }
 }

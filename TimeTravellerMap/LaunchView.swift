@@ -56,7 +56,7 @@ class LaunchView: UIView {
 
     
     func loading() {
-        let image = UIImage(named: "RE-9ad")
+        let image = UIImage(named: "man-walking")
         let imageView = UIImageView(image: image!)
         
         imageView.frame = CGRect(x: -20, y: self.bounds.height/2 - 20,

@@ -27,6 +27,8 @@ class MapDrawingViewController: UIViewController {
     var brushWidth: CGFloat = 10.0
     var opacity: CGFloat = 1.0
     var swiped = false
+    
+    var isExistedMap: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +48,12 @@ class MapDrawingViewController: UIViewController {
     
     @IBAction func Save(sender: UIButton) {
         image = mapDrawingImageView.image
-        performSegueWithIdentifier("SaveMapDrawing", sender: nil)
+        if isExistedMap {
+            performSegueWithIdentifier("SaveExistedMapDrawing", sender: nil)
+        } else {
+            performSegueWithIdentifier("SaveMapDrawing", sender: nil)
+        }
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func cancel(sender: UIButton) {
@@ -54,6 +61,26 @@ class MapDrawingViewController: UIViewController {
     }
     
     @IBAction func fullScreen(sender: UIBarButtonItem) {
+       isFullScreen = !isFullScreen
+    }
+    
+    var isFullScreen: Bool = false {
+        didSet {
+            if isFullScreen {
+                //                mapDrawingImageView.center = view.center
+                //                mapDrawingImageView.frame.size = CGSize(width: 300, height: 240)
+                //                tempImageView.center = view.center
+                //                tempImageView.frame.size = CGSize(width: 300, height: 240)
+                drawingView.center = view.center
+                drawingView.frame.size = CGSize(width: 300, height: 240)
+//                drawingView.frame = CGRect(x: 0, y: 0, width: 300, height: 240)
+            } else {
+                drawingView.removeConstraints(drawingView.constraints)
+                drawingView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height - 64)
+            }
+            mapDrawingImageView.frame = drawingView.bounds
+            tempImageView.frame = drawingView.bounds
+        }
     }
     
     
@@ -137,7 +164,8 @@ class MapDrawingViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "BrushSetting" {
-            let vc = segue.destinationViewController as! BrushSettingsViewController
+            let nvController = segue.destinationViewController as! UINavigationController
+            let vc = nvController.topViewController as! BrushSettingsViewController
             vc.brush = brushWidth
             vc.opacity = opacity
             vc.red = red
@@ -145,6 +173,9 @@ class MapDrawingViewController: UIViewController {
             vc.blue = blue
         } else if segue.identifier == "SaveMapDrawing" {
             let controller = segue.destinationViewController as! MapLocationViewController
+            controller.image = image
+        } else if segue.identifier == "SaveExistedMapDrawing" {
+            let controller = segue.destinationViewController as! AddMapViewController
             controller.image = image
         }
     }

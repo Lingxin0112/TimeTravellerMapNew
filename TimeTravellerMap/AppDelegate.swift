@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map1.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-9ad")!)
         map1.name = "Test1"
         map1.area = "Sheffield"
-        map1.era = "ad"
+        map1.era = "AD"
         map1.year = 9
         map1.neLatitude = 53.3861958137369
         map1.neLongtitude = -1.46166889892051
@@ -111,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map2.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-86bc")!)
         map2.name = "Test2"
         map2.area = "Sheffield"
-        map2.era = "bc"
+        map2.era = "BC"
         map2.year = -86
         map2.neLatitude = 53.3861958137369
         map2.neLongtitude = -1.46166889892051
@@ -122,7 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map3.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-116ad")!)
         map3.name = "Test3"
         map3.area = "Sheffield"
-        map3.era = "ad"
+        map3.era = "AD"
         map3.year = 116
         map3.neLatitude = 53.3861958137369
         map3.neLongtitude = -1.46166889892051
@@ -133,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map4.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-214bc")!)
         map4.name = "Test4"
         map4.area = "Sheffield"
-        map4.era = "bc"
+        map4.era = "AD"
         map4.year = -214
         map4.neLatitude = 53.3861958137369
         map4.neLongtitude = -1.46166889892051
@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map5.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-269ad")!)
         map5.name = "Test5"
         map5.area = "Sheffield"
-        map5.era = "ad"
+        map5.era = "BC"
         map5.year = 269
         map5.neLatitude = 53.3861958137369
         map5.neLongtitude = -1.46166889892051
@@ -155,7 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map6.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-279bc")!)
         map6.name = "Test6"
         map6.area = "Sheffield"
-        map6.era = "bc"
+        map6.era = "AD"
         map6.year = -279
         map6.neLatitude = 53.3861958137369
         map6.neLongtitude = -1.46166889892051

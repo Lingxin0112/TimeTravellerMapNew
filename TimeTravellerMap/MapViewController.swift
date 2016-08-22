@@ -21,9 +21,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var chooseDateTextField: UITextField!
     @IBOutlet weak var endDateLabel: UILabel!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var drawMapImageView: UIImageView!
-//    @IBOutlet weak var tempImageView: UIImageView!
+
     @IBOutlet weak var containerView: UIView!
     
 
@@ -33,38 +31,16 @@ class MapViewController: UIViewController {
     var historyMap = HistoryMap()
     var overlayView: HistoryMapOverlayView?
     var historyMapImage: UIImage?
-    
-//    lazy var data: [String] = {
-//        var dataArray = [String]()
-//        for i in -338...1500 {
-//            dataArray.append("\(i)")
-//        }
-//        
-//        return dataArray
-//    }()
+
     var data: [String] = []
     var alpha = ["0.0", "0.1","0.2","0.3","0.4", "0.5", "0.6",  "0.7", "0.8", "0.9", "1.0"]
     var picker = UIPickerView()
-    var dateAndAlphaDict = [String: String]()
-    var newDateAndAlphaDict = [String: String]()
+//    var dateAndAlphaDict = [String: String]()
+//    var newDateAndAlphaDict = [String: String]()
     
-    // map drawing
-    var lastPoint = CGPoint.zero
-    var red: CGFloat = 0.0
-    var green: CGFloat = 0.0
-    var blue: CGFloat = 0.0
-    var brushWidth: CGFloat = 10.0
-    var opacity: CGFloat = 1.0
-    var swiped = false
-    
-    var overlayOrDraw: String = "overlay"
     
     let oldImageView = UIImageView()
     let newImageView = UIImageView()
-    let testImageView = UIImageView()
-//    let oldImageview = UIImageView(image: UIImage(named: "Newark1800.jpg"))
-//    let newImageView = UIImageView(image: UIImage(named: "Newark1916"))
-    let animationView = UIView()
     
     var oldYear = 1500
     var newYear = -330
@@ -74,13 +50,6 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        scrollView.hidden = true
-        scrollView.userInteractionEnabled = false
-        drawMapImageView.hidden = true
-//        tempImageView.hidden = true
-        scrollView.minimumZoomScale = 0.5
-        scrollView.maximumZoomScale = 6.0
         
         let searchLocationsTableViewController = storyboard!.instantiateViewControllerWithIdentifier("SearchLocationsTableViewController") as! SearchLocationsTableViewController
         searchLocationsTableViewController.mapView = mapView
@@ -99,7 +68,6 @@ class MapViewController: UIViewController {
         
         definesPresentationContext = true
         
-        historyMapImage = UIImage(named: "Newark1800.jpg")
         
         // 
         let latDelta = historyMap.southWestCoordinate.latitude -
@@ -116,10 +84,8 @@ class MapViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
         mapView.showsCompass = true
         mapView.showsScale = true
-//        mapView.showsTraffic = true
         
-        addOverlay()
-        print(overlayView?.overlayImage.size)
+//        addOverlay()
         
         // picker
         picker.delegate = self
@@ -136,22 +102,13 @@ class MapViewController: UIViewController {
         toolBar.sizeToFit()
         var items = [UIBarButtonItem]()
         items.append(UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil))
-        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "donePicker")
+        let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(MapViewController.donePicker))
         items.append(doneButton)
         toolBar.setItems(items, animated: false)
         toolBar.userInteractionEnabled = true
         chooseDateTextField.inputAccessoryView = toolBar
         
-        animationView.hidden = true
-        containerView.addSubview(animationView)
-        oldImageView.hidden = true
-//        containerView.addSubview(oldImageView)
-        newImageView.hidden = true
-        containerView.addSubview(newImageView)
-        animationView.addSubview(oldImageView)
-        
         loadMaps()
-        overlayView?.accessibilityLabel = "overlayView"
     }
     
     
@@ -197,7 +154,7 @@ class MapViewController: UIViewController {
         super.viewWillAppear(true)
         
         let isLaunch = NSUserDefaults.standardUserDefaults().boolForKey("Launch")
-        if isLaunch {
+        if !isLaunch {
 
             let launchView = LaunchView.launchView(view, animated: true)
             let window = UIApplication.sharedApplication().keyWindow
@@ -207,9 +164,6 @@ class MapViewController: UIViewController {
         
         mapView.removeAnnotations(mapView.annotations)
         state = "refresh"
-//        addInformationPins()
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -222,13 +176,16 @@ class MapViewController: UIViewController {
     @IBAction func dateSliderChanged(sender: UISlider) {
         let year = String(Int(self.dateSlider.value))
         var ascending: Bool = false
-        if Int(year)! > Int(dateAndAlphaDict["date"]!) {
+        if Int(year)! > currentYear {
             ascending = true
         } else {
             ascending = false
         }
-        dateAndAlphaDict["date"] = year
-        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+//        dateAndAlphaDict["date"] = year
+//        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        
+        currentYear = Int(year)!
+        
         
 //        newYear = Int(self.dateSlider.value)
         updateMap(year, ascending: ascending)
@@ -236,14 +193,44 @@ class MapViewController: UIViewController {
     
     @IBAction func alphaSliderChanged(sender: UISlider) {
         let alpha = String(format: "%.1f", alphaSlider.value)
-        dateAndAlphaDict["alpha"] = alpha
-        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
-        if overlayOrDraw == "overlay" {
-            overlayView?.alpha = CGFloat(Float(alpha)!)
-        } else {
-            drawMapImageView.alpha = CGFloat(Float(alpha)!)
+//        dateAndAlphaDict["alpha"] = alpha
+//        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+        overlayView?.alpha = CGFloat(Float(alpha)!)
+    }
+    var ascending = false
+    var currentYear: Int = 0 {
+        willSet(newValue) {
+            if newValue > currentYear {
+                ascending = true
+            } else {
+                ascending = false
+            }
         }
-        
+        didSet {
+            var eraCurrentYear: String = "AD" + "\(currentYear)"
+            var eraMapYear: String = "AD" + "\(mapYear)"
+            if currentYear < 0 {
+                eraCurrentYear = "BC" + "\(-currentYear)"
+            }
+            if mapYear < 0 {
+                eraMapYear = "BC" + "\(-mapYear)"
+            }
+            self.chooseDateTextField.text = eraCurrentYear + "(" + eraMapYear + ")"
+        }
+    }
+    
+    var mapYear: Int = 0 {
+        didSet {
+            var eraCurrentYear: String = "AD" + "\(currentYear)"
+            var eraMapYear: String = "AD" + "\(mapYear)"
+            if currentYear < 0 {
+                eraCurrentYear = "BC" + "\(-currentYear)"
+            }
+            if mapYear < 0 {
+                eraMapYear = "BC" + "\(-mapYear)"
+            }
+            self.chooseDateTextField.text = eraCurrentYear + "(" + eraMapYear + ")"
+        }
     }
     
     func configureRangeOfDateSlider(maps: [Map]) {
@@ -281,14 +268,18 @@ class MapViewController: UIViewController {
                 data.append("\(i)")
             }
         }
+        
         dateSlider.value = dateSlider.maximumValue
         
-        dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
-        dateAndAlphaDict["alpha"] = String(format: "%.1f", Float(self.alphaSlider.maximumValue))
+        currentYear = Int(self.dateSlider.maximumValue)
+        mapYear = Int(self.dateSlider.maximumValue)
         
-        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
-        newDateAndAlphaDict["date"] = dateAndAlphaDict["date"]
-        newDateAndAlphaDict["alpha"] = dateAndAlphaDict["alpha"]
+//        dateAndAlphaDict["date"] = String(Int(self.dateSlider.maximumValue))
+//        dateAndAlphaDict["alpha"] = String(format: "%.1f", Float(self.alphaSlider.maximumValue))
+//        
+//        self.chooseDateTextField.text = "\(dateAndAlphaDict["date"]!) + \(dateAndAlphaDict["alpha"]!)"
+//        newDateAndAlphaDict["date"] = dateAndAlphaDict["date"]
+//        newDateAndAlphaDict["alpha"] = dateAndAlphaDict["alpha"]
     }
     
     var left: CGPoint?
@@ -379,66 +370,7 @@ class MapViewController: UIViewController {
     
     var draw: Bool = true
     
-    @IBAction func chooseTool(segue: UIStoryboardSegue) {
-        if segue.identifier == "ChooseTool" {
-            let controller = segue.sourceViewController as! ToolsTableViewController
-            let tool = controller.tool
-            print(tool)
-            if tool == "pencil" {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: Selector("saveDrawImageOverlay"))
-                overlayOrDraw = "draw"
-                mapView.removeOverlays(mapView.overlays)
 
-                scrollView.hidden = false
-                scrollView.userInteractionEnabled = false
-                
-                drawMapImageView.hidden = false
-//                tempImageView.hidden = false
-
-                mapView.userInteractionEnabled = false
-                
-//                tempImageView.image = nil
-//                drawMapImageView.image = nil
-                if draw {
-                    drawMapImageView.image = historyMapImage
-                    draw = false
-                }
-                
-                brushWidth = controller.brush
-                opacity = controller.opacity
-            } else if tool == "reset" {
-                resetDrawing()
-                if let historyMapImage = historyMapImage {
-                    overlayView?.overlayImage = historyMapImage
-                }
-                
-            } else if tool == "zoom" {
-                
-                mapView.removeOverlays(mapView.overlays)
-                scrollView.hidden = false
-                drawMapImageView.hidden = false
-                scrollView.userInteractionEnabled = true
-                mapView.userInteractionEnabled = true
-                drawMapImageView.userInteractionEnabled = false
-                if draw {
-                    drawMapImageView.image = historyMapImage
-                    draw = false
-                }
-            } else if tool == "overlay" {
-                overlayOrDraw = "overlay"
-                scrollView.hidden = true
-                scrollView.userInteractionEnabled = false
-                mapView.userInteractionEnabled = true
-                historyMap.midCoordinate = mapView.centerCoordinate
-                historyMap.overlayBoudingMapRect = mapView.visibleMapRect
-                
-                
-        
-                addOverlay()
-            }
-        }
-    }
-    
 //    @IBAction func chooseBrush(segue: UIStoryboardSegue) {
 //        if segue.identifier == "ChooseBrush" {
 //            let controller = segue.sourceViewController as! BrushSettingsViewController
@@ -464,69 +396,6 @@ class MapViewController: UIViewController {
                 mapView.mapType = .Satellite
             }
         }
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        self.view.endEditing(true)
-        swiped = false
-        if let touch = touches.first {
-            lastPoint = touch.locationInView(drawMapImageView)
-        }
-        
-    }
-    
-    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
-        
-        // 1
-        UIGraphicsBeginImageContext(scrollView.frame.size)
-        let context = UIGraphicsGetCurrentContext()
-        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height))
-        
-        // 2
-        CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
-        CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
-        
-        // 3
-        CGContextSetLineCap(context, .Round)
-        CGContextSetLineWidth(context, brushWidth)
-        CGContextSetRGBStrokeColor(context, red, green, blue, opacity)
-        CGContextSetBlendMode(context, .Normal)
-        
-        // 4
-        CGContextStrokePath(context)
-        
-        // 5
-        drawMapImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-    }
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        // 6
-        swiped = true
-        if let touch = touches.first {
-            let currentPoint = touch.locationInView(drawMapImageView)
-            drawLineFrom(lastPoint, toPoint: currentPoint)
-            
-            // 7
-            lastPoint = currentPoint
-        }
-
-    }
-
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if !swiped {
-            // draw a single point
-            drawLineFrom(lastPoint, toPoint: lastPoint)
-        }
-        
-        // Merge tempImageView into mainImageView
-//        UIGraphicsBeginImageContext(drawMapImageView.frame.size)
-//        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: 1.0)
-//        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), blendMode: .Normal, alpha: opacity)
-//        drawMapImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        
-//        tempImageView.image = nil
     }
     
     var testOption = 0
@@ -603,121 +472,115 @@ class MapViewController: UIViewController {
 //        })
     }
     
-    // TODO: Need to test in the real device
-    func saveDrawImageOverlay() {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            UIImageWriteToSavedPhotosAlbum(self.drawMapImageView.image!, nil, nil, nil)
-        }
-    }
     
     // MARK: - Animation of map overlay
-    func animationWithMapOverlay(option: Int, ascending: Bool) {
-//        oldImageView.image = UIImage(named: "Newark1800.jpg")
-//        newImageView.image = UIImage(named: "RE-812ad")
-        let overlayRect = overlayView!.overlay.boundingMapRect
-        let region = MKCoordinateRegionForMapRect(overlayRect)
-        let rect = mapView.convertRegion(region, toRectToView: containerView)
-    
-//        historyMapImage = UIImage(named: "Newark1916")
-        
-        if option == 0  {
-            newImageView.frame = rect
-            oldImageView.frame = animationView.bounds
-            
-            if ascending {
-                UIView.transitionWithView(newImageView, duration: 2, options: [.CurveEaseOut, .TransitionCurlDown], animations: {
-                    self.newImageView.hidden = false
-                    self.overlayView?.overlayImage = self.newImageView.image!
-                    }, completion: { _ in
-                        self.newImageView.hidden = true
-                })
-            } else {
-                oldImageView.hidden = false
-                animationView.hidden = false
-                UIView.transitionWithView(animationView, duration: 2, options: [.CurveEaseOut, .TransitionCurlUp], animations: {
-                    self.oldImageView.removeFromSuperview()
-                    self.overlayView?.overlayImage = self.newImageView.image!
-                    }, completion: { _ in
-                        self.oldImageView.hidden = true
-                        self.animationView.hidden = true
-                })
-            }
-        } else if option == 1 {
-            animationView.frame = rect
-            animationView.hidden = false
-            newImageView.frame = animationView.bounds
-            UIView.transitionWithView(animationView, duration: 2, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
-                    self.newImageView.hidden = false
-                    self.animationView.addSubview(self.newImageView)
-                }, completion: { _ in
-                    self.overlayView?.overlayImage = self.newImageView.image!
-                    self.animationView.hidden = true
-            })
-        } else if option == 2 {
-            oldImageView.frame = rect
-            newImageView.frame = rect
-            oldImageView.hidden = false
-            newImageView.hidden = false
-            
-            containerView.addSubview(oldImageView)
-            containerView.addSubview(newImageView)
-            overlayView?.alpha = 0.0
-            
-            if ascending {
-                newImageView.center.x -= 300
-                UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
-                    self.newImageView.alpha = 1.0
-                    self.oldImageView.center.x += 300
-                    self.newImageView.center.x += 300
-                    self.overlayView?.overlayImage = self.newImageView.image!
-                    }, completion: { _ in
-                        
-                        //                    self.newImageView.hidden = true
-                        self.oldImageView.hidden = true
-                        self.overlayView?.alpha = 1.0
-                        //                    self.newImageView.removeFromSuperview()
-                        //                    self.oldImageView.removeFromSuperview()
-                })
-            } else {
-                newImageView.center.x += 300
-                UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
-                    self.newImageView.alpha = 1.0
-                    self.oldImageView.center.x -= 300
-                    self.newImageView.center.x -= 300
-                    self.overlayView?.overlayImage = self.newImageView.image!
-                    }, completion: { _ in
-                        
-                        //                    self.newImageView.hidden = true
-                        self.oldImageView.hidden = true
-                        self.overlayView?.alpha = 1.0
-                        //                    self.newImageView.removeFromSuperview()
-                        //                    self.oldImageView.removeFromSuperview()
-                })
-
-            }
-            
-            
-        } else if option == 3 {
-            let imageArray = [oldImageView.image!, newImageView.image!]
-            newImageView.hidden = false
-            newImageView.animationImages = imageArray
-            newImageView.animationDuration = 2.0
-            newImageView.startAnimating()
-        }
-        oldImageView.image = newImageView.image
-        
-        // 2222222
-//        let newRect = mapView.convertRegion(region, toRectToView: view)
-//        testImageView.frame = newRect
-//        testImageView.image = UIImage(named: "RE-9ad")
-//        self.view.addSubview(testImageView)
-//        let point = mapView.convertPoint(testImageView.frame.origin, toCoordinateFromView: view)
-//        print("newImageview point:\(point)")
+//    func animationWithMapOverlay(option: Int, ascending: Bool) {
+////        oldImageView.image = UIImage(named: "Newark1800.jpg")
+////        newImageView.image = UIImage(named: "RE-812ad")
+//        let overlayRect = overlayView!.overlay.boundingMapRect
+//        let region = MKCoordinateRegionForMapRect(overlayRect)
+//        let rect = mapView.convertRegion(region, toRectToView: containerView)
+//    
+////        historyMapImage = UIImage(named: "Newark1916")
 //        
-//        let newPoint = CGPoint(x: testImageView.frame.origin.x + testImageView.frame.size.width, y: testImageView.frame.origin.y + testImageView.frame.size.height)
-//        let eastPoint = mapView.convertPoint(newPoint, toCoordinateFromView: view)
-//        print("newImageview SE_point:\(eastPoint)")
-    }
+//        if option == 0  {
+//            newImageView.frame = rect
+//            oldImageView.frame = animationView.bounds
+//            
+//            if ascending {
+//                UIView.transitionWithView(newImageView, duration: 2, options: [.CurveEaseOut, .TransitionCurlDown], animations: {
+//                    self.newImageView.hidden = false
+//                    self.overlayView?.overlayImage = self.newImageView.image!
+//                    }, completion: { _ in
+//                        self.newImageView.hidden = true
+//                })
+//            } else {
+//                oldImageView.hidden = false
+//                animationView.hidden = false
+//                UIView.transitionWithView(animationView, duration: 2, options: [.CurveEaseOut, .TransitionCurlUp], animations: {
+//                    self.oldImageView.removeFromSuperview()
+//                    self.overlayView?.overlayImage = self.newImageView.image!
+//                    }, completion: { _ in
+//                        self.oldImageView.hidden = true
+//                        self.animationView.hidden = true
+//                })
+//            }
+//        } else if option == 1 {
+//            animationView.frame = rect
+//            animationView.hidden = false
+//            newImageView.frame = animationView.bounds
+//            UIView.transitionWithView(animationView, duration: 2, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
+//                    self.newImageView.hidden = false
+//                    self.animationView.addSubview(self.newImageView)
+//                }, completion: { _ in
+//                    self.overlayView?.overlayImage = self.newImageView.image!
+//                    self.animationView.hidden = true
+//            })
+//        } else if option == 2 {
+//            oldImageView.frame = rect
+//            newImageView.frame = rect
+//            oldImageView.hidden = false
+//            newImageView.hidden = false
+//            
+//            containerView.addSubview(oldImageView)
+//            containerView.addSubview(newImageView)
+//            overlayView?.alpha = 0.0
+//            
+//            if ascending {
+//                newImageView.center.x -= 300
+//                UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+//                    self.newImageView.alpha = 1.0
+//                    self.oldImageView.center.x += 300
+//                    self.newImageView.center.x += 300
+//                    self.overlayView?.overlayImage = self.newImageView.image!
+//                    }, completion: { _ in
+//                        
+//                        //                    self.newImageView.hidden = true
+//                        self.oldImageView.hidden = true
+//                        self.overlayView?.alpha = 1.0
+//                        //                    self.newImageView.removeFromSuperview()
+//                        //                    self.oldImageView.removeFromSuperview()
+//                })
+//            } else {
+//                newImageView.center.x += 300
+//                UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+//                    self.newImageView.alpha = 1.0
+//                    self.oldImageView.center.x -= 300
+//                    self.newImageView.center.x -= 300
+//                    self.overlayView?.overlayImage = self.newImageView.image!
+//                    }, completion: { _ in
+//                        
+//                        //                    self.newImageView.hidden = true
+//                        self.oldImageView.hidden = true
+//                        self.overlayView?.alpha = 1.0
+//                        //                    self.newImageView.removeFromSuperview()
+//                        //                    self.oldImageView.removeFromSuperview()
+//                })
+//
+//            }
+//            
+//            
+//        } else if option == 3 {
+//            let imageArray = [oldImageView.image!, newImageView.image!]
+//            newImageView.hidden = false
+//            newImageView.animationImages = imageArray
+//            newImageView.animationDuration = 2.0
+//            newImageView.startAnimating()
+//        }
+//        oldImageView.image = newImageView.image
+//        
+//        // 2222222
+////        let newRect = mapView.convertRegion(region, toRectToView: view)
+////        testImageView.frame = newRect
+////        testImageView.image = UIImage(named: "RE-9ad")
+////        self.view.addSubview(testImageView)
+////        let point = mapView.convertPoint(testImageView.frame.origin, toCoordinateFromView: view)
+////        print("newImageview point:\(point)")
+////        
+////        let newPoint = CGPoint(x: testImageView.frame.origin.x + testImageView.frame.size.width, y: testImageView.frame.origin.y + testImageView.frame.size.height)
+////        let eastPoint = mapView.convertPoint(newPoint, toCoordinateFromView: view)
+////        print("newImageview SE_point:\(eastPoint)")
+//    }
     
     func transform(oldMap: Map, newMap: Map, ascending: Bool) {
 //        let oldHistoryMap = HistoryMap(map: oldMap)
@@ -753,7 +616,7 @@ class MapViewController: UIViewController {
                     newMapImageView.removeFromSuperview()
                     oldMapImageView.removeFromSuperview()
                     
-                    self.overlayView?.alpha = 1.0
+                    self.overlayView?.alpha = CGFloat(self.alphaSlider.value)
             })
         } else {
             newMapImageView.center.x += 300
@@ -764,7 +627,8 @@ class MapViewController: UIViewController {
                 }, completion: { _ in
                     newMapImageView.removeFromSuperview()
                     oldMapImageView.removeFromSuperview()
-                    self.overlayView?.alpha = 1.0
+                    
+                    self.overlayView?.alpha = CGFloat(self.alphaSlider.value)
             })
         }
         
@@ -787,22 +651,22 @@ class MapViewController: UIViewController {
 //        self.chooseDateTextField.text = String(Int(inputDate))
 //    }
     
-    func updateSlider() {
-        if let date = dateAndAlphaDict["date"] {
-            dateSlider.setValue(Float(date)!, animated: true)
-        }
-        
-        if let alpha = dateAndAlphaDict["alpha"] {
-            alphaSlider.setValue(Float(alpha)!, animated: true)
-        }
-    }
+//    func updateSlider() {
+//        if let date = dateAndAlphaDict["date"] {
+//            dateSlider.setValue(Float(date)!, animated: true)
+//        }
+//        
+//        if let alpha = dateAndAlphaDict["alpha"] {
+//            alphaSlider.setValue(Float(alpha)!, animated: true)
+//        }
+//    }
     
-    func addOverlay() {
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.removeOverlays(mapView.overlays)
-        let overlay = HistoryMapOverlay(historyMap: historyMap)
-        mapView.addOverlay(overlay)
-    }
+//    func addOverlay() {
+//        mapView.removeAnnotations(mapView.annotations)
+//        mapView.removeOverlays(mapView.overlays)
+//        let overlay = HistoryMapOverlay(historyMap: historyMap)
+//        mapView.addOverlay(overlay)
+//    }
     
     func addMapOverlay(map: Map) {
 //        mapView.removeAnnotations(mapView.annotations)
@@ -848,27 +712,6 @@ class MapViewController: UIViewController {
         }
     }
     
-
-    
-    // TODO: add share function
-    func share() {
-        UIGraphicsBeginImageContext(drawMapImageView.bounds.size)
-        drawMapImageView.image?.drawInRect(CGRect(x: 0, y: 0,
-            width: drawMapImageView.frame.size.width, height: drawMapImageView.frame.size.height))
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        presentViewController(activity, animated: true, completion: nil)
-    }
-    
-    func updateNewMap(map: Map) {
-        if let newImage = UIImage(data: map.mapImageData!) {
-            newImageView.image = newImage
-            animationWithMapOverlay(0, ascending: false)
-        }
-    }
-    
     var oldMap: Map?
     var newMap: Map?
     
@@ -884,6 +727,8 @@ class MapViewController: UIViewController {
         }
         
         fetchRequest.predicate = predict
+        let sortDescriptor = NSSortDescriptor(key: "year", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
             let maps = try managedContext.executeFetchRequest(fetchRequest) as! [Map]
@@ -892,6 +737,7 @@ class MapViewController: UIViewController {
                 newMap = maps[0]
                 if newMap != oldMap {
                     transform(oldMap!, newMap: newMap!, ascending: ascending)
+                    mapYear = newMap!.year as! Int
                 }
                 
             } else if maps.count > 1 {
@@ -903,8 +749,11 @@ class MapViewController: UIViewController {
 
                 if ascending {
                     addMapOverlay(maps[maps.count - 1])
+                    mapYear = maps[maps.count - 1].year as! Int
+                    
                 } else {
                     addMapOverlay(maps[0])
+                    mapYear = maps[0].year as! Int
                 }
                 
                 overlayView?.alpha = 1.0
@@ -918,28 +767,22 @@ class MapViewController: UIViewController {
     }
     
     func donePicker() {
-        var ascending: Bool = false
-        if dateAndAlphaDict["date"] < newDateAndAlphaDict["date"] {
-            ascending = true
-        } else {
-            ascending = false
-        }
-        dateAndAlphaDict["date"] = newDateAndAlphaDict["date"]
-        dateAndAlphaDict["alpha"] = newDateAndAlphaDict["alpha"]
-        
-        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
-            updateMap(date, ascending: ascending)
-            chooseDateTextField.text = "\(date) + \(alpha)"
-        }
-        updateSlider()
+//        var ascending: Bool = false
+//        if dateAndAlphaDict["date"] < newDateAndAlphaDict["date"] {
+//            ascending = true
+//        } else {
+//            ascending = false
+//        }
+//        dateAndAlphaDict["date"] = newDateAndAlphaDict["date"]
+//        dateAndAlphaDict["alpha"] = newDateAndAlphaDict["alpha"]
+//        
+//        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
+//            updateMap(date, ascending: ascending)
+//            chooseDateTextField.text = "\(date) + \(alpha)"
+//        }
+//        updateSlider()
         chooseDateTextField.resignFirstResponder()
-    }
-    
-    func resetDrawing() {
-        drawMapImageView.image = historyMapImage
-    }
-    
-    func getMoreInformation() {
+        updateMap(String(currentYear), ascending: ascending)
         
     }
     
@@ -947,7 +790,6 @@ class MapViewController: UIViewController {
         
         // get visible area
         let visibleRect = mapView.visibleMapRect
-        
         
         var maps: [Map] = []
         var localMaps: [Map] = []
@@ -977,8 +819,7 @@ class MapViewController: UIViewController {
                 print("out out out .....")
                 map.comment = "No"
             }
-            
-            
+    
             do {
                 try managedContext.save()
             } catch {
@@ -990,6 +831,7 @@ class MapViewController: UIViewController {
             addMapOverlay(maps[0])
             oldMap = maps[0]
         }
+        
         configureRangeOfDateSlider(localMaps)
     }
     
@@ -1002,12 +844,6 @@ class MapViewController: UIViewController {
                 controller?.delegate = self
             }
             
-            vc.delegate = self
-            vc.brush = brushWidth
-            vc.opacity = opacity
-            vc.red = red
-            vc.green = green
-            vc.blue = blue
         } else if segue.identifier == "ShowAnnotationDetails" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let vc = navigationController.topViewController as! AnnotationDetailsTableViewController
@@ -1051,25 +887,25 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField.returnKeyType == .Go {
-            updateSlider()
-            self.chooseDateTextField.resignFirstResponder()
-            return true
-        }
-        
-        return false
-    }
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        if textField.returnKeyType == .Go {
+//            updateSlider()
+//            self.chooseDateTextField.resignFirstResponder()
+//            return true
+//        }
+//        
+//        return false
+//    }
     
     func textFieldDidEndEditing(textField: UITextField) {
 //        updateMap(dateAndAlphaDict["date"]!)
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        picker.selectRow(data.indexOf(dateAndAlphaDict["date"]!)!, inComponent: 0, animated: true)
-        picker.selectRow(alpha.indexOf(dateAndAlphaDict["alpha"]!)!, inComponent: 1, animated: true)
+        picker.selectRow(data.indexOf(String(currentYear))!, inComponent: 0, animated: true)
+//        picker.selectRow(alpha.indexOf(dateAndAlphaDict["alpha"]!)!, inComponent: 1, animated: true)
         
-        print("beigin editing")
+//        print("beigin editing")
     }
     
 }
@@ -1149,20 +985,22 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         newImageView.hidden = true
         let mapRect = mapView.visibleMapRect;
-        let eastPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMidY(mapRect));
-        let westPoint = MKMapPointMake(MKMapRectGetMaxX(mapRect), MKMapRectGetMidY(mapRect));
-        let currentMapDist = MKMetersBetweenMapPoints(eastPoint, westPoint);
+//        let eastPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMidY(mapRect));
+//        let westPoint = MKMapPointMake(MKMapRectGetMaxX(mapRect), MKMapRectGetMidY(mapRect));
+//        let currentMapDist = MKMetersBetweenMapPoints(eastPoint, westPoint);
 
         if state == "first" || state == "search" || state == "refresh" {
             chooseMapInTheArea()
             state = "finish"
         }
+        
         addInformationPins()
+        
         if let view = overlayView where MKMapRectIntersectsRect(mapRect, view.overlay.boundingMapRect) {
             print("In this area!!!!!!")
         }
         
-        print("Current map distance is \(currentMapDist)");
+//        print("Current map distance is \(currentMapDist)");
     }
 }
 
@@ -1192,9 +1030,11 @@ extension MapViewController: UIPickerViewDataSource {
 extension MapViewController: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
-            newDateAndAlphaDict["date"] = data[row]
+            currentYear = Int(data[row])!
+            self.dateSlider.value = CFloat(Float(currentYear))
         } else if component == 1 {
-            newDateAndAlphaDict["alpha"] = alpha[row]
+//            newDateAndAlphaDict["alpha"] = alpha[row]
+            self.alphaSlider.value = CFloat(Float(alpha[row])!)
         }
         
 //        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
@@ -1230,39 +1070,34 @@ extension MapViewController: UIPopoverPresentationControllerDelegate {
 
 // MARK: - UIScrollViewDelegate
 
-extension MapViewController: UIScrollViewDelegate {
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-        return drawMapImageView
-    }
-    
-    func scrollViewDidZoom(scrollView: UIScrollView) {
-        let boundsSize = self.scrollView.bounds.size
-        let contentFrame = drawMapImageView.frame
-        
-//        if contentFrame.size.width < boundsSize.width {
-//            contentFrame.origin.x = (boundsSize.width - contentFrame.size.width)/2
-//        } else {
-//            contentFrame.origin.x = 0.0
+//    func scrollViewDidZoom(scrollView: UIScrollView) {
+//        let boundsSize = self.scrollView.bounds.size
+//        let contentFrame = drawMapImageView.frame
+//        
+////        if contentFrame.size.width < boundsSize.width {
+////            contentFrame.origin.x = (boundsSize.width - contentFrame.size.width)/2
+////        } else {
+////            contentFrame.origin.x = 0.0
+////        }
+////        
+////        if contentFrame.size.height < boundsSize.height {
+////            contentFrame.origin.y = (boundsSize.height - contentFrame.size.height)/2
+////        } else {
+////            contentFrame.origin.y = 0.0
+////        }
+////        
+////        drawMapImageView.frame = contentFrame
+//        if contentFrame.height < boundsSize.height {
+//            let shiftHeigh = boundsSize.height/2.0 - self.scrollView.contentSize.height/2.0
+//            self.scrollView.contentInset.top = shiftHeigh
+//        }
+//        if contentFrame.width < boundsSize.width {
+//            let shiftwidth = boundsSize.width/2.0 - self.scrollView.contentSize.width/2.0
+//            self.scrollView.contentInset.left = shiftwidth
 //        }
 //        
-//        if contentFrame.size.height < boundsSize.height {
-//            contentFrame.origin.y = (boundsSize.height - contentFrame.size.height)/2
-//        } else {
-//            contentFrame.origin.y = 0.0
-//        }
-//        
-//        drawMapImageView.frame = contentFrame
-        if contentFrame.height < boundsSize.height {
-            let shiftHeigh = boundsSize.height/2.0 - self.scrollView.contentSize.height/2.0
-            self.scrollView.contentInset.top = shiftHeigh
-        }
-        if contentFrame.width < boundsSize.width {
-            let shiftwidth = boundsSize.width/2.0 - self.scrollView.contentSize.width/2.0
-            self.scrollView.contentInset.left = shiftwidth
-        }
-        
-    }
-}
+//    }
+//}
 
 //// MARK: - BrushSettingsViewControllerDelegate
 //
@@ -1273,22 +1108,6 @@ extension MapViewController: UIScrollViewDelegate {
 //    }
 //}
 
-// MARK: - PhotoPickedDelegate
-
-extension MapViewController: PhotoPickedDelegate {
-    func photoPicked(image: UIImage) {
-        historyMapImage = image
-//        overlayView?.overlayImage = historyMapImage!
-        mapView.removeOverlays(mapView.overlays)
-        scrollView.hidden = false
-        scrollView.userInteractionEnabled = true
-        mapView.userInteractionEnabled = true
-        drawMapImageView.hidden = false
-        drawMapImageView.hidden = false
-        drawMapImageView.image = historyMapImage
-        drawMapImageView.userInteractionEnabled = false
-    }
-}
 
 // MARK: - UISearchBarDelegate
 

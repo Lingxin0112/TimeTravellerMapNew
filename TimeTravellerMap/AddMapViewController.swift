@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import CoreLocation
+import MapKit
 
 class AddMapViewController: UIViewController {
     
@@ -33,6 +34,7 @@ class AddMapViewController: UIViewController {
     var neLocationCoordinate: CLLocationCoordinate2D?
     var swLocationCoordinate: CLLocationCoordinate2D?
     
+    @IBOutlet weak var drawButton: UIButton!
     
 //    @IBOutlet weak var scrollView: UIScrollView!
     
@@ -41,6 +43,24 @@ class AddMapViewController: UIViewController {
     
     var map: Map?
     var mapToEdit: Map?
+    var image: UIImage? {
+        didSet {
+            if let _ = image {
+                drawButton.hidden = false
+            }
+        }
+    }
+    let regionRadius: CLLocationDistance = 1000
+    var coordinateRegion: MKCoordinateRegion {
+        get {
+            if let editMap = mapToEdit {
+                return MKCoordinateRegionMakeWithDistance(editMap.midCoordinate, regionRadius * 2.0, regionRadius * 2.0)
+            } else {
+                let midCoordinate = CLLocationCoordinate2DMake((neLocationCoordinate!.latitude + swLocationCoordinate!.latitude) / 2, (neLocationCoordinate!.longitude + swLocationCoordinate!.longitude) / 2)
+                return MKCoordinateRegionMakeWithDistance(midCoordinate, regionRadius * 2.0, regionRadius * 2.0)
+            }
+        }
+    }
     
     var managedContext: NSManagedObjectContext!
 
@@ -48,6 +68,8 @@ class AddMapViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        drawButton.hidden = true
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddMapViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
@@ -67,6 +89,7 @@ class AddMapViewController: UIViewController {
                 eraSegmentedControl.selectedSegmentIndex = 1
             }
             mapImageView.image = UIImage(data: map.mapImageData!)
+            drawButton.hidden = false
         }
     }
 
@@ -274,17 +297,32 @@ class AddMapViewController: UIViewController {
         neLongtitudeTextField.text = String(neLocationCoordinate!.longitude)
         swLatitudeTextField.text = String(swLocationCoordinate!.latitude)
         swLongtitudeTextField.text = String(swLocationCoordinate!.longitude)
+        image = controller.image
+        mapImageView.image = image
     }
 
+    @IBAction func saveExistedMapDrawing(segue: UIStoryboardSegue) {
+        if segue.identifier == "SaveExistedMapDrawing" {
+            let controller = segue.sourceViewController as! MapDrawingViewController
+            image = controller.image
+            mapImageView.image = image
+        }
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ChooseMapLocation" {
             let nvController = segue.destinationViewController as! UINavigationController
             let controller = nvController.topViewController as! MapLocationViewController
             controller.image = sender as? UIImage
+        } else if segue.identifier == "DrawingMap" {
+            let controller = segue.destinationViewController as! MapDrawingViewController
+            controller.isExistedMap = true
+            controller.image = mapImageView.image
+            controller.coordinateRegion = coordinateRegion
         }
-    }
 
+    }
 }
 
 extension AddMapViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

@@ -21,7 +21,7 @@ class MapsTableViewController: UITableViewController {
         
         let sortDescriptor1 = NSSortDescriptor(key: "area", ascending: true)
         let sortDescriptor2 = NSSortDescriptor(key: "era", ascending: true)
-        let sortDescriptor3 = NSSortDescriptor(key: "year", ascending: true)
+        let sortDescriptor3 = NSSortDescriptor(key: "year", ascending: false)
         let sortDescriptor4 = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2, sortDescriptor3, sortDescriptor4]
 
@@ -107,29 +107,58 @@ class MapsTableViewController: UITableViewController {
         return fetchedResultsController.sectionIndexTitles
     }
     
-//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let labelRect = CGRect(x: 15, y: tableView.sectionHeaderHeight - 14, width: 300, height: 14)
+        let label = UILabel(frame: labelRect)
+        label.textAlignment = .Center
+        label.font = UIFont.boldSystemFontOfSize(15)
+        
+        label.text = tableView.dataSource!.tableView!(tableView, titleForHeaderInSection: section)
+        
+        label.textColor = UIColor(white: 1.0, alpha: 0.4)
+        label.backgroundColor = UIColor.clearColor()
+        
+        let seperatorRect = CGRect(x: 15,
+                                   y: tableView.sectionHeaderHeight - 0.5,
+                                   width: tableView.bounds.size.width - 15,
+                                   height: 0.5)
+        let seperator = UIView(frame: seperatorRect)
+        seperator.backgroundColor = tableView.separatorColor
+        
+        let viewRect = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.sectionHeaderHeight)
+        let view = UIView(frame: viewRect)
+        view.backgroundColor = UIColor(white: 0, alpha: 0.85)
+        view.addSubview(label)
+        view.addSubview(seperator)
+        return view
+    }
+    
+//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        
 //        let labelRect = CGRect(x: 15, y: tableView.sectionHeaderHeight - 14, width: 300, height: 14)
 //        let label = UILabel(frame: labelRect)
-//        label.font = UIFont.boldSystemFontOfSize(11)
+//        label.textAlignment = .Center
+//        label.font = UIFont.boldSystemFontOfSize(15)
 //        
-//        label.text = tableView.dataSource!.tableView!(tableView, titleForFooterInSection: section)
+//        label.text = "end"
 //        
 //        label.textColor = UIColor(white: 1.0, alpha: 0.4)
 //        label.backgroundColor = UIColor.clearColor()
 //        
 //        let seperatorRect = CGRect(x: 15,
-//                                   y: tableView.sectionHeaderHeight - 0.5,
+//                                   y: tableView.sectionFooterHeight - 0.5,
 //                                   width: tableView.bounds.size.width - 15,
 //                                   height: 0.5)
 //        let seperator = UIView(frame: seperatorRect)
 //        seperator.backgroundColor = tableView.separatorColor
 //        
-//        let viewRect = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.sectionHeaderHeight)
+//        let viewRect = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.sectionFooterHeight)
 //        let view = UIView(frame: viewRect)
 //        view.backgroundColor = UIColor(white: 0, alpha: 0.85)
 //        view.addSubview(label)
 //        view.addSubview(seperator)
 //        return view
+//
 //    }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
