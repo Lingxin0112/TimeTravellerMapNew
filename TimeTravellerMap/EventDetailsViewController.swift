@@ -27,6 +27,7 @@ class EventDetailsViewController: UIViewController {
     
     @IBOutlet weak var videoWebView: UIWebView!
     
+    @IBOutlet weak var usefulLinksLabel: UILabel!
     var event: Event?
     var managedContext: NSManagedObjectContext!
     
@@ -54,9 +55,19 @@ class EventDetailsViewController: UIViewController {
             nameLabel.text = event.name
             dateLabel.text = event.date
             areaLabel.text = event.area
+            videoUrlLabel.text = event.videoURL
             latitudeLabel.text = String(format: "%.8f", event.latitude)
             longtitudeLabel.text = String(format: "%.8f", event.longtitude)
             descriptionLabel.text = event.eventDescription
+            var userfulLinks = ""
+            var count = 0
+            for linkTemp in event.links! {
+                let link = linkTemp as! Link
+                count += 1
+                userfulLinks += "\(count). " + link.address! + "\n"
+            }
+
+            usefulLinksLabel.text = userfulLinks
         }
     }
 

@@ -39,12 +39,22 @@ class MapDrawingViewController: UIViewController {
 //        mapView.userInteractionEnabled = false
         mapView.setRegion(coordinateRegion!, animated: true)
     }
-
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        mapView.showsUserLocation = false
+        mapView.delegate = nil
+        mapView.removeFromSuperview()
+        mapView = nil
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        print("MapDrawingViewController deinit")
+    }
     
     @IBAction func Save(sender: UIButton) {
         image = mapDrawingImageView.image

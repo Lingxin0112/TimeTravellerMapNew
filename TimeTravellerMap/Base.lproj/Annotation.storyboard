@@ -88,7 +88,7 @@
         <scene sceneID="z6z-t9-18U">
             <objects>
                 <tableViewController storyboardIdentifier="AddEventTableViewController" id="RG4-tz-VDh" customClass="AddEventTableViewController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1ua-D8-Yk3">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1ua-D8-Yk3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -568,13 +568,13 @@
                                                         <rect key="frame" x="0.0" y="163" width="560" height="21"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="Video:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnf-By-55L">
-                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="280" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="VideoUrlLabel" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sR9-Lz-Arz">
-                                                                <rect key="frame" x="452" y="0.0" width="108" height="21"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="VideoUrlLabel" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sR9-Lz-Arz">
+                                                                <rect key="frame" x="280" y="0.0" width="280" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
@@ -622,23 +622,35 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Userful Link:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UiA-Xk-Jwf">
-                                                <rect key="frame" x="20" y="435" width="97" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="VsC-Cx-0bi" userLabel="Other Links Stack View">
+                                                <rect key="frame" x="20" y="435" width="560" height="41"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Userful Link:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UiA-Xk-Jwf">
+                                                        <rect key="frame" x="0.0" y="0.0" width="97" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pg-Sd-zBh">
+                                                        <rect key="frame" x="0.0" y="21" width="42" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="UiA-Xk-Jwf" firstAttribute="top" secondItem="Nbi-QV-3DH" secondAttribute="bottom" constant="16" id="2Fi-sh-Tng"/>
                                             <constraint firstItem="XjN-2I-elo" firstAttribute="centerX" secondItem="py2-Jh-WpS" secondAttribute="centerX" id="6es-RG-UKc"/>
-                                            <constraint firstItem="UiA-Xk-Jwf" firstAttribute="leading" secondItem="Nbi-QV-3DH" secondAttribute="leading" id="9Er-dL-wIl"/>
                                             <constraint firstAttribute="height" constant="864" id="A7u-ie-fYB"/>
                                             <constraint firstItem="Nbi-QV-3DH" firstAttribute="top" secondItem="XjN-2I-elo" secondAttribute="bottom" constant="20" id="Hki-gL-knk"/>
                                             <constraint firstItem="XjN-2I-elo" firstAttribute="top" secondItem="RBh-vc-uQq" secondAttribute="bottom" constant="23" id="N2J-tU-Aow"/>
                                             <constraint firstItem="RBh-vc-uQq" firstAttribute="leading" secondItem="py2-Jh-WpS" secondAttribute="leading" constant="20" id="O4u-ae-5FI"/>
+                                            <constraint firstItem="VsC-Cx-0bi" firstAttribute="top" secondItem="Nbi-QV-3DH" secondAttribute="bottom" constant="16" id="VsR-td-EyL"/>
                                             <constraint firstItem="Nbi-QV-3DH" firstAttribute="leading" secondItem="RBh-vc-uQq" secondAttribute="leading" id="Z0U-vo-kRC"/>
+                                            <constraint firstAttribute="trailing" secondItem="VsC-Cx-0bi" secondAttribute="trailing" constant="20" id="akl-CF-P69"/>
                                             <constraint firstAttribute="trailing" secondItem="Nbi-QV-3DH" secondAttribute="trailing" id="d0I-P2-uhk"/>
+                                            <constraint firstItem="VsC-Cx-0bi" firstAttribute="leading" secondItem="py2-Jh-WpS" secondAttribute="leading" constant="20" id="rFC-bE-wPC"/>
                                             <constraint firstAttribute="trailing" secondItem="RBh-vc-uQq" secondAttribute="trailing" constant="20" id="vgJ-ZY-OD9"/>
                                             <constraint firstItem="RBh-vc-uQq" firstAttribute="top" secondItem="py2-Jh-WpS" secondAttribute="top" constant="24" id="xLC-qj-DkO"/>
                                         </constraints>
@@ -673,6 +685,7 @@
                         <outlet property="latitudeLabel" destination="Hu8-yb-dss" id="2hj-qY-dDJ"/>
                         <outlet property="longtitudeLabel" destination="XMD-Bg-6br" id="chH-Kl-5fh"/>
                         <outlet property="nameLabel" destination="PUP-RX-vL6" id="TvO-dJ-9cs"/>
+                        <outlet property="usefulLinksLabel" destination="7pg-Sd-zBh" id="azj-4v-w9R"/>
                         <outlet property="videoUrlLabel" destination="sR9-Lz-Arz" id="k5A-qG-6fk"/>
                         <outlet property="videoWebView" destination="XjN-2I-elo" id="oyo-PF-dkT"/>
                         <segue destination="vzS-Qc-gYY" kind="presentation" identifier="EditEvent" id="M6e-KU-zC1"/>

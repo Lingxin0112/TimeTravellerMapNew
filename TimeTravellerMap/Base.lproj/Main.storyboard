@@ -42,7 +42,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="aLW-Sa-JDp" kind="unwind" identifier="ChooseTool" unwindAction="chooseTool:" id="4G5-ql-0hg"/>
-                                            <segue destination="9jt-xb-zUN" kind="presentation" identifier="BrushSetting" trigger="accessoryAction" id="Ju2-Q1-PRI"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="e3j-Oh-gam" style="IBUITableViewCellStyleDefault" id="wtI-fM-TOP">
@@ -633,55 +632,6 @@
             </objects>
             <point key="canvasLocation" x="2356" y="-263"/>
         </scene>
-        <!--Draw-->
-        <scene sceneID="wg7-f3-ORb">
-            <objects>
-                <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
-                        <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X24-IX-HVC">
-                                <rect key="frame" x="0.0" y="507" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem systemItem="add" id="AMc-10-VaO"/>
-                                    <barButtonItem title="Photo" id="prV-Nh-piW"/>
-                                    <barButtonItem title="Pencil" id="bL2-yn-KH4"/>
-                                    <barButtonItem title="Zoom" id="DSJ-Og-vK1"/>
-                                    <barButtonItem style="plain" id="4ja-sJ-9yU">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="x8E-4e-CdU">
-                                            <rect key="frame" x="214" y="7" width="34" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Save"/>
-                                        </button>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" id="jcx-oe-ly6">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0MS-er-uxh">
-                                            <rect key="frame" x="258" y="7" width="31" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Rest"/>
-                                        </button>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="X24-IX-HVC" secondAttribute="bottom" id="8sN-K6-4hA"/>
-                            <constraint firstAttribute="trailing" secondItem="X24-IX-HVC" secondAttribute="trailing" id="Ii5-wv-fzR"/>
-                            <constraint firstItem="X24-IX-HVC" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="W6O-mo-k83"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Draw" image="second" id="cPa-gy-q4n"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1468" y="851"/>
-        </scene>
         <!--My Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
@@ -719,9 +669,12 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7q-0r-Qkb">
                                         <rect key="frame" x="0.0" y="-3" width="30" height="30"/>
-                                        <state key="normal" title="X"/>
+                                        <state key="normal" title="X">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="close:" destination="s5Y-B6-Vgp" eventType="touchUpInside" id="iZn-L3-GgG"/>
+                                            <segue destination="fsn-j2-Tgs" kind="unwind" identifier="CloseImagesAnimation" unwindAction="closeImagesAnimation:" id="URE-sr-Z5o"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tGc-rZ-bkS">
@@ -750,6 +703,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B5C-Zv-Aw8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fsn-j2-Tgs" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="704" y="-940"/>
         </scene>
@@ -1062,7 +1016,6 @@
     <resources>
         <image name="map" width="29" height="29"/>
         <image name="pin" width="29" height="29"/>
-        <image name="second" width="30" height="30"/>
         <image name="world" width="29" height="29"/>
     </resources>
 </document>

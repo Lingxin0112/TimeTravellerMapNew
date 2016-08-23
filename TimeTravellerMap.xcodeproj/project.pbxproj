@@ -46,6 +46,7 @@
 		3BA3CFBC1D5B23FE00A1071E /* MyImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFBB1D5B23FE00A1071E /* MyImagePickerController.swift */; };
 		3BA3CFBE1D5BA21800A1071E /* MySearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */; };
 		3BA3CFC01D5BA27D00A1071E /* MySearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */; };
+		3BA511021D6C924F00E7E1A0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA511011D6C924F00E7E1A0 /* TestViewController.swift */; };
 		3BAAABC01D5670950053A59D /* MapLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAAABBF1D5670950053A59D /* MapLocationViewController.swift */; };
 		3BC3AE361D205ECE00EF2D26 /* HistoryMapOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3AE351D205ECE00EF2D26 /* HistoryMapOverlay.swift */; };
 		3BC3AE391D205F7B00EF2D26 /* HistoryMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3AE381D205F7B00EF2D26 /* HistoryMap.swift */; };
@@ -146,6 +147,7 @@
 		3BA3CFBB1D5B23FE00A1071E /* MyImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImagePickerController.swift; sourceTree = "<group>"; };
 		3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySearchBar.swift; sourceTree = "<group>"; };
 		3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySearchController.swift; sourceTree = "<group>"; };
+		3BA511011D6C924F00E7E1A0 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		3BAAABBF1D5670950053A59D /* MapLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
 		3BC3AE351D205ECE00EF2D26 /* HistoryMapOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMapOverlay.swift; sourceTree = "<group>"; };
 		3BC3AE381D205F7B00EF2D26 /* HistoryMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMap.swift; sourceTree = "<group>"; };
@@ -255,8 +257,8 @@
 				3B646C821D5DD0AB0039F998 /* GradientView.swift */,
 				3B646C801D5D29ED0039F998 /* MyPresentationController.swift */,
 				3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */,
-				3B646C7E1D5D27180039F998 /* MapsAnimationViewController.swift */,
 				3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */,
+				3BA511011D6C924F00E7E1A0 /* TestViewController.swift */,
 				3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */,
 				3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */,
 				3B6099881D1FCB6700BBA9E8 /* Assets.xcassets */,
@@ -298,6 +300,7 @@
 			children = (
 				3B6099851D1FCB6700BBA9E8 /* Main.storyboard */,
 				3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */,
+				3B646C7E1D5D27180039F998 /* MapsAnimationViewController.swift */,
 			);
 			name = "Main Screen";
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 			files = (
 				3BA3CFBA1D5B230500A1071E /* MyNavigationController.swift in Sources */,
 				3BC8E9FF1D64C8D9004230F4 /* LinksTableViewController.swift in Sources */,
+				3BA511021D6C924F00E7E1A0 /* TestViewController.swift in Sources */,
 				3B6099B01D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift in Sources */,
 				3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */,
 				3BA3CFBC1D5B23FE00A1071E /* MyImagePickerController.swift in Sources */,

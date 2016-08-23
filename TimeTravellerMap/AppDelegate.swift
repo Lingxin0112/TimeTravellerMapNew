@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         
         customizeAppearace()
 //        loadHistoryMap()
@@ -93,6 +95,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITabBar.appearance().barTintColor = UIColor.blackColor()
     }
+    
+//    func loadMap(frame: CGRect) -> MKMapView {
+//        let mapView = MKMapView()
+//        mapView.mapType = .Hybrid
+//        NSUserDefaults.standardUserDefaults().setObject(mapView, forKey: "MapView")
+//        return mapView
+//    }
     
     func loadHistoryMap() {
         let entity = NSEntityDescription.entityForName("Map", inManagedObjectContext: coreDataStack.context)

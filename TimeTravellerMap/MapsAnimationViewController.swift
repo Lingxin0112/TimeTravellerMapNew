@@ -21,7 +21,7 @@ class MapsAnimationViewController: UIViewController {
         view.backgroundColor = UIColor.clearColor()
         
         mapImageView.animationImages = imageArray
-        mapImageView.animationDuration = 2.0
+        mapImageView.animationDuration = Double(imageArray!.count)
         mapImageView.startAnimating()
     }
 

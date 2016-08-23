@@ -100,6 +100,7 @@ class AddMapViewController: UIViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        print("AddMapViewController deinit")
     }
     
     
@@ -145,6 +146,11 @@ class AddMapViewController: UIViewController {
 
     @IBAction func cancel(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    @IBAction func drawingExistedMap(sender: UIButton) {
+        performSegueWithIdentifier("DrawingExistedMap", sender: nil)
     }
     
     @IBAction func showMapImageTapGesture(sender: UITapGestureRecognizer) {
@@ -315,7 +321,7 @@ class AddMapViewController: UIViewController {
             let nvController = segue.destinationViewController as! UINavigationController
             let controller = nvController.topViewController as! MapLocationViewController
             controller.image = sender as? UIImage
-        } else if segue.identifier == "DrawingMap" {
+        } else if segue.identifier == "DrawingExistedMap" {
             let controller = segue.destinationViewController as! MapDrawingViewController
             controller.isExistedMap = true
             controller.image = mapImageView.image

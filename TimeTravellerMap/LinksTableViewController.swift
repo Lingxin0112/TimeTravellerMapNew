@@ -57,7 +57,14 @@ class LinksTableViewController: UITableViewController {
 //        self.navigationItem.rightBarButtonItem = self.editButtonItem()
         rightItem = "Add"
 //        self.navigationItem.rightBarButtonItem = barButtonItem
-        array = links.array as! [String]
+        for _ in links {
+            array.append("add")
+        }
+        
+        // appearance
+        tableView.backgroundColor = UIColor.blackColor()
+        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.2)
+        tableView.indicatorStyle = .White
         
     }
     
@@ -112,7 +119,8 @@ class LinksTableViewController: UITableViewController {
 
         // Configure the cell...
         if !isNewLink {
-            cell.linkTextField.text = links[indexPath.row] as? String
+            let link = links[indexPath.row] as! Link
+            cell.linkTextField.text = link.address
         }
         
         return cell

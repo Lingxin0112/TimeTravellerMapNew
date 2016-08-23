@@ -404,7 +404,7 @@
                                                 <rect key="frame" x="282" y="456" width="36" height="30"/>
                                                 <state key="normal" title="Draw"/>
                                                 <connections>
-                                                    <segue destination="7ql-zL-eqC" kind="presentation" identifier="DrawingMap" id="Zs1-FS-Ngx"/>
+                                                    <action selector="drawingExistedMap:" destination="4po-1l-gEE" eventType="touchUpInside" id="knP-ex-3zI"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -467,6 +467,7 @@
                         <outlet property="swLongtitudeTextField" destination="hxG-MK-MJR" id="hCJ-wl-ynw"/>
                         <segue destination="mKo-JE-l8Q" kind="unwind" identifier="UpdateMap" unwindAction="updateMap:" id="xi1-i3-dkC"/>
                         <segue destination="Byc-cq-KxK" kind="presentation" identifier="ChooseMapLocation" id="TBz-lP-1gH"/>
+                        <segue destination="7ql-zL-eqC" kind="presentation" identifier="DrawingExistedMap" id="bc9-OM-cKk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UGq-9S-8HM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -501,7 +502,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-yj-b1Z">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-yj-b1Z">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -515,13 +516,6 @@
                                     <constraint firstAttribute="height" constant="240" id="tN3-YJ-QvI"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6s-nS-gA6">
-                                <rect key="frame" x="20" y="77" width="118" height="30"/>
-                                <state key="normal" title="Get The Location"/>
-                                <connections>
-                                    <action selector="getTheLocation:" destination="wQf-1X-9t4" eventType="touchUpInside" id="D6Z-IV-0yZ"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G83-Pf-dub">
                                 <rect key="frame" x="414" y="421" width="36" height="30"/>
                                 <state key="normal" title="Draw"/>
@@ -604,7 +598,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hYj-lq-zHT">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYj-lq-zHT">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F2A-ws-oCS" userLabel="DrawingView">
@@ -931,7 +925,7 @@
         <image name="map" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Zs1-FS-Ngx"/>
         <segue reference="Zip-Nx-iKB"/>
+        <segue reference="vni-si-S8T"/>
     </inferredMetricsTieBreakers>
 </document>

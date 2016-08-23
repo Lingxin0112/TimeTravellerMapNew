@@ -96,6 +96,7 @@ class AddEventTableViewController: UITableViewController {
         
         tableView.estimatedRowHeight = 88
         tableView.rowHeight = UITableViewAutomaticDimension
+
     }
     
     func hideKeyboard(gestureRecognizer: UIGestureRecognizer) {
@@ -105,6 +106,10 @@ class AddEventTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        print("AddEventTableViewController deinit")
     }
     
     @IBAction func cancel(sender: UIBarButtonItem) {
@@ -282,19 +287,12 @@ class AddEventTableViewController: UITableViewController {
         label.textColor = UIColor(white: 1.0, alpha: 0.4)
         label.backgroundColor = UIColor.clearColor()
         
-//        let seperatorRect = CGRect(x: 15,
-//                                   y: tableView.sectionHeaderHeight - 0.5,
-//                                   width: tableView.bounds.size.width - 15,
-//                                   height: 0.5)
-//        let seperator = UIView(frame: seperatorRect)
-//        seperator.backgroundColor = tableView.separatorColor
-        
         let viewRect = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.sectionHeaderHeight)
         let view = UIView(frame: viewRect)
-//        view.backgroundColor = UIColor(white: 0, alpha: 0.85)
+
         view.backgroundColor = UIColor.blackColor()
         view.addSubview(label)
-//        view.addSubview(seperator)
+
         return view
     }
     
@@ -451,8 +449,16 @@ extension AddEventTableViewController: UITextViewDelegate {
     
     func playVideo(url: String) {
         let videoURL = "https://www.youtube.com/embed/Rg6GLVUnnpM"
+        let url = NSURL(string: url)
+        if UIApplication.sharedApplication().canOpenURL(url!) {
+            print("")
+        }
+        
         videoWebView.allowsInlineMediaPlayback = true
         let videoString = "<iframe width=\(videoWebView.frame.width) height=\(videoWebView.frame.height) src=\(url)?&playsinline=1 frameborder=0 allowfullscreen></iframe>"
         videoWebView.loadHTMLString(videoString, baseURL: nil)
+        if videoWebView.request?.URL?.absoluteURL == nil {
+            print("wrong url")
+        }
     }
 }

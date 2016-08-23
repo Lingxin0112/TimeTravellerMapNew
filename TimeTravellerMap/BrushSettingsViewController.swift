@@ -67,6 +67,10 @@ class BrushSettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        print("BrushSettingsViewController deinit")
+    }
+    
     @IBAction func close(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
 //        delegate?.brushSettingsviewControllerFinished(self)

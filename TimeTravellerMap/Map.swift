@@ -27,4 +27,17 @@ class Map: NSManagedObject {
             return CLLocationCoordinate2DMake((Double(neLatitude!) + Double(swLatitude!)) / 2, (Double(swLongtitude!) + Double(neLongtitude!)) / 2)
         }
     }
+    
+    var mapRect: MKMapRect {
+        get {
+            let northEastCoordinate = CLLocationCoordinate2D(latitude: Double(self.neLatitude!), longitude: Double(self.neLongtitude!))
+            let southWestCoordinate = CLLocationCoordinate2D(latitude: Double(self.swLatitude!), longitude: Double(self.swLongtitude!))
+            
+            let southWestPoint = MKMapPointForCoordinate(southWestCoordinate)
+            let northEastPoint = MKMapPointForCoordinate(northEastCoordinate)
+            
+            let mapRect =  MKMapRectMake(southWestPoint.x, northEastPoint.y, fabs(northEastPoint.x - southWestPoint.x), fabs(northEastPoint.y - southWestPoint.y))
+            return mapRect
+        }
+    }
 }

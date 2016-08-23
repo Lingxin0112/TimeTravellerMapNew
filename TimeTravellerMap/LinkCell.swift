@@ -16,6 +16,12 @@ class LinkCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        backgroundColor = UIColor.blackColor()
+        
+        let selectionView = UIView(frame: CGRect.zero)
+        selectionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        selectedBackgroundView = selectionView
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
