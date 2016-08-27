@@ -13,9 +13,9 @@ class HistoryMapOverlay: NSObject, MKOverlay {
     var coordinate: CLLocationCoordinate2D
     var boundingMapRect: MKMapRect
     
-    init(historyMap: HistoryMap) {
+    init(historyMap: Map) {
         coordinate = historyMap.midCoordinate
-        boundingMapRect = historyMap.overlayBoudingMapRect
+        boundingMapRect = historyMap.mapRect
     }
     
 }

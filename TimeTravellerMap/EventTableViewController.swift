@@ -47,6 +47,8 @@ class EventTableViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem()
         performFetch()
         
+        
+        
         // appearance
         tableView.backgroundColor = UIColor.blackColor()
         tableView.separatorColor = UIColor(white: 1.0, alpha: 0.2)
@@ -139,22 +141,54 @@ class EventTableViewController: UITableViewController {
 //        performSegueWithIdentifier("ShowEventDetails", sender: event)
 //    }
     
+    func showDeleteAlert(event: Event) {
+        let controller = UIAlertController(title: "Delete An Annotation", message: "Are you sure you want to delete this annotation permanently", preferredStyle: .ActionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive, handler: { _ in
+            self.confirmDelete(event)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+            self.cancelDelete()
+        })
+        
+        controller.addAction(confirmAction)
+        controller.addAction(cancelAction)
+        
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func confirmDelete(event: Event) {
+        managedContext.deleteObject(event)
+        
+        do {
+            try managedContext.save()
+        } catch {
+            fatalError("Error: \(error)")
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func cancelDelete() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
-            managedContext.deleteObject(event)
-            
-            do {
-                try managedContext.save()
-            } catch {
-                fatalError("Error: \(error)")
-            }
+            showDeleteAlert(event)
+//            managedContext.deleteObject(event)
+//            
+//            do {
+//                try managedContext.save()
+//            } catch {
+//                fatalError("Error: \(error)")
+//            }
         }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 57
+        return 88
     }
 
     /*

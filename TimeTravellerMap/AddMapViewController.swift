@@ -77,6 +77,8 @@ class AddMapViewController: UIViewController {
         
         view.endEditing(true)
         
+        navigationItem.title = "AddOverlay"
+        
         if let map = mapToEdit {
             nameTextField.text = map.name
             areaTextField.text = map.area
@@ -90,6 +92,7 @@ class AddMapViewController: UIViewController {
             }
             mapImageView.image = UIImage(data: map.mapImageData!)
             drawButton.hidden = false
+            navigationItem.title = "EditOverlay"
         }
     }
 

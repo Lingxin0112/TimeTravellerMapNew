@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Maps Table View Controller-->
+        <!--Overlay-->
         <scene sceneID="7bR-CI-BkO">
             <objects>
                 <tableViewController id="SUH-Cp-rwU" customClass="MapsTableViewController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,26 +23,26 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c3L-Or-O5a">
-                                            <rect key="frame" x="10" y="4" width="80" height="80"/>
+                                            <rect key="frame" x="10" y="14" width="60" height="60"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="6qV-qO-V4Q"/>
-                                                <constraint firstAttribute="width" constant="80" id="DnQ-Xs-tKc"/>
+                                                <constraint firstAttribute="height" constant="60" id="6qV-qO-V4Q"/>
+                                                <constraint firstAttribute="width" constant="60" id="DnQ-Xs-tKc"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NameLabel&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFg-8z-nHd">
-                                            <rect key="frame" x="98" y="8" width="108" height="21"/>
+                                            <rect key="frame" x="78" y="8" width="108" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;DateLabel&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e23-uc-mJl">
-                                            <rect key="frame" x="98" y="33" width="99" height="21"/>
+                                            <rect key="frame" x="78" y="33" width="99" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;AreaLabel&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQg-mY-sJY">
-                                            <rect key="frame" x="98" y="59" width="98" height="21"/>
+                                            <rect key="frame" x="78" y="59" width="98" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -73,7 +73,7 @@
                             <outlet property="delegate" destination="SUH-Cp-rwU" id="FvV-pE-YV8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="OhY-oX-SyS">
+                    <navigationItem key="navigationItem" title="Overlay" id="OhY-oX-SyS">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nEX-wP-eLK">
                             <connections>
                                 <segue destination="XpH-go-tEf" kind="presentation" identifier="AddMap" id="eIf-sn-zl9"/>
@@ -490,7 +490,7 @@
             </objects>
             <point key="canvasLocation" x="2978" y="1375"/>
         </scene>
-        <!--Map Location View Controller-->
+        <!--LocateOverly-->
         <scene sceneID="epB-7h-7dS">
             <objects>
                 <viewController id="wQf-1X-9t4" customClass="MapLocationViewController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
@@ -536,7 +536,7 @@
                             <constraint firstItem="aZV-yj-b1Z" firstAttribute="leading" secondItem="hKZ-kC-iIo" secondAttribute="leading" id="vWF-ER-wZ7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="pyJ-rk-tpi">
+                    <navigationItem key="navigationItem" title="LocateOverly" id="pyJ-rk-tpi">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="kbz-2s-p36">
                             <connections>
                                 <action selector="cancel:" destination="wQf-1X-9t4" id="ULa-iP-d1p"/>
@@ -585,7 +585,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dbJ-Jh-VZl"/>
-                                    <barButtonItem title="Full" id="GxG-gM-1eU">
+                                    <barButtonItem id="GxG-gM-1eU">
                                         <connections>
                                             <action selector="fullScreen:" destination="7ql-zL-eqC" id="ags-ss-UU0"/>
                                         </connections>
@@ -719,7 +719,7 @@
             </objects>
             <point key="canvasLocation" x="3702" y="1382"/>
         </scene>
-        <!--Brush Settings View Controller-->
+        <!--BrushSetting-->
         <scene sceneID="HP0-kG-hzt">
             <objects>
                 <viewController id="BcN-OQ-5jJ" customClass="BrushSettingsViewController" customModule="TimeTravellerMap" customModuleProvider="target" sceneMemberID="viewController">
@@ -874,7 +874,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="Wgg-C5-Whc">
+                    <navigationItem key="navigationItem" title="BrushSetting" id="Wgg-C5-Whc">
                         <barButtonItem key="rightBarButtonItem" title="Close" id="byw-xh-TCQ">
                             <connections>
                                 <action selector="close:" destination="BcN-OQ-5jJ" id="2IC-hA-SVd"/>
@@ -925,7 +925,7 @@
         <image name="map" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Zip-Nx-iKB"/>
+        <segue reference="eIf-sn-zl9"/>
         <segue reference="vni-si-S8T"/>
     </inferredMetricsTieBreakers>
 </document>

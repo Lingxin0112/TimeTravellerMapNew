@@ -28,7 +28,7 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var resultSearchController: UISearchController? = nil
-    var historyMap = HistoryMap()
+//    var historyMap = HistoryMap()
     var overlayView: HistoryMapOverlayView?
     var historyMapImage: UIImage?
 
@@ -67,8 +67,8 @@ class MapViewController: UIViewController {
         
         
         // 
-        let latDelta = historyMap.southWestCoordinate.latitude -
-            historyMap.northEastCoordinate.latitude
+//        let latDelta = historyMap.southWestCoordinate.latitude -
+//            historyMap.northEastCoordinate.latitude
         
         // think of a span as a tv size, measure from one corner to another
 //        let span = MKCoordinateSpanMake(fabs(latDelta), 0.0)
@@ -158,9 +158,12 @@ class MapViewController: UIViewController {
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "Launch")
         }
         
-        mapView.removeAnnotations(mapView.annotations)
+//        mapView.removeAnnotations(mapView.annotations)
         state = "refresh"
-        
+        if NSUserDefaults.standardUserDefaults().boolForKey("OverlayUpdated") {
+            chooseMapInTheArea()
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "OverlayUpdated")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -283,7 +286,7 @@ class MapViewController: UIViewController {
                 dateSlider.value = Float(old.year!)
                 
                 currentYear = Int(old.year!)
-                mapYear = Int(old.year!) 
+                mapYear = Int(old.year!)
                 return
             }
             oldMap = maxMap
@@ -327,18 +330,13 @@ class MapViewController: UIViewController {
         
         let point = sender.locationInView(mapView)
         let tapPoint = mapView.convertPoint(point, toCoordinateFromView: containerView)
-        print("long press coordinate: \(tapPoint.latitude), \(tapPoint.longitude)")
-        
-        let coordinate = tapPoint
-        var title = "no title"
-        var subtitle = "no subtitle"
         
         let annotationStoryboard = UIStoryboard(name: "Annotation", bundle: nil)
         let navigationControoler = annotationStoryboard.instantiateViewControllerWithIdentifier("AddEventNavigationController") as! UINavigationController
         let controller = navigationControoler.topViewController as! AddEventTableViewController
         controller.managedContext = managedContext
         
-        controller.coordinate = coordinate
+        controller.coordinate = tapPoint
         controller.eventAddToMap = true
         presentViewController(navigationControoler, animated: true, completion: nil)
         
@@ -472,9 +470,9 @@ class MapViewController: UIViewController {
     func addMapOverlay(map: Map) {
 //        mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
-        historyMap = HistoryMap(map: map)
-        let overlay = HistoryMapOverlay(historyMap: historyMap)
-        historyMapImage = historyMap.image
+//        historyMap = HistoryMap(map: map)
+        let overlay = HistoryMapOverlay(historyMap: map)
+        historyMapImage = UIImage(data: map.mapImageData!)
         mapView.addOverlay(overlay)
     }
     
@@ -534,7 +532,6 @@ class MapViewController: UIViewController {
         do {
             let maps = try managedContext.executeFetchRequest(fetchRequest) as! [Map]
             if maps.count == 1 {
-                print("find a map:\(maps[0].name!)")
                 newMap = maps[0]
                 if newMap != oldMap {
                     transform(oldMap!, newMap: newMap!, ascending: ascending)
@@ -568,20 +565,6 @@ class MapViewController: UIViewController {
     }
     
     func donePicker() {
-//        var ascending: Bool = false
-//        if dateAndAlphaDict["date"] < newDateAndAlphaDict["date"] {
-//            ascending = true
-//        } else {
-//            ascending = false
-//        }
-//        dateAndAlphaDict["date"] = newDateAndAlphaDict["date"]
-//        dateAndAlphaDict["alpha"] = newDateAndAlphaDict["alpha"]
-//        
-//        if let date = dateAndAlphaDict["date"], let alpha = dateAndAlphaDict["alpha"] {
-//            updateMap(date, ascending: ascending)
-//            chooseDateTextField.text = "\(date) + \(alpha)"
-//        }
-//        updateSlider()
         chooseDateTextField.resignFirstResponder()
         updateMap(String(currentYear), ascending: ascending)
         
@@ -602,22 +585,13 @@ class MapViewController: UIViewController {
         } catch {
             fatalError("Error: \(error)")
         }
-        
         for map in maps {
-            let northEastCoordinate = CLLocationCoordinate2D(latitude: Double(map.neLatitude!), longitude: Double(map.neLongtitude!))
-            let southWestCoordinate = CLLocationCoordinate2D(latitude: Double(map.swLatitude!), longitude: Double(map.swLongtitude!))
-            
-            let southWestPoint = MKMapPointForCoordinate(southWestCoordinate)
-            let northEastPoint = MKMapPointForCoordinate(northEastCoordinate)
-            
-            let mapRect =  MKMapRectMake(southWestPoint.x, northEastPoint.y, fabs(northEastPoint.x - southWestPoint.x), fabs(northEastPoint.y - southWestPoint.y))
+            let mapRect = map.mapRect
             
             if MKMapRectIntersectsRect(visibleRect, mapRect) {
-                print("in in in .....")
                 map.comment = "Yes"
                 localMaps.append(map)
             } else {
-                print("out out out .....")
                 map.comment = "No"
             }
     
@@ -627,12 +601,6 @@ class MapViewController: UIViewController {
                 fatalError("Error: \(error)")
             }
         }
-        
-//        if maps.count > 0 {
-//            addMapOverlay(maps[0])
-//            oldMap = maps[0]
-//        }
-        
         configureRangeOfDateSlider(localMaps)
     }
     
@@ -737,9 +705,7 @@ extension MapViewController: MKMapViewDelegate {
         if annotation is MKUserLocation {
             // return nil so map view draws "blue dot" for standard user location
         }
-//        let annotationView = InformationAnnotationView(annotation: annotation, reuseIdentifier: "Information")
-//        annotationView.canShowCallout = true
-        
+
         let identifier = "Information"
         var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
         if annotationView == nil {
@@ -754,14 +720,8 @@ extension MapViewController: MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         
-//        let smallSquare = CGSize(width: 30, height: 30)
-//        let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
-//        button.setBackgroundImage(UIImage(named: "car"), forState: .Normal)
-//        button.addTarget(self, action: Selector("getMoreInformation"), forControlEvents: .TouchUpInside)
-//        pinView?.leftCalloutAccessoryView = button
         return annotationView
-        
-//        return annotationView
+
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -806,6 +766,7 @@ extension MapViewController: MKMapViewDelegate {
 //            chooseMapInTheArea()
 //            state = "finish"
 //        }
+
         
         addInformationPins()
         

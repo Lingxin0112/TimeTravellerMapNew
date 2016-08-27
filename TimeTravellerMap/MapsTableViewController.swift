@@ -187,19 +187,50 @@ class MapsTableViewController: UITableViewController {
         return true
     }
     */
+    
+    func showDeleteAlert(map: Map) {
+        let controller = UIAlertController(title: "Delete An Old Map ", message: "Are you sure you want to delete this old map permanently", preferredStyle: .ActionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive, handler: { _ in
+            self.confirmDelete(map)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+            self.cancelDelete()
+        })
+        
+        controller.addAction(confirmAction)
+        controller.addAction(cancelAction)
+        
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func confirmDelete(map: Map) {
+        managedContext.deleteObject(map)
+        
+        do {
+            try managedContext.save()
+        } catch {
+            fatalError("Error: \(error)")
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 
+    func cancelDelete() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
             let map = fetchedResultsController.objectAtIndexPath(indexPath) as! Map
-            managedContext.deleteObject(map)
-            
-            do {
-                try managedContext.save()
-            } catch {
-                fatalError("Error: \(error)")
-            }
+            showDeleteAlert(map)
+//            managedContext.deleteObject(map)
+//            
+//            do {
+//                try managedContext.save()
+//            } catch {
+//                fatalError("Error: \(error)")
+//            }
         }
     }
 
@@ -262,6 +293,7 @@ extension MapsTableViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "OverlayUpdated")
         switch type {
         case .Insert:
             print("MapTableViewController insert")
@@ -272,8 +304,6 @@ extension MapsTableViewController: NSFetchedResultsControllerDelegate {
         case .Update:
             if let cell = tableView.cellForRowAtIndexPath(indexPath!) as? MapViewCell {
                 let map = controller.objectAtIndexPath(indexPath!) as! Map
-//                cell.textLabel?.text = map.name
-//                cell.detailTextLabel?.text = map.date
                 cell.configureMapForCell(map)
             }
             print("MapTableViewController update")

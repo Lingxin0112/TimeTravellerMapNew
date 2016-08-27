@@ -42,10 +42,6 @@ class MapDrawingViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        mapView.showsUserLocation = false
-        mapView.delegate = nil
-        mapView.removeFromSuperview()
-        mapView = nil
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

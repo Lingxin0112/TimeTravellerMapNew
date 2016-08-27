@@ -72,7 +72,7 @@ class AddEventTableViewController: UITableViewController {
         gestureRecognizer.cancelsTouchesInView = false
         tableView.addGestureRecognizer(gestureRecognizer)
         
-        //Insert a new Walk entity into Core Data
+        navigationItem.title = "AddAnnotation"
         
         if let _ = eventToEdit {
             title = "Edit Event"
@@ -84,6 +84,7 @@ class AddEventTableViewController: UITableViewController {
             descriptionTextView.text = eventDescription
             videoLinkURLTextField.text = videoURL
             playVideo(videoURL!)
+            navigationItem.title = "EditAnnotation"
 //            otherURLsTextView.text = otherURLs
             
         }
@@ -221,12 +222,13 @@ class AddEventTableViewController: UITableViewController {
             if let placemarks = placemarks where placemarks.count > 0 {
                 let pm = placemarks[0]
                 var address: String = "Place unclear"
-                if let thoroughfare = pm.thoroughfare {
-                    address = ""
-                    address = address + thoroughfare + " "
-                }
+//                if let thoroughfare = pm.thoroughfare {
+//                    address = ""
+//                    address = address + thoroughfare + " "
+//                }
                 if let locality = pm.locality {
-                    address = address + locality + " "
+                    address = ""
+                    address = address + locality + ","
                 }
                 if let country = pm.country {
                     address = address + country
