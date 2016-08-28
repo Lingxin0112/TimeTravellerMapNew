@@ -287,7 +287,7 @@
                                         </connections>
                                     </mapView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LbY-Dn-qVm">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
+                                        <rect key="frame" x="0.0" y="24" width="600" height="30"/>
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-9k-hRX">
                                                 <rect key="frame" x="-2" y="0.0" width="604" height="31"/>
@@ -306,15 +306,8 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCw-So-CmS">
-                                        <rect key="frame" x="40" y="58" width="32" height="30"/>
-                                        <state key="normal" title="Hide"/>
-                                        <connections>
-                                            <action selector="hideOverlay:" destination="9pv-A4-QxB" eventType="touchUpInside" id="pUf-cF-1P3"/>
-                                        </connections>
-                                    </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4sX-FK-SXV">
-                                        <rect key="frame" x="-2" y="436" width="600" height="51"/>
+                                        <rect key="frame" x="0.0" y="418" width="600" height="51"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="arz-V7-hqn">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="21"/>
@@ -350,15 +343,15 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="1cA-SG-RJw" firstAttribute="leading" secondItem="LbY-Dn-qVm" secondAttribute="leading" id="10Y-23-7xk"/>
-                                    <constraint firstAttribute="bottom" secondItem="4sX-FK-SXV" secondAttribute="bottom" id="976-lw-tc9"/>
+                                    <constraint firstAttribute="bottom" secondItem="4sX-FK-SXV" secondAttribute="bottom" constant="18" id="976-lw-tc9"/>
                                     <constraint firstItem="4sX-FK-SXV" firstAttribute="leading" secondItem="mDV-WV-xjt" secondAttribute="leading" id="Ms6-40-qdR"/>
                                     <constraint firstItem="1cA-SG-RJw" firstAttribute="trailing" secondItem="LbY-Dn-qVm" secondAttribute="trailing" id="MyS-r1-M9A"/>
                                     <constraint firstItem="LbY-Dn-qVm" firstAttribute="leading" secondItem="mDV-WV-xjt" secondAttribute="leading" id="NgW-cB-4rO"/>
-                                    <constraint firstItem="LbY-Dn-qVm" firstAttribute="top" secondItem="mDV-WV-xjt" secondAttribute="top" id="YxY-S5-K4i"/>
-                                    <constraint firstItem="1cA-SG-RJw" firstAttribute="top" secondItem="LbY-Dn-qVm" secondAttribute="top" id="aRC-hk-8I2"/>
+                                    <constraint firstItem="LbY-Dn-qVm" firstAttribute="top" secondItem="mDV-WV-xjt" secondAttribute="top" constant="24" id="YxY-S5-K4i"/>
+                                    <constraint firstItem="1cA-SG-RJw" firstAttribute="top" secondItem="LbY-Dn-qVm" secondAttribute="top" constant="-24" id="aRC-hk-8I2"/>
                                     <constraint firstAttribute="trailing" secondItem="LbY-Dn-qVm" secondAttribute="trailing" id="dVo-Uu-5EC"/>
                                     <constraint firstAttribute="trailing" secondItem="4sX-FK-SXV" secondAttribute="trailing" id="wPT-VP-Jnd"/>
-                                    <constraint firstItem="4sX-FK-SXV" firstAttribute="bottom" secondItem="1cA-SG-RJw" secondAttribute="bottom" id="zBp-ug-UKm"/>
+                                    <constraint firstItem="4sX-FK-SXV" firstAttribute="bottom" secondItem="1cA-SG-RJw" secondAttribute="bottom" constant="-18" id="zBp-ug-UKm"/>
                                 </constraints>
                             </view>
                         </subviews>

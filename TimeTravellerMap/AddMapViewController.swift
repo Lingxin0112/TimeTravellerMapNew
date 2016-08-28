@@ -36,6 +36,7 @@ class AddMapViewController: UIViewController {
     
     @IBOutlet weak var drawButton: UIButton!
     
+    @IBOutlet weak var locateButton: UIButton!
 //    @IBOutlet weak var scrollView: UIScrollView!
     
     var mapScrollView: UIScrollView?
@@ -47,6 +48,7 @@ class AddMapViewController: UIViewController {
         didSet {
             if let _ = image {
                 drawButton.hidden = false
+                locateButton.hidden = false
             }
         }
     }
@@ -70,6 +72,7 @@ class AddMapViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         drawButton.hidden = true
+        locateButton.hidden = true
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddMapViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
@@ -92,6 +95,7 @@ class AddMapViewController: UIViewController {
             }
             mapImageView.image = UIImage(data: map.mapImageData!)
             drawButton.hidden = false
+            locateButton.hidden = false
             navigationItem.title = "EditOverlay"
         }
     }
@@ -155,6 +159,13 @@ class AddMapViewController: UIViewController {
     @IBAction func drawingExistedMap(sender: UIButton) {
         performSegueWithIdentifier("DrawingExistedMap", sender: nil)
     }
+    
+    @IBAction func locateExistedMap(sender: UIButton) {
+        if let image = mapImageView.image {
+            performSegueWithIdentifier("ChooseMapLocation", sender: image)
+        }
+    }
+    
     
     @IBAction func showMapImageTapGesture(sender: UITapGestureRecognizer) {
         if let _  = mapImageView.image {
@@ -324,11 +335,21 @@ class AddMapViewController: UIViewController {
             let nvController = segue.destinationViewController as! UINavigationController
             let controller = nvController.topViewController as! MapLocationViewController
             controller.image = sender as? UIImage
+//            if let neLatitude = neLatitudeTextField.text, neLongtitude = neLongtitudeTextField.text, swLatitude = swLatitudeTextField.text, swLongtitude = swLatitudeTextField.text {
+//                controller.neLocationCoordinate = CLLocationCoordinate2D(latitude: Double(neLatitude)!, longitude: Double(neLongtitude)!)
+//                controller.swLocationCoordinate = CLLocationCoordinate2D(latitude: Double(swLatitude)!, longitude: Double(swLongtitude)!)
+//            }
+            
+            if let map = mapToEdit {
+                controller.midCoordinate = map.midCoordinate
+            }
+            
         } else if segue.identifier == "DrawingExistedMap" {
             let controller = segue.destinationViewController as! MapDrawingViewController
             controller.isExistedMap = true
             controller.image = mapImageView.image
-            controller.coordinateRegion = coordinateRegion
+//            controller.coordinateRegion = coordinateRegion
+            controller.midCoordinate = mapToEdit?.midCoordinate
         }
 
     }

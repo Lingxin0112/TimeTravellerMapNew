@@ -24,7 +24,8 @@ class MapLocationViewController: UIViewController {
     
     // set initial location in Honolulu
     let initialLocation = CLLocation(latitude: 53.3811, longitude: -1.4701)
-    let regionRadius: CLLocationDistance = 1000
+    var midCoordinate: CLLocationCoordinate2D?
+    let regionRadius: CLLocationDistance = 10000
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +53,14 @@ class MapLocationViewController: UIViewController {
         
         definesPresentationContext = true
         
-        centerMapOnLocation(initialLocation)
+        if let midCoordinate = midCoordinate {
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(midCoordinate, 100000 * 30.0, 100000 * 30.0)
+            mapView.setRegion(coordinateRegion, animated: true)
+            mapView.showsCompass = true
+
+        } else {
+            centerMapOnLocation(initialLocation)
+        }
         
         mapImageView.alpha = 0.6
         
@@ -119,8 +127,8 @@ class MapLocationViewController: UIViewController {
     
     func updateMapLocation(placemark: MKPlacemark) {
         let span = MKCoordinateSpanMake(0.05, 0.05)
-        let region = MKCoordinateRegionMake(placemark.coordinate, span)
-        mapView.setRegion(region, animated: true)
+        coordinateRegion = MKCoordinateRegionMake(placemark.coordinate, span)
+        mapView.setRegion(coordinateRegion!, animated: true)
     }
     
     // MARK: - Navigation
@@ -154,6 +162,9 @@ class MapLocationViewController: UIViewController {
             controller.image = image
             controller.coordinateRegion = coordinateRegion
             controller.isExistedMap = false
+            if let midCoordinate = midCoordinate {
+                controller.midCoordinate = midCoordinate
+            }
         }
     }
 

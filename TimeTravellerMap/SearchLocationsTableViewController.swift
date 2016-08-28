@@ -16,6 +16,13 @@ class SearchLocationsTableViewController: UITableViewController {
     var selectedItem = MKMapItem()
     var mark: String = "Main"
     
+    override func viewDidLoad() {
+        // appearance
+        tableView.backgroundColor = UIColor.blackColor()
+        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.2)
+        tableView.indicatorStyle = .White
+    }
+    
     deinit {
         print("deinit '\(self)'")
     }
@@ -103,6 +110,17 @@ extension SearchLocationsTableViewController {
         let selectedResultItem = matchingItems[indexPath.row].placemark
         cell.textLabel?.text = selectedResultItem.name
         cell.detailTextLabel?.text = parseDetailedAdress(selectedResultItem)
+        
+        cell.backgroundColor = UIColor.blackColor()
+        cell.textLabel!.textColor = UIColor.whiteColor()
+        cell.textLabel!.highlightedTextColor = cell.textLabel!.textColor
+        cell.detailTextLabel!.textColor = UIColor(white: 1.0, alpha: 0.6)
+        cell.detailTextLabel!.highlightedTextColor = cell.detailTextLabel!.textColor
+        
+        let selectionView = UIView(frame: CGRect.zero)
+        selectionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        cell.selectedBackgroundView = selectionView
+        
         return cell
     }
 }

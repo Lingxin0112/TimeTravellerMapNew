@@ -400,8 +400,15 @@
                                                     <outletCollection property="gestureRecognizers" destination="sOl-ep-T60" appends="YES" id="LLZ-yo-x4y"/>
                                                 </connections>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oB1-Jt-dym">
+                                                <rect key="frame" x="180" y="456" width="47" height="30"/>
+                                                <state key="normal" title="Locate"/>
+                                                <connections>
+                                                    <action selector="locateExistedMap:" destination="4po-1l-gEE" eventType="touchUpInside" id="Er2-vI-sfs"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qYl-5S-Rjq">
-                                                <rect key="frame" x="282" y="456" width="36" height="30"/>
+                                                <rect key="frame" x="384" y="456" width="36" height="30"/>
                                                 <state key="normal" title="Draw"/>
                                                 <connections>
                                                     <action selector="drawingExistedMap:" destination="4po-1l-gEE" eventType="touchUpInside" id="knP-ex-3zI"/>
@@ -412,10 +419,12 @@
                                         <constraints>
                                             <constraint firstItem="UQE-jn-TAb" firstAttribute="leading" secondItem="km4-UF-T7t" secondAttribute="leadingMargin" id="1Vz-FI-9Fs"/>
                                             <constraint firstItem="9UC-0J-FHY" firstAttribute="centerX" secondItem="km4-UF-T7t" secondAttribute="centerX" id="E3G-1q-Ese"/>
-                                            <constraint firstItem="qYl-5S-Rjq" firstAttribute="centerX" secondItem="km4-UF-T7t" secondAttribute="centerX" id="EIF-02-Iaw"/>
+                                            <constraint firstItem="qYl-5S-Rjq" firstAttribute="centerX" secondItem="km4-UF-T7t" secondAttribute="centerX" constant="102" id="EIF-02-Iaw"/>
+                                            <constraint firstItem="oB1-Jt-dym" firstAttribute="leading" secondItem="9UC-0J-FHY" secondAttribute="leading" id="F07-Lf-gHh"/>
                                             <constraint firstItem="UQE-jn-TAb" firstAttribute="top" secondItem="km4-UF-T7t" secondAttribute="topMargin" constant="24" id="Jnj-m1-xqi"/>
                                             <constraint firstItem="qYl-5S-Rjq" firstAttribute="top" secondItem="9UC-0J-FHY" secondAttribute="bottom" constant="8" id="X2P-eq-y19"/>
                                             <constraint firstItem="9UC-0J-FHY" firstAttribute="top" secondItem="UQE-jn-TAb" secondAttribute="bottom" constant="23" id="hMt-eK-INc"/>
+                                            <constraint firstItem="oB1-Jt-dym" firstAttribute="baseline" secondItem="qYl-5S-Rjq" secondAttribute="baseline" id="mfZ-ZT-sOa"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="UQE-jn-TAb" secondAttribute="trailing" id="zqE-jt-8WY"/>
                                         </constraints>
                                     </view>
@@ -459,6 +468,7 @@
                         <outlet property="dateTextField" destination="Jgq-hL-AG2" id="V9s-XN-AyQ"/>
                         <outlet property="drawButton" destination="qYl-5S-Rjq" id="q74-C8-BJZ"/>
                         <outlet property="eraSegmentedControl" destination="iYo-Wg-brk" id="OEO-rL-x4s"/>
+                        <outlet property="locateButton" destination="oB1-Jt-dym" id="QLk-gF-Sqr"/>
                         <outlet property="mapImageView" destination="9UC-0J-FHY" id="o4g-Fa-fWr"/>
                         <outlet property="nameTextField" destination="S8k-JQ-ne8" id="lPA-z7-g1d"/>
                         <outlet property="neLatitudeTextField" destination="rG9-D0-LKN" id="V2k-3J-hlg"/>
@@ -502,7 +512,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-yj-b1Z">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZV-yj-b1Z">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -598,7 +608,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYj-lq-zHT">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYj-lq-zHT">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F2A-ws-oCS" userLabel="DrawingView">

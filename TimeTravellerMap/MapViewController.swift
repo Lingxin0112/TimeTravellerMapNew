@@ -76,8 +76,8 @@ class MapViewController: UIViewController {
 //        let region = MKCoordinateRegionMake(historyMap.midCoordinate, span)
 //        
 //        mapView.region = region
-        let initialLocation = CLLocation(latitude: 53.3811, longitude: -1.4701)
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate, 1000 * 2.0, 1000 * 2.0)
+        let initialLocation = CLLocation(latitude: 41.909986, longitude: 12.3959127)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate, 100000 * 30.0, 100000 * 30.0)
         mapView.setRegion(coordinateRegion, animated: true)
         mapView.showsCompass = true
         mapView.showsScale = true
@@ -251,6 +251,7 @@ class MapViewController: UIViewController {
             dateSlider.maximumValue = Float(year)
             data = []
             data.append(String(year))
+            mapView.removeOverlays(mapView.overlays)
         } else if maps.count == 1 {
             let year = maps[0].year! as Int
             minYearLabel.text = String(year - 100)
@@ -376,8 +377,10 @@ class MapViewController: UIViewController {
             let controller = segue.sourceViewController as! SearchLocationsTableViewController
             let chooseLocation = controller.selectedItem
             state = "search"
-            dropPinZoomIn(chooseLocation.placemark)
-            
+//            dropPinZoomIn(chooseLocation.placemark)
+            let span = MKCoordinateSpanMake(0.2, 0.2)
+            let region = MKCoordinateRegionMake(chooseLocation.placemark.coordinate, span)
+            mapView.setRegion(region, animated: true)
             print(chooseLocation.name)
         }
     }
@@ -526,7 +529,7 @@ class MapViewController: UIViewController {
         }
         
         fetchRequest.predicate = predict
-        let sortDescriptor = NSSortDescriptor(key: "year", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "year", ascending: ascending)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
@@ -545,14 +548,14 @@ class MapViewController: UIViewController {
                     imageArray.append(image!)
                 }
 
-                if ascending {
+//                if ascending {
                     addMapOverlay(maps[maps.count - 1])
                     mapYear = maps[maps.count - 1].year as! Int
-                    
-                } else {
-                    addMapOverlay(maps[0])
-                    mapYear = maps[0].year as! Int
-                }
+//
+//                } else {
+//                    addMapOverlay(maps[0])
+//                    mapYear = maps[0].year as! Int
+//                }
                 
                 overlayView?.alpha = 0.0
                 performSegueWithIdentifier("MapsAnimation", sender: imageArray)
@@ -588,7 +591,7 @@ class MapViewController: UIViewController {
         for map in maps {
             let mapRect = map.mapRect
             
-            if MKMapRectIntersectsRect(visibleRect, mapRect) {
+            if MKMapRectIntersectsRect(visibleRect, mapRect) && !MKMapRectContainsRect(mapRect, visibleRect) {
                 map.comment = "Yes"
                 localMaps.append(map)
             } else {

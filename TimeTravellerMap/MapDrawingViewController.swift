@@ -29,6 +29,7 @@ class MapDrawingViewController: UIViewController {
     var swiped = false
     
     var isExistedMap: Bool = false
+    var midCoordinate: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,18 @@ class MapDrawingViewController: UIViewController {
         mapDrawingImageView.image = image
         tempImageView.image = image
 //        mapView.userInteractionEnabled = false
-        mapView.setRegion(coordinateRegion!, animated: true)
+        
+        
+        if let midCoordinate = midCoordinate {
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(midCoordinate, 100000 * 30.0, 100000 * 30.0)
+            mapView.setRegion(coordinateRegion, animated: true)
+            mapView.showsCompass = true
+            
+        } else {
+            mapView.setRegion(coordinateRegion!, animated: true)
+        }
+        
+        
     }
     
     override func viewDidDisappear(animated: Bool) {
