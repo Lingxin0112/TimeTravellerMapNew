@@ -20,7 +20,7 @@ extension Event {
     @NSManaged var latitude: Double
     @NSManaged var longtitude: Double
     @NSManaged var name: String?
-    @NSManaged var otherURLs: String?
+//    @NSManaged var otherURLs: String?
     @NSManaged var videoURL: String?
     @NSManaged var links: NSOrderedSet?
 

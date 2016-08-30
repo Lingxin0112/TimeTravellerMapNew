@@ -37,8 +37,8 @@ class MapDrawingViewController: UIViewController {
         // Do any additional setup after loading the view.
         mapDrawingImageView.image = image
         tempImageView.image = image
-//        mapView.userInteractionEnabled = false
-        
+        mapDrawingImageView.alpha = 0.5
+        tempImageView.alpha = 0.5
         
         if let midCoordinate = midCoordinate {
             let coordinateRegion = MKCoordinateRegionMakeWithDistance(midCoordinate, 100000 * 30.0, 100000 * 30.0)
@@ -64,6 +64,12 @@ class MapDrawingViewController: UIViewController {
         print("MapDrawingViewController deinit")
     }
     
+    @IBAction func alphaSliderChanged(sender: UISlider) {
+        mapDrawingImageView.alpha = CGFloat(sender.value)
+        tempImageView.alpha = CGFloat(sender.value)
+    }
+    
+    
     @IBAction func Save(sender: UIButton) {
         image = mapDrawingImageView.image
         if isExistedMap {
@@ -78,8 +84,10 @@ class MapDrawingViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func fullScreen(sender: UIBarButtonItem) {
-       isFullScreen = !isFullScreen
+
+    @IBAction func drawNewOverlay(sender: UIBarButtonItem) {
+        mapDrawingImageView.image = UIImage(named: "white")
+        tempImageView.image = UIImage(named: "white")
     }
     
     var isFullScreen: Bool = false {

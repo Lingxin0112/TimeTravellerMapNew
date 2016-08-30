@@ -35,8 +35,11 @@ class AnnotationDetailsTableViewController: UITableViewController {
         if let url = annotation?.videoURL {
             playVideo(url)
         }
-        descriptionTextView.text = info
-        otherURLsTextView.text = annotation!.otherURLs
+        descriptionTextView.text = annotation?.eventDescription
+        if let description = annotation?.eventDescription {
+            info = description
+        }
+//        otherURLsTextView.text = annotation!.otherURLs
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,7 +62,7 @@ class AnnotationDetailsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -108,31 +111,27 @@ class AnnotationDetailsTableViewController: UITableViewController {
     
     let moreInfoText = "Read more"
     var isExpanded = true
-    let info = "In this component we will add  behaviour to text view. It will have two modes - full mode and trimmed mode. In full mode it will behave like standard UITextView. In trimmed mode it will trim text to some maximum numbers of lines and trim text with a string. When user taps on the component will switch from trimmed mode to full mode."
+    var info = ""
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 && indexPath.row == 0 {
-            // 1
+        
             guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
             
-            // 2
-            //        var work = selectedArtist.works[indexPath.row]
-            //        work.isExpanded = !work.isExpanded
-            //        selectedArtist.works[indexPath.row] = work
             isExpanded = !isExpanded
-            // 3
+            
             descriptionTextView.text = isExpanded ? info : moreInfoText
             descriptionTextView.textAlignment = isExpanded ? .Left : .Center
             
-            // 4
+            
             UIView.animateWithDuration(0.3) {
                 cell.contentView.layoutIfNeeded()
             }
             
-            // 5
+            
             tableView.beginUpdates()
             tableView.endUpdates()
             
-            // 6
+
             tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
     }

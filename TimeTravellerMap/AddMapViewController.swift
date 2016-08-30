@@ -46,9 +46,12 @@ class AddMapViewController: UIViewController {
     var mapToEdit: Map?
     var image: UIImage? {
         didSet {
-            if let _ = image {
+            if neLatitudeTextField.text != "" && neLongtitudeTextField.text != "" && swLatitudeTextField.text != "" && swLongtitudeTextField.text != "" {
                 drawButton.hidden = false
                 locateButton.hidden = false
+            } else {
+                drawButton.hidden = true
+                locateButton.hidden = true
             }
         }
     }
@@ -112,6 +115,31 @@ class AddMapViewController: UIViewController {
     
     
     @IBAction func done(sender: UIBarButtonItem) {
+        
+        if nameTextField.text == "" || areaTextField.text == "" || dateTextField.text == "" {
+            let controller = UIAlertController(title: "Warning", message: "You have not introduce your map", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            controller.addAction(okAction)
+            presentViewController(controller, animated: true, completion: nil)
+            return
+        }
+        
+        if swLatitudeTextField.text == "" || swLongtitudeTextField.text == "" || neLatitudeTextField.text == "" || neLongtitudeTextField.text == "" {
+            let controller = UIAlertController(title: "Warning", message: "You have not located your old map", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            controller.addAction(okAction)
+            presentViewController(controller, animated: true, completion: nil)
+            return
+        }
+        
+        if mapImageView.image == nil {
+            let controller = UIAlertController(title: "Warning", message: "You have not chosen an old map", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            controller.addAction(okAction)
+            presentViewController(controller, animated: true, completion: nil)
+            return
+        }
+        
         let hudView = HudView.hudInView(navigationController!.view, animated: true)
         
         
@@ -139,15 +167,15 @@ class AddMapViewController: UIViewController {
 
         do {
             try managedContext.save()
-            if let _ = mapToEdit {
-                performSegueWithIdentifier("UpdateMap", sender: self)
-            }
         } catch {
             fatalError("Error: \(error)")
         }
         
         afterDelay(0.6, closure: {
             self.dismissViewControllerAnimated(true, completion: nil)
+            if let _ = self.mapToEdit {
+                self.performSegueWithIdentifier("UpdateMap", sender: self)
+            }
         })
     }
 
@@ -340,16 +368,26 @@ class AddMapViewController: UIViewController {
 //                controller.swLocationCoordinate = CLLocationCoordinate2D(latitude: Double(swLatitude)!, longitude: Double(swLongtitude)!)
 //            }
             
-            if let map = mapToEdit {
-                controller.midCoordinate = map.midCoordinate
+//            if let map = mapToEdit {
+//                controller.midCoordinate = map.midCoordinate
+//            } else
+            if let _ = mapImageView.image, neLatitude = neLatitudeTextField.text, neLongtitude = neLongtitudeTextField.text, swLatitude = swLatitudeTextField.text, swLongtitude = swLongtitudeTextField.text where neLatitude != "" && neLongtitude != "" && swLatitude != "" && swLongtitude != "" {
+                let midCoordinate = CLLocationCoordinate2DMake((Double(neLatitude)! + Double(swLatitude)!) / 2, (Double(neLongtitude)! + Double(swLongtitude)!) / 2)
+                controller.midCoordinate = midCoordinate
             }
+            
             
         } else if segue.identifier == "DrawingExistedMap" {
             let controller = segue.destinationViewController as! MapDrawingViewController
             controller.isExistedMap = true
             controller.image = mapImageView.image
 //            controller.coordinateRegion = coordinateRegion
-            controller.midCoordinate = mapToEdit?.midCoordinate
+//            controller.midCoordinate = mapToEdit?.midCoordinate
+            
+            if let _ = mapImageView.image, neLatitude = neLatitudeTextField.text, neLongtitude = neLongtitudeTextField.text, swLatitude = swLatitudeTextField.text, swLongtitude = swLongtitudeTextField.text where neLatitude != "" && neLongtitude != "" && swLatitude != "" && swLongtitude != "" {
+                let midCoordinate = CLLocationCoordinate2DMake((Double(neLatitude)! + Double(swLatitude)!) / 2, (Double(neLongtitude)! + Double(swLongtitude)!) / 2)
+                controller.midCoordinate = midCoordinate
+            }
         }
 
     }

@@ -12,7 +12,7 @@ class EventCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var areaLabel: UILabel!
+//    @IBOutlet weak var areaLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,8 +23,8 @@ class EventCell: UITableViewCell {
         nameLabel.highlightedTextColor = nameLabel.textColor
         dateLabel.textColor = UIColor(white: 1.0, alpha: 0.6)
         dateLabel.highlightedTextColor = dateLabel.textColor
-        areaLabel.textColor = UIColor(white: 1.0, alpha: 0.4)
-        areaLabel.highlightedTextColor = areaLabel.textColor
+//        areaLabel.textColor = UIColor(white: 1.0, alpha: 0.4)
+//        areaLabel.highlightedTextColor = areaLabel.textColor
         
         let selectionView = UIView(frame: CGRect.zero)
         selectionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
@@ -40,7 +40,7 @@ class EventCell: UITableViewCell {
     func configureCellForEvent(event: Event) {
         nameLabel.text = event.name
         dateLabel.text = event.date
-        areaLabel.text = event.area
+//        areaLabel.text = event.area
     }
 
 }

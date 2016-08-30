@@ -20,7 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         customizeAppearace()
+        if NSUserDefaults.standardUserDefaults().boolForKey("hasLaunchedBefore") {
+            print("222222222 is not first laucn")
+        } else {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "hasLaunchedBefore")
+            NSUserDefaults.standardUserDefaults().synchronize()
+//            loadHistoryMap()
+//            loadAnnotations()
+            print("222222222 is first laucn")
+        }
 //        loadHistoryMap()
+//        loadAnnotations()
         
         // Override point for customization after application launch.
         
@@ -43,7 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print("Fetching error: \(error.localizedDescription)")
 //        }
         
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Launch")
         
         let tabBarController = window?.rootViewController as! UITabBarController
         if let tabBarViewControllers = tabBarController.viewControllers {
@@ -63,6 +72,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             //        eventTableViewController.events = events
         }
+        
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FirstLaunch")
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "OverlayIsUpdated")
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "AnnotationIsUpdated")
         
         return true
     }
@@ -121,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map2.name = "Minimum: Losses to Pyrrhus."
         map2.area = "Rome"
         map2.era = "BC"
-        map2.year = -86
+        map2.year = -279
         map2.neLatitude = 47.6683072436119
         map2.neLongtitude = 22.852896988186
         map2.swLatitude = 36.1479296778893
@@ -332,6 +345,114 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             fatalError("Error: \(error)")
         }
     }
-
+    
+    func loadAnnotations() {
+        let entity = NSEntityDescription.entityForName("Event", inManagedObjectContext: coreDataStack.context)
+        
+        let event1 = Event(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        let entityLink = NSEntityDescription.entityForName("Link", inManagedObjectContext: coreDataStack.context)
+        let links1 = Link(entity: entityLink!, insertIntoManagedObjectContext: coreDataStack.context)
+        links1.address = "http://www.ict.griffith.edu.au/wiseman/Roman/19MapsB.html"
+        let links2 = Link(entity: entityLink!, insertIntoManagedObjectContext: coreDataStack.context)
+        links2.address = "http://www.roman-empire.net"
+        var linksArray = [Link]()
+        linksArray.append(links1)
+        linksArray.append(links2)
+        var links = NSOrderedSet(array: linksArray)
+        links1.event = event1
+        links2.event = event1
+        event1.name = "Conquest of the Latin League"
+        event1.latitude = 41.8905568
+        event1.longtitude = 12.4942679
+        event1.area = "ROME"
+        event1.date = "BC338"
+        event1.eventDescription = "In 510 BC, the city of Rome overthrew its Etruscan rulers (to the North-West) and became a republic. It rapidly grew in size and power, becoming the leading city in central Italy and supreme commander of the League of Latin Cities in times of war. In 340 BC the Latin cities revolted, but Rome defeated them and they came under direct Roman rule in 338 BC. This area, the nascent Roman Empire, is indicated in red in the above map. The stippled red area is Capua, an independent area owing allegiance to the Roman Empire. These conventions apply to all of the maps below also. "
+        event1.videoURL = "https://www.youtube.com/embed/WG_lHq5GHtM"
+        event1.links = links
+        
+        
+        let event2 = Event(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        
+        let links3 = Link(entity: entityLink!, insertIntoManagedObjectContext: coreDataStack.context)
+        links3.address = "http://www.roman-empire.net"
+        linksArray = [Link]()
+        linksArray.append(links3)
+        
+        links = NSOrderedSet(array: linksArray)
+        links3.event = event2
+        event2.links = links
+        
+        event2.name = "Losses to Pyrrhus"
+        event2.latitude = 40.74301808
+        event2.longtitude = 16.76599693
+        event2.area = "SANTERAMO IN COLLE,ITALY"
+        event2.date = "BC279"
+        event2.eventDescription = "In 326-290 BC Rome won the struggle for control of Italy against its main rival, the Samnites to the south-east. "
+        event2.videoURL = "https://www.youtube.com/embed/O0MGGgSoAdE"
+        
+        let event3 = Event(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        
+        let links4 = Link(entity: entityLink!, insertIntoManagedObjectContext: coreDataStack.context)
+        links4.address = "http://www.roman-empire.net"
+        linksArray = [Link]()
+        linksArray.append(links4)
+        
+        links = NSOrderedSet(array: linksArray)
+        links4.event = event3
+        event3.links = links
+        
+        
+        event3.name = "Hannibal's Campaigns"
+        event3.latitude = 39.93416747
+        event3.longtitude = 9.22210333
+        event3.area = "ARITZO,ITALY"
+        event3.date = "BC212"
+        event3.eventDescription = "The Romans finally got the better of Pyrrhus in 275 BC, and by 272 BC had secured the entirety of southern Italy."
+        event3.videoURL = "https://www.youtube.com/embed/LqElPOyb-S4"
+        
+        let event4 = Event(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        
+        let links5 = Link(entity: entityLink!, insertIntoManagedObjectContext: coreDataStack.context)
+        links5.address = "http://www.roman-empire.net"
+        linksArray = [Link]()
+        linksArray.append(links5)
+        
+        links = NSOrderedSet(array: linksArray)
+        links5.event = event4
+        event4.links = links
+        
+        event4.name = "Conquest of Germany"
+        event4.latitude = 50.6275416
+        event4.longtitude = 9.9584503
+        event4.area = "GERMANY"
+        event4.date = "AD9"
+        event4.eventDescription = "Rome's efforts to put Mithradates back in his place were hampered by civil strife at home between the populists lead by Marius and the aristocrats lead by Sulla."
+        event4.videoURL = "https://www.youtube.com/embed/IYYAd4WGFWw"
+        
+        let event5 = Event(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
+        event5.name = "Trajan's Victory"
+        event5.latitude = 53.7660138385598
+        event5.longtitude = -0.266101304019816
+        event5.area = "PARTHIANS"
+        event5.date = "AD116"
+        event5.eventDescription = "Rome's rival to the east. He annexed Armenia in 114, northern Mesopotamia in 115, and occupied southern Mesopotamia all the way to the Persian gulf in 116."
+        event5.videoURL = "https://www.youtube.com/embed/KRiCVO18LOk"
+        
+        let links6 = Link(entity: entityLink!, insertIntoManagedObjectContext: coreDataStack.context)
+        links6.address = "http://www.roman-empire.net"
+        linksArray = [Link]()
+        linksArray.append(links6)
+        
+        links = NSOrderedSet(array: linksArray)
+        links6.event = event5
+        event5.links = links
+        
+        do {
+            try coreDataStack.context.save()
+        } catch {
+            fatalError("Error: \(error)")
+        }
+    }
+    
 }
 

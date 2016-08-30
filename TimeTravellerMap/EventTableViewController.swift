@@ -188,7 +188,7 @@ class EventTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 88
+        return 66
     }
 
     /*
@@ -236,6 +236,7 @@ extension EventTableViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "AnnotationIsUpdated")
         switch type {
         case .Insert:
             print("EventTableViewController insert")

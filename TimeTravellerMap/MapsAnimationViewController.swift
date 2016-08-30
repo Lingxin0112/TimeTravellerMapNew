@@ -23,6 +23,13 @@ class MapsAnimationViewController: UIViewController {
         mapImageView.animationImages = imageArray
         mapImageView.animationDuration = Double(imageArray!.count)
         mapImageView.startAnimating()
+        
+        // add a close button
+        let btnFrame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let button = UIButton(frame: btnFrame)
+        button.setTitle("X", forState: .Normal)
+        button.addTarget(self, action: #selector(close), forControlEvents: .TouchUpInside)
+        mapImageView.addSubview(button)
     }
 
     override func didReceiveMemoryWarning() {

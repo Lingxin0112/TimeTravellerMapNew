@@ -74,6 +74,7 @@
 		3BCBB7EB1D7367E800504AAC /* RE-1288ad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BCBB7D81D7367E800504AAC /* RE-1288ad.png */; };
 		3BCBB7EC1D7367E800504AAC /* RE-1403ad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BCBB7D91D7367E800504AAC /* RE-1403ad.png */; };
 		3BCBB7ED1D7367E800504AAC /* RE-1452ad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BCBB7DA1D7367E800504AAC /* RE-1452ad.png */; };
+		3BCBB7F21D74C83100504AAC /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BCBB7F11D74C83100504AAC /* white.png */; };
 		3BE2F78F1D65C58100C647AA /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2F78E1D65C58100C647AA /* LinkCell.swift */; };
 		3BF7587A1D26F9E300BACE00 /* ToolsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */; };
 		3BFE73671D34FEE6003E851E /* AnnotationDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */; };
@@ -173,6 +174,7 @@
 		3BCBB7D81D7367E800504AAC /* RE-1288ad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RE-1288ad.png"; sourceTree = "<group>"; };
 		3BCBB7D91D7367E800504AAC /* RE-1403ad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RE-1403ad.png"; sourceTree = "<group>"; };
 		3BCBB7DA1D7367E800504AAC /* RE-1452ad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RE-1452ad.png"; sourceTree = "<group>"; };
+		3BCBB7F11D74C83100504AAC /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		3BE2F78E1D65C58100C647AA /* LinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsTableViewController.swift; sourceTree = "<group>"; };
 		3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 		3B60997E1D1FCB6700BBA9E8 /* TimeTravellerMap */ = {
 			isa = PBXGroup;
 			children = (
+				3BCBB7EE1D74C7CB00504AAC /* Resources */,
 				3B65FFED1D6A187C00B27285 /* Main Screen */,
 				3B69ADC11D6B0FE8007DA753 /* Annotation Tab */,
 				3B65FFEF1D6A5DC000B27285 /* Overlay Tab */,
@@ -372,6 +375,14 @@
 				3BC3AE3E1D20693F00EF2D26 /* HistoryMapOverlayView.swift */,
 			);
 			name = Overlays;
+			sourceTree = "<group>";
+		};
+		3BCBB7EE1D74C7CB00504AAC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3BCBB7F11D74C83100504AAC /* white.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		3BFE73951D36D619003E851E /* CoreData */ = {
@@ -514,6 +525,7 @@
 				3B6099871D1FCB6700BBA9E8 /* Main.storyboard in Resources */,
 				3BCBB7E01D7367E800504AAC /* RE-279bc.png in Resources */,
 				3BCBB7DC1D7367E800504AAC /* RE-86bc.png in Resources */,
+				3BCBB7F21D74C83100504AAC /* white.png in Resources */,
 				3BCBB7EA1D7367E800504AAC /* RE-1181ad.png in Resources */,
 				3BCBB7ED1D7367E800504AAC /* RE-1452ad.png in Resources */,
 				3B36D2ED1D39685D00BACEF8 /* Annotation.storyboard in Resources */,

@@ -12,7 +12,7 @@ class MapViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var areaLabel: UILabel!
+//    @IBOutlet weak var areaLabel: UILabel!
     
     @IBOutlet weak var mapImageView: UIImageView!
     
@@ -28,8 +28,8 @@ class MapViewCell: UITableViewCell {
         nameLabel.highlightedTextColor = nameLabel.textColor
         dateLabel.textColor = UIColor(white: 1.0, alpha: 0.6)
         dateLabel.highlightedTextColor = dateLabel.textColor
-        areaLabel.textColor = UIColor(white: 1.0, alpha: 0.4)
-        areaLabel.highlightedTextColor = areaLabel.textColor
+//        areaLabel.textColor = UIColor(white: 1.0, alpha: 0.4)
+//        areaLabel.highlightedTextColor = areaLabel.textColor
         
         let selectionView = UIView(frame: CGRect.zero)
         selectionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
@@ -45,7 +45,7 @@ class MapViewCell: UITableViewCell {
     func configureMapForCell(map: Map) {
         nameLabel.text = map.name
         dateLabel.text = "\(map.era!)\(String(abs(Int(map.year!))))"
-        areaLabel.text = map.area
+//        areaLabel.text = map.area
         mapImageView.image = UIImage(data: map.mapImageData!)
     }
 }

@@ -48,7 +48,7 @@ class AddEventTableViewController: UITableViewController {
                 self.event = event
                 eventDescription = event.eventDescription
                 videoURL = event.videoURL
-                otherURLs = event.otherURLs
+//                otherURLs = event.otherURLs
                 if let links = event.links {
                     self.links = links
                 }
@@ -117,7 +117,17 @@ class AddEventTableViewController: UITableViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     @IBAction func done(sender: UIBarButtonItem) {
+        
+        if areaTextField.text == "" || latitudeTextField.text == "" || longtitudeTextField.text == "" {
+            let controller = UIAlertController(title: "Warning", message: "Ensure area and coordinate has been filled", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            controller.addAction(okAction)
+            presentViewController(controller, animated: true, completion: nil)
+            return
+        }
+        
         let hudView = HudView.hudInView(navigationController!.view, animated: true)
         
         if let temp = eventToEdit {
@@ -139,18 +149,18 @@ class AddEventTableViewController: UITableViewController {
         
         do {
             try managedContext.save()
-            if let _ = eventToEdit {
-                performSegueWithIdentifier("UpdateEvent", sender: self)
-            } else if eventAddToMap {
-                performSegueWithIdentifier("AddEventAnnotation", sender: self)
-            }
         } catch {
             print("error: \(error)")
         }
         
-        afterDelay(0.6) {
+        afterDelay(0.6, closure: {
             self.dismissViewControllerAnimated(true, completion: nil)
-        }
+            if let _ = self.eventToEdit {
+                self.performSegueWithIdentifier("UpdateEvent", sender: self)
+            } else if self.eventAddToMap {
+                self.performSegueWithIdentifier("AddEventAnnotation", sender: self)
+            }
+        })
     }
 
     // MARK: - Function
@@ -158,6 +168,7 @@ class AddEventTableViewController: UITableViewController {
         let when = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
         dispatch_after(when, dispatch_get_main_queue(), closure)
     }
+    
     
 //    func addNewEvent() {
 //        let event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: managedContext) as! Event
@@ -221,11 +232,12 @@ class AddEventTableViewController: UITableViewController {
             
             if let placemarks = placemarks where placemarks.count > 0 {
                 let pm = placemarks[0]
-                var address: String = "Place unclear"
+                var address: String = ""
 //                if let thoroughfare = pm.thoroughfare {
 //                    address = ""
 //                    address = address + thoroughfare + " "
 //                }
+                self.areaTextField.placeholder = "Input Area"
                 if let locality = pm.locality {
                     address = ""
                     address = address + locality + ","
@@ -369,28 +381,29 @@ extension AddEventTableViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
             descriptionTextView.becomeFirstResponder()
             return false
-        } else if textField == latitudeTextField {
-            if let text = longtitudeTextField.text {
-                if text == "" {
-                    longtitudeTextField.becomeFirstResponder()
-                } else {
-                    reverseGeocodeLocation()
-                    descriptionTextView.becomeFirstResponder()
-                }
-            }
-            textField.resignFirstResponder()
-            return false
-        } else if textField == longtitudeTextField {
-            if let text = latitudeTextField.text {
-                if text == "" {
-                    latitudeTextField.becomeFirstResponder()
-                } else {
-                    reverseGeocodeLocation()
-                    descriptionTextView.becomeFirstResponder()
-                }
-            }
-            textField.resignFirstResponder()
-            return false
+        
+//        } else if textField == latitudeTextField {
+//            if let text = longtitudeTextField.text {
+//                if text == "" {
+//                    longtitudeTextField.becomeFirstResponder()
+//                } else {
+//                    reverseGeocodeLocation()
+//                    descriptionTextView.becomeFirstResponder()
+//                }
+//            }
+//            textField.resignFirstResponder()
+//            return false
+//        } else if textField == longtitudeTextField {
+//            if let text = latitudeTextField.text {
+//                if text == "" {
+//                    latitudeTextField.becomeFirstResponder()
+//                } else {
+//                    reverseGeocodeLocation()
+//                    descriptionTextView.becomeFirstResponder()
+//                }
+//            }
+//            textField.resignFirstResponder()
+//            return false
         } else if textField == videoLinkURLTextField {
             playVideo(textField.text!)
             textField.resignFirstResponder()
@@ -404,26 +417,26 @@ extension AddEventTableViewController: UITextFieldDelegate {
             geocodeAddressToCoordinate()
             textField.resignFirstResponder()
             descriptionTextView.becomeFirstResponder()
-        } else if textField == latitudeTextField {
-            if let text = longtitudeTextField.text {
-                if text == "" {
-                    longtitudeTextField.becomeFirstResponder()
-                } else {
-                    reverseGeocodeLocation()
-                    descriptionTextView.becomeFirstResponder()
-                }
-            }
-            textField.resignFirstResponder()
-        } else if textField == longtitudeTextField {
-            if let text = latitudeTextField.text {
-                if text == "" {
-                    latitudeTextField.becomeFirstResponder()
-                } else {
-                    reverseGeocodeLocation()
-                    descriptionTextView.becomeFirstResponder()
-                }
-            }
-            textField.resignFirstResponder()
+//        } else if textField == latitudeTextField {
+//            if let text = longtitudeTextField.text {
+//                if text == "" {
+//                    longtitudeTextField.becomeFirstResponder()
+//                } else {
+//                    reverseGeocodeLocation()
+//                    descriptionTextView.becomeFirstResponder()
+//                }
+//            }
+//            textField.resignFirstResponder()
+//        } else if textField == longtitudeTextField {
+//            if let text = latitudeTextField.text {
+//                if text == "" {
+//                    latitudeTextField.becomeFirstResponder()
+//                } else {
+//                    reverseGeocodeLocation()
+//                    descriptionTextView.becomeFirstResponder()
+//                }
+//            }
+//            textField.resignFirstResponder()
         } else if textField == videoLinkURLTextField {
             playVideo(textField.text!)
             textField.resignFirstResponder()
@@ -450,17 +463,17 @@ extension AddEventTableViewController: UITextViewDelegate {
     }
     
     func playVideo(url: String) {
-        let videoURL = "https://www.youtube.com/embed/Rg6GLVUnnpM"
-        let url = NSURL(string: url)
-        if UIApplication.sharedApplication().canOpenURL(url!) {
-            print("")
-        }
+//        let videoURL = "https://www.youtube.com/embed/Rg6GLVUnnpM"
+//        let url = NSURL(string: url)
+//        if UIApplication.sharedApplication().canOpenURL(url!) {
+//            print("")
+//        }
         
         videoWebView.allowsInlineMediaPlayback = true
         let videoString = "<iframe width=\(videoWebView.frame.width) height=\(videoWebView.frame.height) src=\(url)?&playsinline=1 frameborder=0 allowfullscreen></iframe>"
         videoWebView.loadHTMLString(videoString, baseURL: nil)
-        if videoWebView.request?.URL?.absoluteURL == nil {
-            print("wrong url")
-        }
+//        if videoWebView.request?.URL?.absoluteURL == nil {
+//            print("wrong url")
+//        }
     }
 }

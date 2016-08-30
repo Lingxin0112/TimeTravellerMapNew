@@ -105,6 +105,15 @@ class MapViewController: UIViewController {
         chooseDateTextField.inputAccessoryView = toolBar
         
         loadMaps()
+        
+        // slider appearance
+        let thumbImageNormal = UIImage(named: "backpacker-normal")
+        dateSlider.setThumbImage(thumbImageNormal, forState: .Normal)
+        
+        let thumbImageHighlighted = UIImage(named: "backpacker-highlighted")
+        dateSlider.setThumbImage(thumbImageHighlighted, forState: .Highlighted)
+        
+
     }
     
     
@@ -149,20 +158,25 @@ class MapViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        let isLaunch = NSUserDefaults.standardUserDefaults().boolForKey("Launch")
+        let isLaunch = NSUserDefaults.standardUserDefaults().boolForKey("FirstLaunch")
         if !isLaunch {
 
             let launchView = LaunchView.launchView(view, animated: true)
             let window = UIApplication.sharedApplication().keyWindow
                         window?.addSubview(launchView)
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "Launch")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FirstLaunch")
         }
         
 //        mapView.removeAnnotations(mapView.annotations)
         state = "refresh"
-        if NSUserDefaults.standardUserDefaults().boolForKey("OverlayUpdated") {
+        if NSUserDefaults.standardUserDefaults().boolForKey("OverlayIsUpdated") {
             chooseMapInTheArea()
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "OverlayUpdated")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "OverlayIsUpdated1")
+        }
+        if NSUserDefaults.standardUserDefaults().boolForKey("AnnotationIsUpdated") {
+            mapView.removeAnnotations(mapView.annotations)
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "AnnotationIsUpdated")
+            addInformationPins()
         }
     }
     
@@ -269,7 +283,7 @@ class MapViewController: UIViewController {
             dateSlider.value = dateSlider.maximumValue
             
             currentYear = Int(self.dateSlider.maximumValue)
-            mapYear = Int(self.dateSlider.maximumValue)
+            mapYear = oldMap!.year as! Int
         } else if maps.count > 1 {
             let minMap = maps[0]
             let maxMap = maps[maps.count - 1]
@@ -295,7 +309,7 @@ class MapViewController: UIViewController {
             dateSlider.value = dateSlider.maximumValue
             
             currentYear = Int(self.dateSlider.maximumValue)
-            mapYear = Int(self.dateSlider.maximumValue)
+            mapYear = oldMap!.year as! Int
         }
         
         
@@ -346,7 +360,8 @@ class MapViewController: UIViewController {
     @IBAction func addEventAnnotation(segue: UIStoryboardSegue) {
         let controller = segue.sourceViewController as! AddEventTableViewController
         let event = controller.event
-        let annotation = InformationAnnotation(coordinate: event!.coordinate, title: event!.name!, subtitle: event!.area!, url: nil)
+//        let annotation = InformationAnnotation(coordinate: event!.coordinate, title: event!.name!, subtitle: event!.area!, url: nil)
+        let annotation = InformationAnnotation(event: event!)
         self.mapView.addAnnotation(annotation)
     }
     
@@ -477,6 +492,7 @@ class MapViewController: UIViewController {
         let overlay = HistoryMapOverlay(historyMap: map)
         historyMapImage = UIImage(data: map.mapImageData!)
         mapView.addOverlay(overlay)
+        oldMap = map
     }
     
     func addInformationPins() {
@@ -540,8 +556,8 @@ class MapViewController: UIViewController {
                     transform(oldMap!, newMap: newMap!, ascending: ascending)
                     mapYear = newMap!.year as! Int
                 }
-                
-            } else if maps.count > 1 {
+            
+            }else if maps.count > 1 {
                 var imageArray : [UIImage] = []
                 for map in maps {
                     let image = UIImage(data: map.mapImageData!)

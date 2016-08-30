@@ -56,6 +56,11 @@ class EventDetailsViewController: UIViewController {
             dateLabel.text = event.date
             areaLabel.text = event.area
             videoUrlLabel.text = event.videoURL
+            
+            if let videoURL = event.videoURL {
+                playVideo(videoURL)
+            }
+            
             latitudeLabel.text = String(format: "%.8f", event.latitude)
             longtitudeLabel.text = String(format: "%.8f", event.longtitude)
             descriptionLabel.text = event.eventDescription
@@ -70,6 +75,13 @@ class EventDetailsViewController: UIViewController {
             usefulLinksLabel.text = userfulLinks
         }
     }
+    
+    func playVideo(url: String) {
+        videoWebView.allowsInlineMediaPlayback = true
+        let videoString = "<iframe width=\(videoWebView.frame.width) height=\(videoWebView.frame.height) src=\(url)?&playsinline=1 frameborder=0 allowfullscreen></iframe>"
+        videoWebView.loadHTMLString(videoString, baseURL: nil)
+    }
+    
 
     // MARK: - Navigation
     

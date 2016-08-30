@@ -293,7 +293,7 @@ extension MapsTableViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "OverlayUpdated")
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Overlay_Updated")
         switch type {
         case .Insert:
             print("MapTableViewController insert")

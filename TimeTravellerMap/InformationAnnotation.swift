@@ -14,7 +14,8 @@ class InformationAnnotation: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var videoURL: String?
-    var otherURLs: String?
+//    var otherURLs: String?
+    var eventDescription: String?
     
     init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, url: String? = nil) {
         self.coordinate = coordinate
@@ -28,6 +29,7 @@ class InformationAnnotation: NSObject, MKAnnotation {
         self.title = event.name
         self.subtitle = event.date
         self.videoURL = event.videoURL
-        self.otherURLs = event.otherURLs
+//        self.otherURLs = event.otherURLs
+        self.eventDescription = event.eventDescription
     }
 }

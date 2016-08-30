@@ -62,7 +62,7 @@ class MapLocationViewController: UIViewController {
             centerMapOnLocation(initialLocation)
         }
         
-        mapImageView.alpha = 0.6
+        mapImageView.alpha = 0.5
         
         mapImageView.image = image
     }
@@ -73,6 +73,11 @@ class MapLocationViewController: UIViewController {
     }
     
     // MARK: - Action
+    
+    
+    @IBAction func alphaSliderChanged(sender: UISlider) {
+        mapImageView.alpha = CGFloat(sender.value)
+    }
     
     @IBAction func done(sender: UIBarButtonItem) {
         getTheLocation()

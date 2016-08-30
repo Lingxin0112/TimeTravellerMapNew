@@ -15,6 +15,7 @@ class SearchLocationsTableViewController: UITableViewController {
     var mapView: MKMapView? = nil
     var selectedItem = MKMapItem()
     var mark: String = "Main"
+    var isHasResults: Bool = true
     
     override func viewDidLoad() {
         // appearance
@@ -72,6 +73,7 @@ class SearchLocationsTableViewController: UITableViewController {
 
 extension SearchLocationsTableViewController: UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
+        self.isHasResults = false
         guard let mapView = mapView, let searchBarText = searchController.searchBar.text else {return}
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = searchBarText
@@ -79,17 +81,25 @@ extension SearchLocationsTableViewController: UISearchResultsUpdating {
         let search = MKLocalSearch(request: request)
         search.startWithCompletionHandler() { response, _ in
             guard let response = response else {return}
-            
+            self.isHasResults = true
             self.matchingItems = response.mapItems
             self.tableView.reloadData()
         }
+        
     }
 }
 
 // MARK: - UITableViewDelegate
 
 extension SearchLocationsTableViewController {
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if !isHasResults {
+            return nil
+        }
+        return indexPath
+    }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
         if mark == "Main" {
             performSegueWithIdentifier("ChooseLocation", sender: indexPath)
         } else {
@@ -102,14 +112,23 @@ extension SearchLocationsTableViewController {
 
 extension SearchLocationsTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return matchingItems.count
+        if isHasResults {
+            return matchingItems.count
+        } else {
+            return 1
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath)
-        let selectedResultItem = matchingItems[indexPath.row].placemark
-        cell.textLabel?.text = selectedResultItem.name
-        cell.detailTextLabel?.text = parseDetailedAdress(selectedResultItem)
+        if isHasResults {
+            let selectedResultItem = matchingItems[indexPath.row].placemark
+            cell.textLabel?.text = selectedResultItem.name
+            cell.detailTextLabel?.text = parseDetailedAdress(selectedResultItem)
+        } else {
+            cell.textLabel?.text = "No results"
+            cell.detailTextLabel?.text = "Please Try It Later"
+        }
         
         cell.backgroundColor = UIColor.blackColor()
         cell.textLabel!.textColor = UIColor.whiteColor()
