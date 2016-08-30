@@ -47,7 +47,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        alphaSlider.value = 0.7
         let searchLocationsTableViewController = storyboard!.instantiateViewControllerWithIdentifier("SearchLocationsTableViewController") as! SearchLocationsTableViewController
         searchLocationsTableViewController.mapView = mapView
         searchLocationsTableViewController.mark = "Main"
@@ -77,10 +77,12 @@ class MapViewController: UIViewController {
 //        
 //        mapView.region = region
         let initialLocation = CLLocation(latitude: 41.909986, longitude: 12.3959127)
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate, 100000 * 30.0, 100000 * 30.0)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate, 100000 * 60.0, 100000 * 60.0)
         mapView.setRegion(coordinateRegion, animated: true)
         mapView.showsCompass = true
         mapView.showsScale = true
+        
+        NSUserDefaults.standardUserDefaults().setObject("hybrid", forKey: "MapType")
         
 //        addOverlay()
         
@@ -112,7 +114,6 @@ class MapViewController: UIViewController {
         
         let thumbImageHighlighted = UIImage(named: "backpacker-highlighted")
         dateSlider.setThumbImage(thumbImageHighlighted, forState: .Highlighted)
-        
 
     }
     
@@ -171,7 +172,7 @@ class MapViewController: UIViewController {
         state = "refresh"
         if NSUserDefaults.standardUserDefaults().boolForKey("OverlayIsUpdated") {
             chooseMapInTheArea()
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "OverlayIsUpdated1")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "OverlayIsUpdated")
         }
         if NSUserDefaults.standardUserDefaults().boolForKey("AnnotationIsUpdated") {
             mapView.removeAnnotations(mapView.annotations)
@@ -414,6 +415,7 @@ class MapViewController: UIViewController {
             } else {
                 mapView.mapType = .Satellite
             }
+            NSUserDefaults.standardUserDefaults().setObject(mapType, forKey: "MapType")
         }
     }
     
@@ -607,7 +609,8 @@ class MapViewController: UIViewController {
         for map in maps {
             let mapRect = map.mapRect
             
-            if MKMapRectIntersectsRect(visibleRect, mapRect) && !MKMapRectContainsRect(mapRect, visibleRect) {
+            // && !MKMapRectContainsRect(mapRect, visibleRect)
+            if MKMapRectIntersectsRect(visibleRect, mapRect)  {
                 map.comment = "Yes"
                 localMaps.append(map)
             } else {
@@ -714,6 +717,7 @@ extension MapViewController: MKMapViewDelegate {
             let overlayView = HistoryMapOverlayView(overlay: overlay, overlayImage: historyMapImage!)
 //            overlayView.alpha = 1.0
             self.overlayView = overlayView
+            overlayView.alpha = CGFloat(alphaSlider.value)
             return overlayView
         } 
         

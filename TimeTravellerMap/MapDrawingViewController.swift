@@ -49,6 +49,14 @@ class MapDrawingViewController: UIViewController {
             mapView.setRegion(coordinateRegion!, animated: true)
         }
         
+        let mapType = NSUserDefaults.standardUserDefaults().objectForKey("MapType") as! String
+        if mapType == "standard" {
+            mapView.mapType = .Standard
+        } else if mapType == "hybrid" {
+            mapView.mapType = .Hybrid
+        } else {
+            mapView.mapType = .Satellite
+        }
         
     }
     

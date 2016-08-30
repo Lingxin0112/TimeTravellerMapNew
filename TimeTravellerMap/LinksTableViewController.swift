@@ -90,13 +90,24 @@ class LinksTableViewController: UITableViewController {
     }
     
     func saveNewLink() {
+        
+        let indexPath = NSIndexPath(forRow: array.count - 1, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! LinkCell
+        
+        if cell.linkTextField.text == "" {
+            let controller = UIAlertController(title: "Warning", message: "You have not inputed a new adress link", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            controller.addAction(okAction)
+            presentViewController(controller, animated: true, completion: nil)
+            return
+        }
+        
         rightItem = "Add"
         //Insert a new Walk entity into Core Data
         let entity = NSEntityDescription.entityForName("Link", inManagedObjectContext: managedContext)
         let link = Link(entity: entity!, insertIntoManagedObjectContext: managedContext)
 
-        let indexPath = NSIndexPath(forRow: array.count - 1, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! LinkCell
+        
         link.address = cell.linkTextField.text
         let newLinks = links.mutableCopy() as! NSMutableOrderedSet
         newLinks.addObject(link)
@@ -126,6 +137,9 @@ class LinksTableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

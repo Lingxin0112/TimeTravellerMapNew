@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "hasLaunchedBefore")
             NSUserDefaults.standardUserDefaults().synchronize()
-//            loadHistoryMap()
-//            loadAnnotations()
+            loadHistoryMap()
+            loadAnnotations()
             print("222222222 is first laucn")
         }
 //        loadHistoryMap()
@@ -124,10 +124,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map1.area = "Rome"
         map1.era = "BC"
         map1.year = -338
-        map1.neLatitude = 47.6683072436119
-        map1.neLongtitude = 22.852896988186
-        map1.swLatitude = 36.1479296778893
-        map1.swLongtitude = 3.4172398379824
+        map1.neLatitude = 57.9871110767932
+        map1.neLongtitude = 52.6685074130942
+        map1.swLatitude = 20.5827669086471
+        map1.swLongtitude = -10.4652444515621
         
         let map2 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
         map2.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-279bc")!)
@@ -135,10 +135,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map2.area = "Rome"
         map2.era = "BC"
         map2.year = -279
-        map2.neLatitude = 47.6683072436119
-        map2.neLongtitude = 22.852896988186
-        map2.swLatitude = 36.1479296778893
-        map2.swLongtitude = 3.4172398379824
+        map2.neLatitude = 58.5161886910392
+        map2.neLongtitude = 54.534442135165
+        map2.swLatitude = 19.39410600726008
+        map2.swLongtitude = -11.4373014881011
 
         let map3 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
         map3.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-212bc")!)
@@ -146,10 +146,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map3.area = "Rome"
         map3.era = "BC"
         map3.year = -212
-        map3.neLatitude = 47.6683072436119
-        map3.neLongtitude = 22.852896988186
-        map3.swLatitude = 36.1479296778893
-        map3.swLongtitude = 3.4172398379824
+        map3.neLatitude = 58.466515024817
+        map3.neLongtitude = 54.9214700738821
+        map3.swLatitude = 19.0144968448635
+        map3.swLongtitude = -11.4339404270664
         
         let map4 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
         map4.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-86bc")!)
@@ -157,10 +157,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map4.area = "Rome"
         map4.era = "BC"
         map4.year = -86
-        map4.neLatitude = 47.6683072436119
-        map4.neLongtitude = 22.852896988186
-        map4.swLatitude = 36.1479296778893
-        map4.swLongtitude = 3.4172398379824
+        map4.neLatitude = 58.6786003035667
+        map4.neLongtitude = 54.4691146587197
+        map4.swLatitude = 19.6526741890049
+        map4.swLongtitude = -11.5493297143082
         
         let map5 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
         map5.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-9ad")!)
@@ -168,10 +168,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map5.area = "Rome"
         map5.era = "AD"
         map5.year = 9
-        map5.neLatitude = 47.6683072436119
-        map5.neLongtitude = 22.852896988186
-        map5.swLatitude = 36.1479296778893
-        map5.swLongtitude = 3.4172398379824
+        map5.neLatitude = 59.3454425142429
+        map5.neLongtitude = 57.2242283917067
+        map5.swLatitude = 17.8656067695177
+        map5.swLongtitude = -12.7725437442746
         
         let map6 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
         map6.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-116ad")!)
@@ -179,10 +179,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map6.area = "Rome"
         map6.era = "AD"
         map6.year = 116
-        map6.neLatitude = 47.6683072436119
-        map6.neLongtitude = 22.852896988186
-        map6.swLatitude = 36.1479296778893
-        map6.swLongtitude = 3.4172398379824
+        map6.swLatitude = 21.5279212911373
+        map6.swLongtitude = -8.71157444167774
+        map6.neLatitude = 56.940852879494
+        map6.neLongtitude = 50.724325028869
         
         let map7 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
         map7.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-269ad")!)
@@ -190,10 +190,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map7.area = "Rome"
         map7.era = "AD"
         map7.year = 269
-        map7.neLatitude = 47.6683072436119
-        map7.neLongtitude = 22.852896988186
-        map7.swLatitude = 36.1479296778893
-        map7.swLongtitude = 3.4172398379824
+        map7.swLatitude = 21.1949790425919
+        map7.swLongtitude = -10.7293581787898
+        map7.neLatitude = 58.1394848110108
+        map7.neLongtitude = 51.9453512037916
         
         let map8 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
         map8.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-336ad")!)
@@ -201,10 +201,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         map8.area = "Rome"
         map8.era = "AD"
         map8.year = 336
-        map8.neLatitude = 47.6683072436119
-        map8.neLongtitude = 22.852896988186
-        map8.swLatitude = 36.1479296778893
-        map8.swLongtitude = 3.4172398379824
+        map8.swLatitude = 21.8302621375643
+        map8.swLongtitude = -9.374570190447781
+        map8.neLatitude = 57.3453295425963
+        map8.neLongtitude = 50.5865474048832
         
 //        let map4 = Map(entity: entity!, insertIntoManagedObjectContext: coreDataStack.context)
 //        map4.mapImageData = UIImagePNGRepresentation(UIImage(named: "RE-86bc")!)

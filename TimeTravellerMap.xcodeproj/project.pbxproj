@@ -249,28 +249,17 @@
 				3BC3AE3D1D20692A00EF2D26 /* Overlays */,
 				3BC3AE3A1D2068EE00EF2D26 /* HistoryMap */,
 				3BC3AE371D205ED800EF2D26 /* Model */,
+				3B6831041D7641F50026C86D /* Appearance */,
 				3B60997F1D1FCB6700BBA9E8 /* AppDelegate.swift */,
-				3BA3CFB71D5B226800A1071E /* MyTabBarController.swift */,
-				3BA3CFB91D5B230500A1071E /* MyNavigationController.swift */,
-				3BA3CFBB1D5B23FE00A1071E /* MyImagePickerController.swift */,
-				3B646C821D5DD0AB0039F998 /* GradientView.swift */,
-				3B646C801D5D29ED0039F998 /* MyPresentationController.swift */,
 				3B6099831D1FCB6700BBA9E8 /* SecondViewController.swift */,
 				3B0F393F1D4DFB5C004B0B2C /* TestTableViewController.swift */,
 				3BA511011D6C924F00E7E1A0 /* TestViewController.swift */,
-				3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */,
-				3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */,
 				3B6099881D1FCB6700BBA9E8 /* Assets.xcassets */,
 				3B60998A1D1FCB6700BBA9E8 /* LaunchScreen.storyboard */,
 				3B65FFE91D690FC500B27285 /* LaunchViewController.swift */,
 				3B65FFEB1D69163100B27285 /* LaunchView.swift */,
 				3B60998D1D1FCB6700BBA9E8 /* Info.plist */,
 				3B6099AF1D1FDC0700BBA9E8 /* SearchLocationsTableViewController.swift */,
-				3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */,
-				3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */,
-				3BFE738E1D36C36C003E851E /* DataModel.xcdatamodeld */,
-				3BFE73911D36CAB4003E851E /* CoreDataStack.swift */,
-				3B36D2E71D379A6D00BACEF8 /* HudView.swift */,
 			);
 			path = TimeTravellerMap;
 			sourceTree = "<group>";
@@ -297,9 +286,12 @@
 		3B65FFED1D6A187C00B27285 /* Main Screen */ = {
 			isa = PBXGroup;
 			children = (
+				3BF758791D26F9E300BACE00 /* ToolsTableViewController.swift */,
+				3B646C801D5D29ED0039F998 /* MyPresentationController.swift */,
 				3B6099851D1FCB6700BBA9E8 /* Main.storyboard */,
 				3B6099811D1FCB6700BBA9E8 /* MapViewController.swift */,
 				3B646C7E1D5D27180039F998 /* MapsAnimationViewController.swift */,
+				3BFE73661D34FEE6003E851E /* AnnotationDetailsTableViewController.swift */,
 			);
 			name = "Main Screen";
 			sourceTree = "<group>";
@@ -318,6 +310,20 @@
 				3B5D65451D271F2B0085D057 /* BrushSettingsViewController.swift */,
 			);
 			name = "Overlay Tab";
+			sourceTree = "<group>";
+		};
+		3B6831041D7641F50026C86D /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				3BA3CFB71D5B226800A1071E /* MyTabBarController.swift */,
+				3BA3CFB91D5B230500A1071E /* MyNavigationController.swift */,
+				3BA3CFBB1D5B23FE00A1071E /* MyImagePickerController.swift */,
+				3B646C821D5DD0AB0039F998 /* GradientView.swift */,
+				3B36D2E71D379A6D00BACEF8 /* HudView.swift */,
+				3BA3CFBD1D5BA21800A1071E /* MySearchBar.swift */,
+				3BA3CFBF1D5BA27D00A1071E /* MySearchController.swift */,
+			);
+			name = Appearance;
 			sourceTree = "<group>";
 		};
 		3B69ADC11D6B0FE8007DA753 /* Annotation Tab */ = {
@@ -388,6 +394,8 @@
 		3BFE73951D36D619003E851E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				3BFE738E1D36C36C003E851E /* DataModel.xcdatamodeld */,
+				3BFE73911D36CAB4003E851E /* CoreDataStack.swift */,
 				3BC8EA001D64D773004230F4 /* Link+CoreDataProperties.swift */,
 				3BC8EA011D64D773004230F4 /* Link.swift */,
 				3B0F39391D40E2FA004B0B2C /* Map+CoreDataProperties.swift */,

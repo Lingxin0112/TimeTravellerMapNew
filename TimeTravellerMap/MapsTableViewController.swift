@@ -89,7 +89,7 @@ class MapsTableViewController: UITableViewController {
             fetchedResultsController.fetchRequest.predicate = nil
         } else {
 //            NSFetchedResultsController.deleteCacheWithName("Maps")
-            fetchedResultsController.fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+            fetchedResultsController.fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@ OR year contains[cd] %@", searchText, searchText)
         }
         
         performFetch()
@@ -163,7 +163,7 @@ class MapsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionInfo = fetchedResultsController.sections![section]
-        return sectionInfo.name
+        return sectionInfo.name.uppercaseString
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -293,7 +293,7 @@ extension MapsTableViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Overlay_Updated")
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "OverlayIsUpdated")
         switch type {
         case .Insert:
             print("MapTableViewController insert")

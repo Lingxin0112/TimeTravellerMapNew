@@ -57,4 +57,31 @@ class TimeTravellerMapUITests: XCTestCase {
     func testAddNewMap() {
         
     }
+    
+    func testAddNewAnnotation() {
+        
+        let app = XCUIApplication()
+        app.tabBars.buttons["Annotation"].tap()
+        app.navigationBars["Annotation"].buttons["Add"].tap()
+        
+        let tablesQuery = app.tables
+        let nameCellsQuery = tablesQuery.cells.containingType(.StaticText, identifier:"Name")
+        nameCellsQuery.childrenMatchingType(.TextField).element.tap()
+        nameCellsQuery.childrenMatchingType(.TextField).element
+        
+        let dateCellsQuery = tablesQuery.cells.containingType(.StaticText, identifier:"Date")
+        dateCellsQuery.childrenMatchingType(.TextField).element.tap()
+        dateCellsQuery.childrenMatchingType(.TextField).element
+        
+        let areaCellsQuery = tablesQuery.cells.containingType(.StaticText, identifier:"Area")
+        areaCellsQuery.childrenMatchingType(.TextField).element.tap()
+        areaCellsQuery.childrenMatchingType(.TextField).element
+        
+        let cell = tablesQuery.childrenMatchingType(.Cell).elementBoundByIndex(5)
+        let textView = cell.childrenMatchingType(.TextView).element
+        textView.tap()
+        textView.tap()
+        cell.childrenMatchingType(.TextView).element
+        
+    }
 }

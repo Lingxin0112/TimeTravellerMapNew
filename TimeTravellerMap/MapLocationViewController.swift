@@ -53,6 +53,15 @@ class MapLocationViewController: UIViewController {
         
         definesPresentationContext = true
         
+        let mapType = NSUserDefaults.standardUserDefaults().objectForKey("MapType") as! String
+        if mapType == "standard" {
+            mapView.mapType = .Standard
+        } else if mapType == "hybrid" {
+            mapView.mapType = .Hybrid
+        } else {
+            mapView.mapType = .Satellite
+        }
+        
         if let midCoordinate = midCoordinate {
             let coordinateRegion = MKCoordinateRegionMakeWithDistance(midCoordinate, 100000 * 30.0, 100000 * 30.0)
             mapView.setRegion(coordinateRegion, animated: true)
@@ -167,9 +176,9 @@ class MapLocationViewController: UIViewController {
             controller.image = image
             controller.coordinateRegion = coordinateRegion
             controller.isExistedMap = false
-            if let midCoordinate = midCoordinate {
-                controller.midCoordinate = midCoordinate
-            }
+//            if let midCoordinate = midCoordinate {
+//                controller.midCoordinate = midCoordinate
+//            }
         }
     }
 
@@ -193,4 +202,28 @@ extension MapLocationViewController: UISearchControllerDelegate {
     func didPresentSearchController(searchController: UISearchController) {
         searchController.searchBar.showsCancelButton = false
     }
+}
+
+// MARK: - Map
+extension MapLocationViewController: MKMapViewDelegate {
+    
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let mRect = mapView.visibleMapRect;
+        let eastMapPoint = MKMapPointMake(MKMapRectGetMinX(mRect), MKMapRectGetMidY(mRect));
+        let westMapPoint = MKMapPointMake(MKMapRectGetMaxX(mRect), MKMapRectGetMidY(mRect));
+        
+        let northMapPoint = MKMapPointMake(MKMapRectGetMidX(mRect), MKMapRectGetMaxY(mRect));
+        let southMapPoint = MKMapPointMake(MKMapRectGetMidX(mRect), MKMapRectGetMinY(mRect));
+        
+        let midMapPoint = MKMapPoint(x: MKMapRectGetMidX(mRect), y: MKMapRectGetMidY(mRect))
+        
+        let midCoordinate = MKCoordinateForMapPoint(midMapPoint)
+        
+        let ewDistance = MKMetersBetweenMapPoints(eastMapPoint, westMapPoint);
+        let nsDistance = MKMetersBetweenMapPoints(northMapPoint, southMapPoint);
+
+//        coordinateRegion = MKCoordinateRegionMakeWithDistance(midCoordinate, MKMapRectGetHeight(mRect), MKMapRectGetWidth(mRect))
+        coordinateRegion = MKCoordinateRegionMakeWithDistance(midCoordinate, nsDistance, ewDistance)
+    }
+    
 }

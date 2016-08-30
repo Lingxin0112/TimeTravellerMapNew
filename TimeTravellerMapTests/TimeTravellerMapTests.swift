@@ -52,10 +52,7 @@ class TimeTravellerMapTests: XCTestCase {
     }
     
     func testisInThisArea() {
-        let event = Event()
-        event.latitude = 53.3811
-        event.longtitude = 1.4701
-        XCTAssertNotNil(event.coordinate, "coordinate is not Nil")
+
     }
     
     func testDonotAllowGetCurrentLocation() {

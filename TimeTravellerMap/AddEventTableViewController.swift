@@ -121,7 +121,15 @@ class AddEventTableViewController: UITableViewController {
     @IBAction func done(sender: UIBarButtonItem) {
         
         if areaTextField.text == "" || latitudeTextField.text == "" || longtitudeTextField.text == "" {
-            let controller = UIAlertController(title: "Warning", message: "Ensure area and coordinate has been filled", preferredStyle: .Alert)
+            let controller = UIAlertController(title: "Warning", message: "Please input date or coordinate", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            controller.addAction(okAction)
+            presentViewController(controller, animated: true, completion: nil)
+            return
+        }
+        
+        if nameTextField.text == "" || dateTextField.text == "" {
+            let controller = UIAlertController(title: "Warning", message: "Please input name or date", preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             controller.addAction(okAction)
             presentViewController(controller, animated: true, completion: nil)
@@ -384,7 +392,7 @@ extension AddEventTableViewController: UITextFieldDelegate {
         
 //        } else if textField == latitudeTextField {
 //            if let text = longtitudeTextField.text {
-//                if text == "" {
+//                if text == "" { 
 //                    longtitudeTextField.becomeFirstResponder()
 //                } else {
 //                    reverseGeocodeLocation()
